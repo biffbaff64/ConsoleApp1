@@ -3,6 +3,7 @@ using LughSharp.Backends.DesktopGL;
 
 namespace ConsoleApp1;
 
+// ReSharper disable once MemberCanBeInternal
 public static class DesktopLauncher
 {
     public static void Main( string[] args )

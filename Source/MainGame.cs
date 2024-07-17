@@ -6,6 +6,7 @@ using LughSharp.LibCore.Utils;
 
 namespace ConsoleApp1.Source;
 
+// ReSharper disable once MemberCanBeInternal
 public class MainGame : ApplicationAdapter
 {
     private OrthographicCamera? _camera;
@@ -15,21 +16,29 @@ public class MainGame : ApplicationAdapter
     /// <inheritdoc />
     public override void Create()
     {
+        Logger.CheckPoint();
+
         _spriteBatch = new SpriteBatch();
+
+        Logger.CheckPoint();
 
         _camera = new OrthographicCamera();
         _camera.SetToOrtho( false, 640, 480 );
 
+        Logger.CheckPoint();
+
         _background = new Texture( Gdx.Files.Internal( "LughLogo.png" ).FileName );
+
+        Logger.Debug( " - finished" );
     }
 
     /// <inheritdoc />
     public override void Render()
     {
         ScreenUtils.Clear( 0, 0, 0.2f, 1 );
-        
+
         _camera?.Update();
-        
+
         _spriteBatch?.SetProjectionMatrix( _camera!.Combined );
         _spriteBatch?.Begin();
         _spriteBatch?.Draw( _background!, 0, 0 );

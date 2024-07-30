@@ -16,7 +16,7 @@ public static class DesktopLauncher
             DisableAudio  = true
         };
 
-        config.SetWindowedMode( 640, 480 );
+        config.SetWindowedMode( 320, 240 );
 
         var game = new DesktopGLApplication( new MainGame(), config );
         game.Run();

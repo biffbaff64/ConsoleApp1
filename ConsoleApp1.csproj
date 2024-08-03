@@ -7,11 +7,11 @@
         <Nullable>enable</Nullable>
     </PropertyGroup>
 
-    <ItemGroup>
-      <Reference Include="LughSharp">
-        <HintPath>..\LughSharp\bin\Debug\net7.0\LughSharp.dll</HintPath>
-      </Reference>
-    </ItemGroup>
+<!--    <ItemGroup>-->
+<!--      <Reference Include="LughSharp">-->
+<!--        <HintPath>..\LughSharp\bin\Debug\net7.0\LughSharp.dll</HintPath>-->
+<!--      </Reference>-->
+<!--    </ItemGroup>-->
 
     <ItemGroup>
       <PackageReference Include="DotGLFW" Version="1.2.0" />

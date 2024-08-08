@@ -27,7 +27,7 @@ public class MainGame : ApplicationAdapter
 
         Logger.CheckPoint();
 
-        _background = new Texture( Gdx.Files.Internal( "LughLogo.png" ).FileName );
+//        _background = new Texture( Gdx.Files.Internal( "LughLogo.png" ).FileName );
 
         Logger.Debug( " - finished" );
     }
@@ -35,14 +35,14 @@ public class MainGame : ApplicationAdapter
     /// <inheritdoc />
     public override void Render()
     {
-        ScreenUtils.Clear( 0, 0, 0.2f, 1 );
+//        ScreenUtils.Clear( 0, 0, 0.2f, 1 );
 
-        _camera?.Update();
+//        _camera?.Update();
 
-        _spriteBatch?.SetProjectionMatrix( _camera!.Combined );
-        _spriteBatch?.Begin();
-        _spriteBatch?.Draw( _background!, 0, 0 );
-        _spriteBatch?.End();
+//        _spriteBatch?.SetProjectionMatrix( _camera!.Combined );
+//        _spriteBatch?.Begin();
+//        _spriteBatch?.Draw( _background!, 0, 0 );
+//        _spriteBatch?.End();
     }
 
 //    /// <inheritdoc />

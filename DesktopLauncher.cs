@@ -1,4 +1,5 @@
-﻿using ConsoleApp1.Source;
+﻿using System.Reflection;
+using ConsoleApp1.Source;
 using LughSharp.Backends.DesktopGL;
 
 namespace ConsoleApp1;
@@ -22,4 +23,3 @@ public static class DesktopLauncher
         game.Run();
     }
 }
-

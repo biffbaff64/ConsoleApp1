@@ -16,8 +16,10 @@ public class MainGame : ApplicationAdapter
     /// <inheritdoc />
     public override void Create()
     {
+        Logger.Debug( Directory.GetParent( Path.GetDirectoryName( System.Reflection.Assembly.GetCallingAssembly().Location )! )!.Name );
+
         Logger.CheckPoint();
-        
+
         _spriteBatch = new SpriteBatch();
 
         _camera = new OrthographicCamera();

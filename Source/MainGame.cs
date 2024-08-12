@@ -23,7 +23,7 @@ public class MainGame : ApplicationAdapter
         _camera = new OrthographicCamera();
         _camera.SetToOrtho( false, 640, 480 );
         
-        _background = new Texture( Gdx.Files.Internal( "LughLogo.png" ).FileName );
+        _background = new Texture( Gdx.Files.Internal( "Felix.png" ).FileName );
     }
 
     /// <inheritdoc />

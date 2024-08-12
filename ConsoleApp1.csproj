@@ -22,4 +22,15 @@
       <ProjectReference Include="..\LughSharp\LughSharp.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <None Remove="Assets\LughLogo.png" />
+      <Content Include="Assets\LughLogo.png">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Content>
+      <None Remove="Assets\Felix.png" />
+      <Content Include="Assets\Felix.png">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Content>
+    </ItemGroup>
+
 </Project>

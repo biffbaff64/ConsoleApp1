@@ -1,5 +1,4 @@
-﻿using System.Reflection;
-using ConsoleApp1.Source;
+﻿using ConsoleApp1.Source;
 using LughSharp.Backends.DesktopGL;
 
 namespace ConsoleApp1;

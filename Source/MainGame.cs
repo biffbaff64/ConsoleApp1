@@ -19,11 +19,10 @@ public class MainGame : ApplicationAdapter
         Logger.CheckPoint();
 
         _spriteBatch = new SpriteBatch();
-
-        _camera = new OrthographicCamera();
+        _camera      = new OrthographicCamera();
         _camera.SetToOrtho( false, 640, 480 );
-        
-        _background = new Texture( Gdx.Files.Internal( "Felix.png" ).FileName );
+
+        _background = new Texture( "Felix.png" );
     }
 
     /// <inheritdoc />

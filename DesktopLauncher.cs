@@ -16,6 +16,7 @@ public static class DesktopLauncher
             DisableAudio  = true
         };
 
+        config.EnableGLDebugOutput( true, new StreamWriter( "GLDebug.log" ) );
         config.SetWindowedMode( 320, 240 );
 
         var game = new DesktopGLApplication( new MainGame(), config );

@@ -2,6 +2,7 @@
 using LughSharp.LibCore.Graphics;
 using LughSharp.LibCore.Graphics.Cameras;
 using LughSharp.LibCore.Graphics.G2D;
+using LughSharp.LibCore.Graphics.Playground;
 using LughSharp.LibCore.Utils;
 
 namespace ConsoleApp1.Source;

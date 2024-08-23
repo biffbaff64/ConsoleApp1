@@ -2,7 +2,6 @@
 using LughSharp.LibCore.Graphics;
 using LughSharp.LibCore.Graphics.Cameras;
 using LughSharp.LibCore.Graphics.G2D;
-using LughSharp.LibCore.Graphics.Playground;
 using LughSharp.LibCore.Utils;
 
 namespace ConsoleApp1.Source;
@@ -23,27 +22,30 @@ public class MainGame : ApplicationAdapter
         _camera      = new OrthographicCamera();
         _camera.SetToOrtho( false, 640, 480 );
 
-        var test  = new Pixmap( 100, 100, Pixmap.Format.RGBA8888 );
-//        var test2 = new Pixmap( new FileInfo( Gdx.Files.Internal( "LughLogo.png" ).FileName ) );
-//        _background = new Texture( "Felix.png" );
-//        var test3 = new Texture( 100, 100, Pixmap.Format.RGBA8888 );
+//        var pm = new Pixmap( 100, 100, Pixmap.Format.RGBA8888 );
+//        var pm = new Pixmap( new FileInfo( Gdx.Files.Internal( "LughLogo.png" ).FileName ) );
+//        _background = new Texture( pm );
+        _background = new Texture( "Felix.png" );
+//        _background = new Texture( 100, 100, Pixmap.Format.RGBA8888 );
     }
 
     /// <inheritdoc />
     public override void Render()
     {
-//        ScreenUtils.Clear( Color.Blue );
+        ScreenUtils.Clear( Color.Blue );
 
-//        _camera?.Update();
+        _camera?.Update();
 
-//        _spriteBatch?.SetProjectionMatrix( _camera!.Combined );
+        _spriteBatch?.SetProjectionMatrix( _camera!.Combined );
 
-//        if ( _background != null )
-//        {
-//            _spriteBatch?.Begin();
-//            _spriteBatch?.Draw( _background!, 0, 0 );
-//            _spriteBatch?.End();
-//        }
+        _spriteBatch?.Begin();
+
+        if ( _background != null )
+        {
+            _spriteBatch?.Draw( _background!, 0, 0 );
+        }
+        
+        _spriteBatch?.End();
     }
 
     /// <inheritdoc />

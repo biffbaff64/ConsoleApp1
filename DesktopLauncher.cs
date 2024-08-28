@@ -1,5 +1,6 @@
 ﻿using ConsoleApp1.Source;
 using LughSharp.Backends.DesktopGL;
+using LughSharp.LibCore.Core;
 
 namespace ConsoleApp1;
 
@@ -20,6 +21,9 @@ public static class DesktopLauncher
         config.SetWindowedMode( 320, 240 );
 
         var game = new DesktopGLApplication( new MainGame(), config );
+
+        Gdx.DevMode = true;
+        
         game.Run();
     }
 }

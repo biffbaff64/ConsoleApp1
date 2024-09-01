@@ -22,14 +22,16 @@ public class MainGame : ApplicationAdapter
         _camera      = new OrthographicCamera();
         _camera.SetToOrtho( false, 640, 480 );
 
-        var pm = new Pixmap( 100, 100, Pixmap.Format.RGBA8888 );
-        
-        Logger.Debug( $"pm.Width: {pm.Width}, pm.Height: {pm.Height}, pm.Format: {pm.PixFormat}" );
-        
-//        var pm = new Pixmap( new FileInfo( Gdx.Files.Internal( "LughLogo.png" ).FileName ) );
-        _background = new Texture( pm );
-//        _background = new Texture( "Felix.png" );
+        // --------------------------------------------------------------------
+        // Working
+//        var pm = new Pixmap( 100, 100, Pixmap.Format.RGBA8888 );
 //        _background = new Texture( 100, 100, Pixmap.Format.RGBA8888 );
+
+        // --------------------------------------------------------------------
+        // Not Working
+//        var pm = new Pixmap( new FileInfo( Gdx.Files.Internal( "LughLogo.png" ).FileName ) );
+//        _background = new Texture( pm );
+        _background = new Texture( "Felix.png" );
     }
 
     /// <inheritdoc />

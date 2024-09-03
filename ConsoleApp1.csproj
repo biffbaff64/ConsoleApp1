@@ -24,11 +24,12 @@
 
     <ItemGroup>
       <None Remove="Assets\LughLogo.png" />
-      <Content Include="Assets\LughLogo.png">
-        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      </Content>
       <None Remove="Assets\Felix.png" />
-      <Content Include="Assets\Felix.png">
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Remove="Assets\red7logo_small.png" />
+      <Content Include="Assets\red7logo_small.png">
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </Content>
     </ItemGroup>

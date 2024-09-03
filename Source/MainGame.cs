@@ -31,7 +31,7 @@ public class MainGame : ApplicationAdapter
         // Not Working
 //        var pm = new Pixmap( new FileInfo( Gdx.Files.Internal( "LughLogo.png" ).FileName ) );
 //        _background = new Texture( pm );
-        _background = new Texture( "Felix.png" );
+        _background = new Texture( "red7logo_small.png" );
     }
 
     /// <inheritdoc />

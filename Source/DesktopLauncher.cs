@@ -1,8 +1,7 @@
-﻿using ConsoleApp1.Source;
-using LughSharp.Backends.DesktopGL;
+﻿using LughSharp.Backends.DesktopGL;
 using LughSharp.LibCore.Core;
 
-namespace ConsoleApp1;
+namespace ConsoleApp1.Source;
 
 // ReSharper disable once MemberCanBeInternal
 public static class DesktopLauncher

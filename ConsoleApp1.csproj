@@ -5,7 +5,7 @@
         <TargetFramework>net7.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
-        <StartupObject>ConsoleApp1.DesktopLauncher</StartupObject>
+        <StartupObject>ConsoleApp1.Source.DesktopLauncher</StartupObject>
     </PropertyGroup>
 
 <!--    <ItemGroup>-->
@@ -25,6 +25,7 @@
     <ItemGroup>
       <None Remove="Assets\LughLogo.png" />
       <None Remove="Assets\Felix.png" />
+      <None Include="bin\Debug\net7.0\gdx2d.dll" />
     </ItemGroup>
 
     <ItemGroup>
@@ -32,6 +33,10 @@
       <Content Include="Assets\red7logo_small.png">
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </Content>
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="bin\Debug\net7.0\" />
     </ItemGroup>
 
 </Project>

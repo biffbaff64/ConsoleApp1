@@ -30,10 +30,13 @@ namespace ConsoleApp1.Source;
 public class Keyboard : InputAdapter
 {
     /// <inheritdoc />
-    public override bool KeyUp( int keycode )
+    public override bool KeyDown( int keycode )
     {
+        Logger.CheckPoint();
+        Logger.Debug( $"KeyDown: {keycode}" );
+
         bool flag;
-        
+
         switch ( keycode )
         {
             case IInput.Keys.UP:
@@ -43,32 +46,49 @@ public class Keyboard : InputAdapter
             case IInput.Keys.DOWN:
                 flag = true;
                 break;
-            
+
             default:
                 flag = false;
                 break;
         }
-        
+
         return flag;
     }
 
     /// <inheritdoc />
-    public override bool KeyDown( int keycode )
+    public override bool KeyUp( int keycode )
     {
+        Logger.CheckPoint();
+        Logger.Debug( $"KeyUp: {keycode}" );
+        
         bool flag;
 
         switch ( keycode )
         {
             case IInput.Keys.UP:
-                Logger.Debug( "UP" );
+                if ( MainGame.Instance.Camera != null )
+                {
+                    MainGame.Instance.Camera.Zoom -= 1f;
+                    MainGame.Instance.Camera.Update();
+                    
+                    Logger.Debug( $"Camera Zoom: {MainGame.Instance.Camera.Zoom}" );
+                }
+
                 flag = true;
                 break;
 
             case IInput.Keys.DOWN:
-                Logger.Debug( "DOWN" );
+                if ( MainGame.Instance.Camera != null )
+                {
+                    MainGame.Instance.Camera.Zoom += 1f;
+                    MainGame.Instance.Camera.Update();
+                    
+                    Logger.Debug( $"Camera Zoom: {MainGame.Instance.Camera.Zoom}" );
+                }
+
                 flag = true;
                 break;
-            
+
             default:
                 flag = false;
                 break;

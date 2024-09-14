@@ -9,14 +9,11 @@ namespace ConsoleApp1.Source;
 // ReSharper disable once MemberCanBeInternal
 public class MainGame : ApplicationAdapter
 {
-    public InputMultiplexer? InputMultiplexer;
-    public Keyboard?         Keyboard;
-
-    // ------------------------------------------------------------------------
-    
-    private OrthographicCamera? _camera;
-    private SpriteBatch?        _spriteBatch;
-    private Texture?            _background;
+    public InputMultiplexer?   InputMultiplexer { get; set; }
+    public Keyboard?           Keyboard         { get; set; }
+    public OrthographicCamera? Camera           { get; set; }
+    public SpriteBatch?        SpriteBatch      { get; set; }
+    public Texture?            Background       { get; set; }
 
     // ------------------------------------------------------------------------
 
@@ -25,10 +22,10 @@ public class MainGame : ApplicationAdapter
     {
         Logger.CheckPoint();
 
-        _spriteBatch = new SpriteBatch();
-        _camera      = new OrthographicCamera();
-        _camera.SetToOrtho( false, Gdx.Graphics.Width, Gdx.Graphics.Height );
-        _camera.Zoom = 0f;
+        SpriteBatch = new SpriteBatch();
+        Camera      = new OrthographicCamera();
+        Camera.SetToOrtho( false, Gdx.Graphics.Width, Gdx.Graphics.Height );
+        Camera.Zoom = 0f;
 
         // --------------------------------------------------------------------
         // Working
@@ -38,7 +35,7 @@ public class MainGame : ApplicationAdapter
         // --------------------------------------------------------------------
         // Not Working
         var pm = new Pixmap( new FileInfo( Gdx.Files.Internal( "red7logo_small.png" ).FileName ) );
-        _background = new Texture( pm );
+        Background = new Texture( pm );
 
 //        _background = new Texture( "red7logo_small.png" );
 
@@ -46,25 +43,20 @@ public class MainGame : ApplicationAdapter
         Logger.Debug( $"pm.Format: {pm.Format}" );
         Logger.Debug( $"pm.Pixels.BackingArray: {pm.Pixels?.BackingArray().Length}" );
 
-        if ( _background != null )
+        if ( Background != null )
         {
-            Logger.Debug( $"_background: {_background.Width} x {_background.Height}" );
-            Logger.Debug( $"_background Format: {_background.TextureData?.Format}" );
+            Logger.Debug( $"_background: {Background.Width} x {Background.Height}" );
+            Logger.Debug( $"_background Format: {Background.TextureData?.Format}" );
         }
 
-        Logger.CheckPoint();
-        
-        Keyboard = new Keyboard();
-        
-        Logger.CheckPoint();
+        Logger.CheckPoint( true );
+        Logger.Debug( "Setting up Keyboard" );
 
+        Keyboard         = new Keyboard();
         InputMultiplexer = new InputMultiplexer();
         InputMultiplexer.AddProcessor( Keyboard );
-
-        Logger.CheckPoint();
-
         Gdx.Input.InputProcessor = InputMultiplexer;
-        
+
         Logger.CheckPoint();
     }
 
@@ -79,20 +71,20 @@ public class MainGame : ApplicationAdapter
     {
         ScreenUtils.Clear( Color.Blue );
 
-        if ( _camera != null && _spriteBatch != null )
+        if ( ( Camera != null ) && ( SpriteBatch != null ) )
         {
-            _camera.Update();
+            Camera.Update();
 
-            _spriteBatch.SetProjectionMatrix( _camera.Combined );
-            _spriteBatch.Begin();
+            SpriteBatch.SetProjectionMatrix( Camera.Combined );
+            SpriteBatch.Begin();
 
-            if ( _background != null )
+            if ( Background != null )
             {
-                _spriteBatch.Draw( _background, 0, 0 );
+                SpriteBatch.Draw( Background, 0, 0 );
             }
 
-            _spriteBatch.End();
-            _spriteBatch.EnableBlending();
+            SpriteBatch.End();
+            SpriteBatch.EnableBlending();
         }
     }
 
@@ -114,7 +106,7 @@ public class MainGame : ApplicationAdapter
     /// <inheritdoc />
     public override void Dispose()
     {
-        _spriteBatch?.Dispose();
-        _background?.Dispose();
+        SpriteBatch?.Dispose();
+        Background?.Dispose();
     }
 }

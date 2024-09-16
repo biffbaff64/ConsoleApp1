@@ -66,24 +66,24 @@ public class Keyboard : InputAdapter
         switch ( keycode )
         {
             case IInput.Keys.UP:
-                if ( MainGame.Instance.Camera != null )
+                if ( App.Camera != null )
                 {
-                    MainGame.Instance.Camera.Zoom -= 1f;
-                    MainGame.Instance.Camera.Update();
+                    App.Camera.Zoom -= 1f;
+                    App.Camera.Update();
                     
-                    Logger.Debug( $"Camera Zoom: {MainGame.Instance.Camera.Zoom}" );
+                    Logger.Debug( $"Camera Zoom: {App.Camera.Zoom}" );
                 }
 
                 flag = true;
                 break;
 
             case IInput.Keys.DOWN:
-                if ( MainGame.Instance.Camera != null )
+                if ( App.Camera != null )
                 {
-                    MainGame.Instance.Camera.Zoom += 1f;
-                    MainGame.Instance.Camera.Update();
+                    App.Camera.Zoom += 1f;
+                    App.Camera.Update();
                     
-                    Logger.Debug( $"Camera Zoom: {MainGame.Instance.Camera.Zoom}" );
+                    Logger.Debug( $"Camera Zoom: {App.Camera.Zoom}" );
                 }
 
                 flag = true;

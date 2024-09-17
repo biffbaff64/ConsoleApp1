@@ -66,6 +66,7 @@ public class Keyboard : InputAdapter
         switch ( keycode )
         {
             case IInput.Keys.UP:
+            case IInput.Keys.RIGHT:
                 if ( App.Camera != null )
                 {
                     App.Camera.Zoom -= 1f;
@@ -78,6 +79,7 @@ public class Keyboard : InputAdapter
                 break;
 
             case IInput.Keys.DOWN:
+            case IInput.Keys.LEFT:
                 if ( App.Camera != null )
                 {
                     App.Camera.Zoom += 1f;

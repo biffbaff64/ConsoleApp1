@@ -23,7 +23,6 @@
 // /////////////////////////////////////////////////////////////////////////////
 
 using LughSharp.LibCore.Core;
-using LughSharp.LibCore.Graphics;
 using LughSharp.LibCore.Graphics.Cameras;
 using LughSharp.LibCore.Graphics.G2D;
 
@@ -35,8 +34,6 @@ internal static class App
     public static Keyboard?           Keyboard         { get; set; }
     public static OrthographicCamera? Camera           { get; set; }
     public static SpriteBatch?        SpriteBatch      { get; set; }
-    public static Texture?            Background       { get; set; }
-    public static BitmapFont?         Font             { get; set; }
     
     // ------------------------------------------------------------------------
 

@@ -1,4 +1,5 @@
 ﻿using System.Drawing;
+using System.Drawing.Imaging;
 using System.Text.RegularExpressions;
 using LughSharp.LibCore.Core;
 using LughSharp.LibCore.Graphics;
@@ -12,6 +13,8 @@ namespace ConsoleApp1.Source;
 // ReSharper disable once MemberCanBeInternal
 public class MainGame : ApplicationAdapter
 {
+    private Texture? _background;
+    
     /// <inheritdoc />
     public override void Create()
     {
@@ -25,36 +28,22 @@ public class MainGame : ApplicationAdapter
         // --------------------------------------------------------------------
         // Working
 //        var pm = new Pixmap( 100, 100, Pixmap.ColorFormat.RGBA8888 );
-//        App.Background = new Texture( 100, 100, Pixmap.ColorFormat.RGBA8888 );
+//        _background = new Texture( 100, 100, Pixmap.ColorFormat.RGBA8888 );
 
         // --------------------------------------------------------------------
         // Not Working
-//        var pm = new Pixmap( new FileInfo( Gdx.Files.Internal( "red7logo_small.png" ).FileName ) );
-//        App.Background = new Texture( pm );
+        var pm = new Pixmap( new FileInfo( Gdx.Files.Internal( "libgdx.png" ).FileName ) );
+        _background = new Texture( pm );
+//        _background = new Texture( "red7logo_small.png" );
 
-        App.Background = new Texture( "red7logo_small.png" );
-
-//        Logger.Debug( $"pm.Width: {pm.Width}, pm.Height: {pm.Height}" );
-//        Logger.Debug( $"pm.Format: {pm.Format}" );
-//        Logger.Debug( $"pm.Pixels.BackingArray: {pm.Pixels?.BackingArray().Length}" );
-
-        // ReSharper disable once ConditionIsAlwaysTrueOrFalse
-        if ( App.Background != null )
-        {
-            Logger.Debug( $"Background       : {App.Background.Width} x {App.Background.Height}" );
-            Logger.Debug( $"Background Format: {App.Background.TextureData?.Format}" );
-        }
-
-        Logger.CheckPoint( true );
-        Logger.Debug( "Setting up Keyboard" );
-
-        App.Keyboard         = new Keyboard();
-        App.InputMultiplexer = new InputMultiplexer();
-        App.InputMultiplexer.AddProcessor( App.Keyboard );
-        Gdx.Input.InputProcessor = App.InputMultiplexer;
-
-//        App.Font = new BitmapFont();
-
+        // --------------------------------------------------------------------
+        // Initialise Input Multiplexer and Keyboard
+//        Logger.Debug( "Setting up Keyboard" );
+//        App.Keyboard         = new Keyboard();
+//        App.InputMultiplexer = new InputMultiplexer();
+//        App.InputMultiplexer.AddProcessor( App.Keyboard );
+//        Gdx.Input.InputProcessor = App.InputMultiplexer;
+        
         Logger.CheckPoint();
     }
 
@@ -67,7 +56,7 @@ public class MainGame : ApplicationAdapter
     /// <inheritdoc />
     public override void Render()
     {
-        ScreenUtils.Clear( Color.Blue, true );
+        ScreenUtils.Clear( Color.Blue );
 
         if ( ( App.Camera != null ) && ( App.SpriteBatch != null ) )
         {
@@ -76,15 +65,12 @@ public class MainGame : ApplicationAdapter
             App.SpriteBatch.SetProjectionMatrix( App.Camera.Combined );
             App.SpriteBatch.Begin();
 
-            if ( App.Background != null )
+            if ( _background != null )
             {
-                App.SpriteBatch.Draw( App.Background, 0, 0 );
+                App.SpriteBatch.Draw( _background, 0, 0 );
             }
 
-//            App.Font?.Draw( App.SpriteBatch, "TEST", 0, 0 );
-
             App.SpriteBatch.End();
-            App.SpriteBatch.EnableBlending();
         }
     }
 
@@ -113,6 +99,6 @@ public class MainGame : ApplicationAdapter
     public override void Dispose()
     {
         App.SpriteBatch?.Dispose();
-        App.Background?.Dispose();
+        _background?.Dispose();
     }
 }

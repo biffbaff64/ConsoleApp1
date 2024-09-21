@@ -1,6 +1,7 @@
 ﻿using System.Drawing;
 using System.Drawing.Imaging;
 using System.Text.RegularExpressions;
+using ICSharpCode.SharpZipLib.Zip;
 using LughSharp.LibCore.Core;
 using LughSharp.LibCore.Graphics;
 using LughSharp.LibCore.Graphics.Cameras;
@@ -13,7 +14,13 @@ namespace ConsoleApp1.Source;
 // ReSharper disable once MemberCanBeInternal
 public class MainGame : ApplicationAdapter
 {
+    private const int X = 0;
+    private const int Y = 0;
+
     private Texture? _background;
+
+    // ------------------------------------------------------------------------
+    // ------------------------------------------------------------------------
     
     /// <inheritdoc />
     public override void Create()
@@ -26,32 +33,32 @@ public class MainGame : ApplicationAdapter
         App.Camera.Zoom = 0f;
 
         // --------------------------------------------------------------------
-        // Working
-//        var pm = new Pixmap( 100, 100, Pixmap.ColorFormat.RGBA8888 );
-//        _background = new Texture( 100, 100, Pixmap.ColorFormat.RGBA8888 );
-
         // --------------------------------------------------------------------
-        // Not Working
-        var pm = new Pixmap( new FileInfo( Gdx.Files.Internal( "libgdx.png" ).FileName ) );
-        _background = new Texture( pm );
-//        _background = new Texture( "red7logo_small.png" );
+
+//        var pm = new Pixmap( 100, 100, Pixmap.ColorFormat.RGBA8888 );
+//        _background = new Texture( pm, pm.Format );
+
+//        var pm = new Pixmap( new FileInfo( Gdx.Files.Internal( "libgdx.png" ).FileName ) );
+//        _background = new Texture( pm );
+
+        _background = new Texture( "libgdx.png" );
 
         // --------------------------------------------------------------------
         // Initialise Input Multiplexer and Keyboard
 //        Logger.Debug( "Setting up Keyboard" );
+//
 //        App.Keyboard         = new Keyboard();
 //        App.InputMultiplexer = new InputMultiplexer();
 //        App.InputMultiplexer.AddProcessor( App.Keyboard );
 //        Gdx.Input.InputProcessor = App.InputMultiplexer;
-        
+
         Logger.CheckPoint();
     }
 
-//    /// <inheritdoc />
-//    public override void Update()
-//    {
-//        base.Update();
-//    }
+    /// <inheritdoc />
+    public override void Update()
+    {
+    }
 
     /// <inheritdoc />
     public override void Render()
@@ -67,21 +74,11 @@ public class MainGame : ApplicationAdapter
 
             if ( _background != null )
             {
-                App.SpriteBatch.Draw( _background, 0, 0 );
+                App.SpriteBatch.Draw( _background, X, Y );
             }
 
             App.SpriteBatch.End();
         }
-    }
-
-    /// <inheritdoc />
-    public override void Pause()
-    {
-    }
-
-    /// <inheritdoc />
-    public override void Resume()
-    {
     }
 
     /// <inheritdoc />
@@ -101,4 +98,8 @@ public class MainGame : ApplicationAdapter
         App.SpriteBatch?.Dispose();
         _background?.Dispose();
     }
+    
+    // ------------------------------------------------------------------------
+    // ------------------------------------------------------------------------
 }
+

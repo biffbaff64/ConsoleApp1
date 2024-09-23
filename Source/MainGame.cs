@@ -21,7 +21,7 @@ public class MainGame : ApplicationAdapter
 
     // ------------------------------------------------------------------------
     // ------------------------------------------------------------------------
-    
+
     /// <inheritdoc />
     public override void Create()
     {
@@ -39,9 +39,8 @@ public class MainGame : ApplicationAdapter
 //        _background = new Texture( pm, pm.Format );
 
         var pm = new Pixmap( new FileInfo( Gdx.Files.Internal( "libgdx.png" ).FileName ) );
-        Pixmap.SaveToFile( new FileInfo( "c:/Development/test.png" ), pm );
-        
-//        _background = new Texture( pm );
+        pm.Color    = new Color( Color.Red );
+        _background = new Texture( pm );
 
 //        _background = new Texture( "libgdx.png" );
 
@@ -100,8 +99,7 @@ public class MainGame : ApplicationAdapter
         App.SpriteBatch?.Dispose();
         _background?.Dispose();
     }
-    
+
     // ------------------------------------------------------------------------
     // ------------------------------------------------------------------------
 }
-

@@ -35,11 +35,16 @@ public class MainGame : ApplicationAdapter
         // --------------------------------------------------------------------
         // --------------------------------------------------------------------
 
+//        var test = new Matrix4Test();
+//        test.Run();
+
+        // --------------------------------------------------------------------
+        // --------------------------------------------------------------------
+
 //        var pm = new Pixmap( 100, 100, Pixmap.ColorFormat.RGBA8888 );
 //        _background = new Texture( pm, pm.Format );
 
         var pm = new Pixmap( new FileInfo( Gdx.Files.Internal( "libgdx.png" ).FileName ) );
-        pm.Color    = new Color( Color.Red );
         _background = new Texture( pm );
 
 //        _background = new Texture( "libgdx.png" );

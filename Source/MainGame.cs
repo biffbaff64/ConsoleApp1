@@ -1,8 +1,4 @@
-﻿using System.Drawing;
-using System.Drawing.Imaging;
-using System.Text.RegularExpressions;
-using ICSharpCode.SharpZipLib.Zip;
-using LughSharp.LibCore.Core;
+﻿using LughSharp.LibCore.Core;
 using LughSharp.LibCore.Graphics;
 using LughSharp.LibCore.Graphics.Cameras;
 using LughSharp.LibCore.Graphics.G2D;
@@ -35,17 +31,11 @@ public class MainGame : ApplicationAdapter
         // --------------------------------------------------------------------
         // --------------------------------------------------------------------
 
-//        var test = new Matrix4Test();
-//        test.Run();
+        var pm = new Pixmap( 100, 100, Pixmap.ColorFormat.RGBA8888 );
+        _background = new Texture( pm, pm.Format );
 
-        // --------------------------------------------------------------------
-        // --------------------------------------------------------------------
-
-//        var pm = new Pixmap( 100, 100, Pixmap.ColorFormat.RGBA8888 );
-//        _background = new Texture( pm, pm.Format );
-
-        var pm = new Pixmap( new FileInfo( Gdx.Files.Internal( "libgdx.png" ).FileName ) );
-        _background = new Texture( pm );
+//        var pm = new Pixmap( new FileInfo( Gdx.Files.Internal( "libgdx.png" ).FileName ) );
+//        _background = new Texture( pm );
 
 //        _background = new Texture( "libgdx.png" );
 
@@ -59,6 +49,15 @@ public class MainGame : ApplicationAdapter
 //        Gdx.Input.InputProcessor = App.InputMultiplexer;
 
         Logger.CheckPoint();
+
+        // --------------------------------------------------------------------
+        // --------------------------------------------------------------------
+
+//        var test = new Matrix4Test();
+//        test.Run();
+
+        // --------------------------------------------------------------------
+        // --------------------------------------------------------------------
     }
 
     /// <inheritdoc />

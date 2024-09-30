@@ -17,7 +17,7 @@ public static class DesktopLauncher
         };
 
         config.EnableGLDebugOutput( true, new StreamWriter( "GLDebug.log" ) );
-        config.SetWindowedMode( 640, 480 );
+        config.SetWindowedMode( 480, 320 );
 
         var game = new DesktopGLApplication( new MainGame(), config );
 

@@ -56,6 +56,9 @@ public class MainGame : ApplicationAdapter
 //        var test = new Matrix4Test();
 //        test.Run();
 
+        var test = new ColorTest();
+        test.Run();
+
         // --------------------------------------------------------------------
         // --------------------------------------------------------------------
     }

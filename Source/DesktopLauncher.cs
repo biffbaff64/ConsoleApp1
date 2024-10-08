@@ -1,4 +1,4 @@
-﻿using LughSharp.Backends.DesktopGL;
+﻿using DesktopGLBackend.Core;
 using LughSharp.LibCore.Core;
 
 namespace ConsoleApp1.Source;

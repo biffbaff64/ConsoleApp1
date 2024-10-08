@@ -19,6 +19,9 @@
     </ItemGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\..\Frameworks\LughSharpFramework\DesktopGLBackend\DesktopGLBackend.csproj" />
+      <ProjectReference Include="..\..\Frameworks\LughSharpFramework\Extensions\Extensions.csproj" />
+      <ProjectReference Include="..\..\Frameworks\LughSharpFramework\LughSharp\LughSharp.csproj" />
       <ProjectReference Include="..\LughSharp\LughSharp.csproj" />
     </ItemGroup>
 

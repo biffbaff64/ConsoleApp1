@@ -1,4 +1,5 @@
-﻿using LughSharp.LibCore.Core;
+﻿using ConsoleApp1.Source.Tests;
+using LughSharp.LibCore.Core;
 using LughSharp.LibCore.Graphics;
 using LughSharp.LibCore.Graphics.Cameras;
 using LughSharp.LibCore.Graphics.G2D;
@@ -56,9 +57,12 @@ public class MainGame : ApplicationAdapter
 //        var test = new Matrix4Test();
 //        test.Run();
 
-        var test = new ColorTest();
-        test.Run();
+//        var test = new ColorTest();
+//        test.Run();
 
+        var test = new AssetManagerTest();
+        test.Run();
+        
         // --------------------------------------------------------------------
         // --------------------------------------------------------------------
     }

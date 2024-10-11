@@ -1,4 +1,4 @@
-﻿// /////////////////////////////////////////////////////////////////////////////
+// /////////////////////////////////////////////////////////////////////////////
 //  MIT License
 // 
 //  Copyright (c) 2024 Richard Ikin / Red 7 Projects
@@ -22,31 +22,34 @@
 //  SOFTWARE.
 // /////////////////////////////////////////////////////////////////////////////
 
-using JetBrains.Annotations;
-using LughSharp.LibCore.Maths;
+using LughSharp.LibCore.Assets;
+using LughSharp.LibCore.Assets.Loaders;
+using LughSharp.LibCore.Graphics;
 using LughSharp.LibCore.Utils;
 
-namespace ConsoleApp1.Source;
+namespace ConsoleApp1.Source.Tests;
 
-[PublicAPI]
-public class Matrix4Test
+public class AssetManagerTest
 {
-    private readonly Matrix4 _matrix4 = new();
-
-    public Matrix4Test()
-    {
-    }
+    private readonly AssetManager _assetManager = new();
 
     public void Run()
     {
-        Logger.Debug( _matrix4.ToString() );
+        Logger.CheckPoint();
+        
+        LoadSingleAsset( "libgdx.png", typeof( Texture ) );
 
-        var tmpMat = new Matrix4( _matrix4 );
+        Logger.Debug( _assetManager.GetDiagnostics() );
+    }
 
-        tmpMat.Invert();
-
-        Matrix4.Prj( _matrix4.Values, tmpMat.Values );
-
-        Logger.Debug( _matrix4.ToString() );
+    private object? LoadSingleAsset( string assetname, Type type )
+    {
+        if ( !_assetManager.IsLoaded( assetname, type ) )
+        {
+            _assetManager.Load( assetname, type );
+            _assetManager.FinishLoadingAsset( assetname );
+        }
+        
+        return _assetManager.Get( assetname, type, true );
     }
 }

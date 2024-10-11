@@ -25,7 +25,7 @@
 using JetBrains.Annotations;
 using LughSharp.LibCore.Graphics;
 
-namespace ConsoleApp1.Source;
+namespace ConsoleApp1.Source.Tests;
 
 [PublicAPI]
 public class ColorTest

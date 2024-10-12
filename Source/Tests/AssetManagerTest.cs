@@ -31,21 +31,35 @@ namespace ConsoleApp1.Source.Tests;
 
 public class AssetManagerTest
 {
-    private readonly AssetManager _assetManager = new();
+    private readonly AssetManager _assetManager;
 
+    public AssetManagerTest()
+    {
+        Logger.CheckPoint();
+        
+        _assetManager = new AssetManager();
+    }
+    
     public void Run()
     {
         Logger.CheckPoint();
         
-        LoadSingleAsset( "libgdx.png", typeof( Texture ) );
+        var asset = LoadSingleAsset( "libgdx.png", typeof( Texture ) );
 
+        Logger.Debug( $"{asset} is loaded" );
         Logger.Debug( _assetManager.GetDiagnostics() );
+        
+        _assetManager.Unload( "Libgdx.png" );
     }
 
     private object? LoadSingleAsset( string assetname, Type type )
     {
+        Logger.CheckPoint();
+        
         if ( !_assetManager.IsLoaded( assetname, type ) )
         {
+            Logger.CheckPoint();
+            
             _assetManager.Load( assetname, type );
             _assetManager.FinishLoadingAsset( assetname );
         }

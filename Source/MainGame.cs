@@ -22,7 +22,7 @@ public class MainGame : ApplicationAdapter
     /// <inheritdoc />
     public override void Create()
     {
-        Logger.CheckPoint();
+        Logger.Checkpoint();
 
         App.SpriteBatch = new SpriteBatch();
         App.Camera      = new OrthographicCamera();
@@ -49,7 +49,7 @@ public class MainGame : ApplicationAdapter
 //        App.InputMultiplexer.AddProcessor( App.Keyboard );
 //        Gdx.Input.InputProcessor = App.InputMultiplexer;
 
-        Logger.CheckPoint();
+        Logger.Checkpoint();
 
         // --------------------------------------------------------------------
         // --------------------------------------------------------------------

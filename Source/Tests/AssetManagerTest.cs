@@ -24,6 +24,7 @@
 
 using LughSharp.LibCore.Assets;
 using LughSharp.LibCore.Assets.Loaders;
+using LughSharp.LibCore.Core;
 using LughSharp.LibCore.Graphics;
 using LughSharp.LibCore.Utils;
 
@@ -35,16 +36,16 @@ public class AssetManagerTest
 
     public AssetManagerTest()
     {
-        Logger.CheckPoint();
+        Logger.Checkpoint();
         
         _assetManager = new AssetManager();
     }
     
     public void Run()
     {
-        Logger.CheckPoint();
+        Logger.Checkpoint();
         
-        var asset = LoadSingleAsset( "libgdx.png", typeof( Texture ) );
+        var asset = LoadSingleAsset( Gdx.Files.Internal( "libgdx.png" ).FilePath, typeof( Texture ) );
 
         Logger.Debug( $"{asset} is loaded" );
         Logger.Debug( _assetManager.GetDiagnostics() );
@@ -54,11 +55,11 @@ public class AssetManagerTest
 
     private object? LoadSingleAsset( string assetname, Type type )
     {
-        Logger.CheckPoint();
+        Logger.Debug( $"assetname: {assetname}, type: {type}" );
         
         if ( !_assetManager.IsLoaded( assetname, type ) )
         {
-            Logger.CheckPoint();
+            Logger.Checkpoint();
             
             _assetManager.Load( assetname, type );
             _assetManager.FinishLoadingAsset( assetname );

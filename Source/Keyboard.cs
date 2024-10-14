@@ -32,7 +32,7 @@ public class Keyboard : InputAdapter
     /// <inheritdoc />
     public override bool KeyDown( int keycode )
     {
-        Logger.CheckPoint();
+        Logger.Checkpoint();
         Logger.Debug( $"KeyDown: {keycode}" );
 
         bool flag;
@@ -58,7 +58,7 @@ public class Keyboard : InputAdapter
     /// <inheritdoc />
     public override bool KeyUp( int keycode )
     {
-        Logger.CheckPoint();
+        Logger.Checkpoint();
         Logger.Debug( $"KeyUp: {keycode}" );
         
         bool flag;

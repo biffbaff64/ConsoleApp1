@@ -40,31 +40,18 @@ public class AssetManagerTest
         
         _assetManager = new AssetManager();
     }
-    
+
     public void Run()
     {
         Logger.Checkpoint();
-        
-        var asset = LoadSingleAsset( Gdx.Files.Internal( "libgdx.png" ).FilePath, typeof( Texture ) );
 
-        Logger.Debug( $"{asset} is loaded" );
-        Logger.Debug( _assetManager.GetDiagnostics() );
-        
-        _assetManager.Unload( "Libgdx.png" );
-    }
+        _assetManager.Load( "libgdx.png", typeof( Texture ) );
+        _assetManager.Load( "biffbaff.png", typeof( Texture ) );
+        _assetManager.Load( "red7logo_small.png", typeof( Texture ) );
 
-    private object? LoadSingleAsset( string assetname, Type type )
-    {
-        Logger.Debug( $"assetname: {assetname}, type: {type}" );
-        
-        if ( !_assetManager.IsLoaded( assetname, type ) )
-        {
-            Logger.Checkpoint();
-            
-            _assetManager.Load( assetname, type );
-            _assetManager.FinishLoadingAsset( assetname );
-        }
-        
-        return _assetManager.Get( assetname, type, true );
+        Logger.Debug( $"LoadQueue Count  : {_assetManager.LoadQueue.Count}" );
+        Logger.Debug( $"TaskQueue Count  : {_assetManager.TaskQueue.Count}" );
+        Logger.Debug( $"ActiveTasks Count: {_assetManager.ActiveTasks.Count}" );
+        Logger.Debug( $"AssetTypes Count : {_assetManager.AssetTypes.Count}" );
     }
 }

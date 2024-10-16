@@ -41,17 +41,31 @@ public class AssetManagerTest
         _assetManager = new AssetManager();
     }
 
-    public void Run()
+    public async void Run()
     {
         Logger.Checkpoint();
-
+        Logger.Debug( "Loading assets..." );
+        
         _assetManager.Load( "libgdx.png", typeof( Texture ) );
         _assetManager.Load( "biffbaff.png", typeof( Texture ) );
         _assetManager.Load( "red7logo_small.png", typeof( Texture ) );
 
+        DisplayAssetManagerMetrics();
+
+        await _assetManager.FinishLoadingAsync();
+        
+        Logger.Debug( "Finished!" );
+        
+        DisplayAssetManagerMetrics();
+    }
+
+    private void DisplayAssetManagerMetrics()
+    {
+        Logger.Divider();
         Logger.Debug( $"LoadQueue Count  : {_assetManager.LoadQueue.Count}" );
         Logger.Debug( $"TaskQueue Count  : {_assetManager.TaskQueue.Count}" );
-        Logger.Debug( $"ActiveTasks Count: {_assetManager.ActiveTasks.Count}" );
         Logger.Debug( $"AssetTypes Count : {_assetManager.AssetTypes.Count}" );
+        Logger.Debug( $"Asset Count      : {_assetManager.Assets!.Count}" );
+        Logger.Divider();
     }
 }

@@ -32,9 +32,6 @@ public class Keyboard : InputAdapter
     /// <inheritdoc />
     public override bool KeyDown( int keycode )
     {
-        Logger.Checkpoint();
-        Logger.Debug( $"KeyDown: {keycode}" );
-
         bool flag;
 
         switch ( keycode )
@@ -58,9 +55,6 @@ public class Keyboard : InputAdapter
     /// <inheritdoc />
     public override bool KeyUp( int keycode )
     {
-        Logger.Checkpoint();
-        Logger.Debug( $"KeyUp: {keycode}" );
-        
         bool flag;
 
         switch ( keycode )
@@ -71,8 +65,6 @@ public class Keyboard : InputAdapter
                 {
                     App.Camera.Zoom -= 1f;
                     App.Camera.Update();
-                    
-                    Logger.Debug( $"Camera Zoom: {App.Camera.Zoom}" );
                 }
 
                 flag = true;
@@ -84,8 +76,6 @@ public class Keyboard : InputAdapter
                 {
                     App.Camera.Zoom += 1f;
                     App.Camera.Update();
-                    
-                    Logger.Debug( $"Camera Zoom: {App.Camera.Zoom}" );
                 }
 
                 flag = true;

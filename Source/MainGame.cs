@@ -1,9 +1,11 @@
 ﻿using ConsoleApp1.Source.Tests;
+using LughSharp.LibCore.Assets;
 using LughSharp.LibCore.Core;
 using LughSharp.LibCore.Graphics;
 using LughSharp.LibCore.Graphics.Cameras;
 using LughSharp.LibCore.Graphics.G2D;
 using LughSharp.LibCore.Utils;
+using LughSharp.LibCore.Utils.Exceptions;
 using Color = LughSharp.LibCore.Graphics.Color;
 
 namespace ConsoleApp1.Source;
@@ -14,11 +16,19 @@ public class MainGame : ApplicationAdapter
     private const int X = 0;
     private const int Y = 0;
 
-    private Texture? _background;
+    private          Texture?     _background;
+    private readonly AssetManager _assetManager;
 
     // ------------------------------------------------------------------------
     // ------------------------------------------------------------------------
 
+    public MainGame()
+    {
+        Logger.Checkpoint();
+        
+        _assetManager = new AssetManager();
+    }
+    
     /// <inheritdoc />
     public override void Create()
     {
@@ -54,14 +64,7 @@ public class MainGame : ApplicationAdapter
         // --------------------------------------------------------------------
         // --------------------------------------------------------------------
 
-//        var test = new Matrix4Test();
-//        test.Run();
-
-//        var test = new ColorTest();
-//        test.Run();
-
-        var test = new AssetManagerTest();
-        test.Run();
+        LoadAssets();
         
         // --------------------------------------------------------------------
         // --------------------------------------------------------------------
@@ -70,6 +73,28 @@ public class MainGame : ApplicationAdapter
     /// <inheritdoc />
     public override void Update()
     {
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <exception cref="GdxRuntimeException"></exception>
+    private async Task UpdateLoading()
+    {
+        try
+        {
+            await _assetManager.FinishLoadingAsync();
+        }
+        catch ( System.Exception )
+        {
+            throw new GdxRuntimeException( "Failed to load assets." );
+        }
+        finally
+        {
+            Logger.Debug( "Finished loading assets" );
+            
+            _assetManager.DisplayMetrics();
+        }
     }
 
     /// <inheritdoc />
@@ -109,6 +134,30 @@ public class MainGame : ApplicationAdapter
     {
         App.SpriteBatch?.Dispose();
         _background?.Dispose();
+    }
+
+    // ------------------------------------------------------------------------
+    // ------------------------------------------------------------------------
+
+    private void LoadAssets()
+    {
+        Logger.Checkpoint();
+        Logger.Divider();
+        Logger.Debug( "Loading assets...", true );
+        Logger.Divider();
+        
+        _assetManager.Load( "libgdx.png", typeof( Texture ) );
+//        _assetManager.Load( "biffbaff.png", typeof( Texture ) );
+//        _assetManager.Load( "red7logo_small.png", typeof( Texture ) );
+
+        Logger.Debug( "All assets queued for loading.", true );
+        
+        _assetManager.DisplayMetrics();
+        
+        Task.Run( async () =>
+        {
+            await UpdateLoading();
+        } );
     }
 
     // ------------------------------------------------------------------------

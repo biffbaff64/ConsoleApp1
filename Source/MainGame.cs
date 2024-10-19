@@ -16,8 +16,10 @@ public class MainGame : ApplicationAdapter
     private const int X = 0;
     private const int Y = 0;
 
-    private          Texture?     _background;
     private readonly AssetManager _assetManager;
+
+    private Texture? _background = null;
+    private Texture? _libgdx     = null;
 
     // ------------------------------------------------------------------------
     // ------------------------------------------------------------------------
@@ -25,10 +27,10 @@ public class MainGame : ApplicationAdapter
     public MainGame()
     {
         Logger.Checkpoint();
-        
+
         _assetManager = new AssetManager();
     }
-    
+
     /// <inheritdoc />
     public override void Create()
     {
@@ -42,8 +44,8 @@ public class MainGame : ApplicationAdapter
         // --------------------------------------------------------------------
         // --------------------------------------------------------------------
 
-        var pm = new Pixmap( 100, 100, Pixmap.ColorFormat.RGBA8888 );
-        _background = new Texture( pm, pm.Format );
+//        var pm = new Pixmap( 100, 100, Pixmap.ColorFormat.RGBA8888 );
+//        _background = new Texture( pm, pm.Format );
 
 //        var pm = new Pixmap( new FileInfo( Gdx.Files.Internal( "libgdx.png" ).FileName ) );
 //        _background = new Texture( pm );
@@ -65,7 +67,7 @@ public class MainGame : ApplicationAdapter
         // --------------------------------------------------------------------
 
         LoadAssets();
-        
+
         // --------------------------------------------------------------------
         // --------------------------------------------------------------------
     }
@@ -73,6 +75,7 @@ public class MainGame : ApplicationAdapter
     /// <inheritdoc />
     public override void Update()
     {
+        _libgdx ??= _assetManager.Get( "libgdx.png" ) as Texture;
     }
 
     /// <summary>
@@ -92,7 +95,7 @@ public class MainGame : ApplicationAdapter
         finally
         {
             Logger.Debug( "Finished loading assets" );
-            
+
             _assetManager.DisplayMetrics();
         }
     }
@@ -112,6 +115,11 @@ public class MainGame : ApplicationAdapter
             if ( _background != null )
             {
                 App.SpriteBatch.Draw( _background, X, Y );
+            }
+
+            if ( _libgdx != null )
+            {
+                App.SpriteBatch.Draw( _libgdx, X, Y );
             }
 
             App.SpriteBatch.End();
@@ -134,6 +142,8 @@ public class MainGame : ApplicationAdapter
     {
         App.SpriteBatch?.Dispose();
         _background?.Dispose();
+        _libgdx?.Dispose();
+        _assetManager?.Dispose();
     }
 
     // ------------------------------------------------------------------------
@@ -145,19 +155,16 @@ public class MainGame : ApplicationAdapter
         Logger.Divider();
         Logger.Debug( "Loading assets...", true );
         Logger.Divider();
-        
+
         _assetManager.Load( "libgdx.png", typeof( Texture ) );
 //        _assetManager.Load( "biffbaff.png", typeof( Texture ) );
 //        _assetManager.Load( "red7logo_small.png", typeof( Texture ) );
 
         Logger.Debug( "All assets queued for loading.", true );
-        
+
         _assetManager.DisplayMetrics();
-        
-        Task.Run( async () =>
-        {
-            await UpdateLoading();
-        } );
+
+//        Task.Run( async () => { await UpdateLoading(); } );
     }
 
     // ------------------------------------------------------------------------

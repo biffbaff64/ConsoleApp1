@@ -56,9 +56,6 @@
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </Content>
       <None Remove="Assets\red7logo_small.bmp" />
-      <Content Include="Assets\red7logo_small.bmp">
-        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      </Content>
       <None Remove="Assets\libgdx.png" />
       <Content Include="Assets\libgdx.png">
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>

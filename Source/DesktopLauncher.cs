@@ -1,5 +1,5 @@
 ﻿using DesktopGLBackend.Core;
-using LughSharp.LibCore.Core;
+using Corelib.LibCore.Core;
 
 namespace ConsoleApp1.Source;
 

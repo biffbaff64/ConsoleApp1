@@ -22,9 +22,9 @@
 //  SOFTWARE.
 // /////////////////////////////////////////////////////////////////////////////
 
-using LughSharp.LibCore.Core;
-using LughSharp.LibCore.Graphics.Cameras;
-using LughSharp.LibCore.Graphics.G2D;
+using Corelib.LibCore.Core;
+using Corelib.LibCore.Graphics.Cameras;
+using Corelib.LibCore.Graphics.G2D;
 
 namespace ConsoleApp1.Source;
 

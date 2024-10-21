@@ -22,8 +22,8 @@
 //  SOFTWARE.
 // /////////////////////////////////////////////////////////////////////////////
 
-using LughSharp.LibCore.Core;
-using LughSharp.LibCore.Utils;
+using Corelib.LibCore.Core;
+using Corelib.LibCore.Utils;
 
 namespace ConsoleApp1.Source;
 

@@ -22,11 +22,11 @@
 //  SOFTWARE.
 // /////////////////////////////////////////////////////////////////////////////
 
-using LughSharp.LibCore.Assets;
-using LughSharp.LibCore.Assets.Loaders;
-using LughSharp.LibCore.Core;
-using LughSharp.LibCore.Graphics;
-using LughSharp.LibCore.Utils;
+using Corelib.LibCore.Assets;
+using Corelib.LibCore.Assets.Loaders;
+using Corelib.LibCore.Core;
+using Corelib.LibCore.Graphics;
+using Corelib.LibCore.Utils;
 
 namespace ConsoleApp1.Source.Tests;
 

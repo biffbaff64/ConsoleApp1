@@ -1,12 +1,10 @@
-﻿using ConsoleApp1.Source.Tests;
-using LughSharp.LibCore.Assets;
-using LughSharp.LibCore.Core;
-using LughSharp.LibCore.Graphics;
-using LughSharp.LibCore.Graphics.Cameras;
-using LughSharp.LibCore.Graphics.G2D;
-using LughSharp.LibCore.Utils;
-using LughSharp.LibCore.Utils.Exceptions;
-using Color = LughSharp.LibCore.Graphics.Color;
+﻿using Corelib.LibCore.Assets;
+using Corelib.LibCore.Core;
+using Corelib.LibCore.Graphics;
+using Corelib.LibCore.Graphics.Cameras;
+using Corelib.LibCore.Graphics.G2D;
+using Corelib.LibCore.Utils;
+using Color = Corelib.LibCore.Graphics.Color;
 
 namespace ConsoleApp1.Source;
 
@@ -122,16 +120,14 @@ public class MainGame : ApplicationAdapter
         Logger.Debug( "Loading assets...", true );
         Logger.Divider();
 
-        _assetManager.AddToLoadqueue( "libgdx.png", typeof( Texture ) );
+        _assetManager.AddToLoadqueue( "Assets/libgdx.png", typeof( Texture ) );
 //        _assetManager.AddToLoadqueue( "biffbaff.png", typeof( Texture ) );
 //        _assetManager.AddToLoadqueue( "red7logo_small.png", typeof( Texture ) );
 
         Logger.Debug( "All assets queued for loading.", true );
 
         _assetManager.DisplayMetrics();
-
         _assetManager.FinishLoadingAsync();
-
         _assetManager.DisplayMetrics();
     }
 

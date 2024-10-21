@@ -23,7 +23,7 @@
 // /////////////////////////////////////////////////////////////////////////////
 
 using JetBrains.Annotations;
-using LughSharp.LibCore.Graphics;
+using Corelib.LibCore.Graphics;
 
 namespace ConsoleApp1.Source.Tests;
 

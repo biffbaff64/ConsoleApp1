@@ -12,20 +12,14 @@
         <PackageReadmeFile>README.md</PackageReadmeFile>
     </PropertyGroup>
 
-    <!--    <ItemGroup>-->
-<!--      <Reference Include="LughSharp">-->
-<!--        <HintPath>..\LughSharp\bin\Debug\net7.0\LughSharp.dll</HintPath>-->
-<!--      </Reference>-->
-<!--    </ItemGroup>-->
-
     <ItemGroup>
       <PackageReference Include="DotGLFW" Version="1.2.0" />
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\..\Frameworks\LughSharpFramework\DesktopGLBackend\DesktopGLBackend.csproj" />
-      <ProjectReference Include="..\..\Frameworks\LughSharpFramework\Extensions\Extensions.csproj" />
-      <ProjectReference Include="..\..\Frameworks\LughSharpFramework\LughSharp\LughSharp.csproj" />
+      <ProjectReference Include="..\LughSharp\Corelib\Corelib.csproj" />
+      <ProjectReference Include="..\LughSharp\DesktopGLBackend\DesktopGLBackend.csproj" />
+      <ProjectReference Include="..\LughSharp\Extensions\Extensions.csproj" />
     </ItemGroup>
 
     <ItemGroup>

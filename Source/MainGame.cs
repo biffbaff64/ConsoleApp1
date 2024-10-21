@@ -16,20 +16,12 @@ public class MainGame : ApplicationAdapter
     private const int X = 0;
     private const int Y = 0;
 
-    private readonly AssetManager _assetManager;
-
-    private Texture? _background = null;
-    private Texture? _libgdx     = null;
+    private readonly AssetManager _assetManager = new();
+    private readonly Texture?     _background   = null;
+    private          Texture?     _libgdx       = null;
 
     // ------------------------------------------------------------------------
     // ------------------------------------------------------------------------
-
-    public MainGame()
-    {
-        Logger.Checkpoint();
-
-        _assetManager = new AssetManager();
-    }
 
     /// <inheritdoc />
     public override void Create()
@@ -52,52 +44,23 @@ public class MainGame : ApplicationAdapter
 
 //        _background = new Texture( "libgdx.png" );
 
+        LoadAssets();
+
         // --------------------------------------------------------------------
-        // Initialise Input Multiplexer and Keyboard
+        // --------------------------------------------------------------------
+
 //        Logger.Debug( "Setting up Keyboard" );
 //
 //        App.Keyboard         = new Keyboard();
 //        App.InputMultiplexer = new InputMultiplexer();
 //        App.InputMultiplexer.AddProcessor( App.Keyboard );
 //        Gdx.Input.InputProcessor = App.InputMultiplexer;
-
-        Logger.Checkpoint();
-
-        // --------------------------------------------------------------------
-        // --------------------------------------------------------------------
-
-        LoadAssets();
-
-        // --------------------------------------------------------------------
-        // --------------------------------------------------------------------
     }
 
     /// <inheritdoc />
     public override void Update()
     {
-        _libgdx ??= _assetManager.Get( "libgdx.png" ) as Texture;
-    }
-
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <exception cref="GdxRuntimeException"></exception>
-    private async Task UpdateLoading()
-    {
-        try
-        {
-            await _assetManager.FinishLoadingAsync();
-        }
-        catch ( System.Exception )
-        {
-            throw new GdxRuntimeException( "Failed to load assets." );
-        }
-        finally
-        {
-            Logger.Debug( "Finished loading assets" );
-
-            _assetManager.DisplayMetrics();
-        }
+//        _libgdx ??= _assetManager.Get( "libgdx.png" ) as Texture;
     }
 
     /// <inheritdoc />
@@ -140,10 +103,13 @@ public class MainGame : ApplicationAdapter
     /// <inheritdoc />
     public override void Dispose()
     {
+        GC.SuppressFinalize( this );
+
         App.SpriteBatch?.Dispose();
+
         _background?.Dispose();
         _libgdx?.Dispose();
-        _assetManager?.Dispose();
+        _assetManager.Dispose();
     }
 
     // ------------------------------------------------------------------------
@@ -156,15 +122,17 @@ public class MainGame : ApplicationAdapter
         Logger.Debug( "Loading assets...", true );
         Logger.Divider();
 
-        _assetManager.Load( "libgdx.png", typeof( Texture ) );
-//        _assetManager.Load( "biffbaff.png", typeof( Texture ) );
-//        _assetManager.Load( "red7logo_small.png", typeof( Texture ) );
+        _assetManager.AddToLoadqueue( "libgdx.png", typeof( Texture ) );
+//        _assetManager.AddToLoadqueue( "biffbaff.png", typeof( Texture ) );
+//        _assetManager.AddToLoadqueue( "red7logo_small.png", typeof( Texture ) );
 
         Logger.Debug( "All assets queued for loading.", true );
 
         _assetManager.DisplayMetrics();
 
-//        Task.Run( async () => { await UpdateLoading(); } );
+        _assetManager.FinishLoadingAsync();
+
+        _assetManager.DisplayMetrics();
     }
 
     // ------------------------------------------------------------------------

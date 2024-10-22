@@ -1,5 +1,6 @@
 ﻿using DesktopGLBackend.Core;
 using Corelib.LibCore.Core;
+using Corelib.LibCore.Utils;
 
 namespace ConsoleApp1.Source;
 
@@ -19,9 +20,14 @@ public static class DesktopLauncher
         config.EnableGLDebugOutput( true, new StreamWriter( "GLDebug.log" ) );
         config.SetWindowedMode( 480, 320 );
 
-        var game = new DesktopGLApplication( new MainGame(), config );
+        if ( Environment.GetEnvironmentVariables().Contains( "DEV_MODE" ) )
+        {
+            Gdx.DevMode = Environment.GetEnvironmentVariable( "DEV_MODE" )!.Equals( "TRUE" );
+        }
+        
+        Logger.Debug( $"Gdx.DevMode: {Gdx.DevMode}" );
 
-        Gdx.DevMode = true;
+        var game = new DesktopGLApplication( new MainGame(), config );
         
         game.Run();
     }

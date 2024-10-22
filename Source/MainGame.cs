@@ -58,7 +58,6 @@ public class MainGame : ApplicationAdapter
     /// <inheritdoc />
     public override void Update()
     {
-//        _libgdx ??= _assetManager.Get( "libgdx.png" ) as Texture;
     }
 
     /// <inheritdoc />
@@ -120,15 +119,17 @@ public class MainGame : ApplicationAdapter
         Logger.Debug( "Loading assets...", true );
         Logger.Divider();
 
-        _assetManager.AddToLoadqueue( "Assets/libgdx.png", typeof( Texture ) );
+        _assetManager.AddToLoadqueue( Assets.LIBGDX_LOGO, typeof( Texture ) );
 //        _assetManager.AddToLoadqueue( "biffbaff.png", typeof( Texture ) );
 //        _assetManager.AddToLoadqueue( "red7logo_small.png", typeof( Texture ) );
 
         Logger.Debug( "All assets queued for loading.", true );
 
         _assetManager.DisplayMetrics();
-        _assetManager.FinishLoadingAsync();
+        _assetManager.FinishLoading();
         _assetManager.DisplayMetrics();
+        
+        _libgdx ??= _assetManager.Get( Assets.LIBGDX_LOGO ) as Texture;
     }
 
     // ------------------------------------------------------------------------

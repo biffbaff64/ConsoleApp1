@@ -1,4 +1,4 @@
-// /////////////////////////////////////////////////////////////////////////////
+﻿// /////////////////////////////////////////////////////////////////////////////
 //  MIT License
 // 
 //  Copyright (c) 2024 Richard Ikin / Red 7 Projects
@@ -22,45 +22,9 @@
 //  SOFTWARE.
 // /////////////////////////////////////////////////////////////////////////////
 
-using Corelib.LibCore.Assets;
-using Corelib.LibCore.Assets.Loaders;
-using Corelib.LibCore.Core;
-using Corelib.LibCore.Graphics;
-using Corelib.LibCore.Utils;
+namespace ConsoleApp1.Source;
 
-namespace ConsoleApp1.Source.Tests;
-
-public class AssetManagerTest
+public class Assets
 {
-    private readonly AssetManager _assetManager;
-
-    public AssetManagerTest()
-    {
-        Logger.Checkpoint();
-        
-        _assetManager = new AssetManager();
-    }
-
-    public void Run()
-    {
-        Logger.Checkpoint();
-        Logger.Divider();
-        Logger.Debug( "Loading assets...", true );
-        Logger.Divider();
-        
-        _assetManager.AddToLoadqueue( "libgdx.png", typeof( Texture ) );
-        _assetManager.AddToLoadqueue( "biffbaff.png", typeof( Texture ) );
-        _assetManager.AddToLoadqueue( "red7logo_small.png", typeof( Texture ) );
-
-        Logger.Debug( "All assets queued for loading.", true );
-        
-        _assetManager.DisplayMetrics();
-        
-        Task.Run( () =>
-        {
-            _assetManager.FinishLoading();
-        } );
-
-        Logger.Debug( "Finished!", true );
-    }
+    public const string LIBGDX_LOGO = "Assets/libgdx.png";
 }

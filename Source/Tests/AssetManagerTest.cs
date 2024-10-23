@@ -23,8 +23,6 @@
 // /////////////////////////////////////////////////////////////////////////////
 
 using Corelib.LibCore.Assets;
-using Corelib.LibCore.Assets.Loaders;
-using Corelib.LibCore.Core;
 using Corelib.LibCore.Graphics;
 using Corelib.LibCore.Utils;
 

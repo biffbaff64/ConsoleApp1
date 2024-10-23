@@ -14,7 +14,7 @@ public static class DesktopLauncher
             Title         = "LughSharp Template",
             VSyncEnabled  = true,
             ForegroundFPS = 60,
-            DisableAudio  = true
+            DisableAudio  = true,
         };
 
         config.EnableGLDebugOutput( true, new StreamWriter( "GLDebug.log" ) );

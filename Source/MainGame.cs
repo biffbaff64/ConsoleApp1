@@ -28,8 +28,12 @@ public class MainGame : ApplicationAdapter
 
         App.SpriteBatch = new SpriteBatch();
         App.Camera      = new OrthographicCamera();
-        App.Camera.SetToOrtho( false, Gdx.Graphics.Width, Gdx.Graphics.Height );
+        App.Camera.SetToOrtho( Gdx.Graphics.Width, Gdx.Graphics.Height, false );
         App.Camera.Zoom = 0f;
+        
+        Logger.Debug( "Camera:" );
+        Logger.Debug( $"Width: {App.Camera.ViewportWidth}, Height: {App.Camera.ViewportHeight}" );
+        Logger.Debug( $"X: {App.Camera.Position.X}, Y: {App.Camera.Position.Y}, Z: {App.Camera.Position.Z}" );
 
         // --------------------------------------------------------------------
         // --------------------------------------------------------------------
@@ -74,12 +78,12 @@ public class MainGame : ApplicationAdapter
 
             if ( _background != null )
             {
-                App.SpriteBatch.Draw( _background, X, Y );
+                App.SpriteBatch.Draw( _background, X, Y, _background.Width, _background.Height );
             }
 
             if ( _libgdx != null )
             {
-                App.SpriteBatch.Draw( _libgdx, X, Y );
+                App.SpriteBatch.Draw( _libgdx, X, Y, _libgdx.Width, _libgdx.Height );
             }
 
             App.SpriteBatch.End();

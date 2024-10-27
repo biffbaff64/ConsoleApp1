@@ -17,6 +17,7 @@ public class MainGame : ApplicationAdapter
     private readonly AssetManager _assetManager = new();
     private readonly Texture?     _background   = null;
     private          Texture?     _libgdx       = null;
+    private          Sprite?      _sprite       = null;
 
     // ------------------------------------------------------------------------
     // ------------------------------------------------------------------------
@@ -30,7 +31,7 @@ public class MainGame : ApplicationAdapter
         App.Camera      = new OrthographicCamera();
         App.Camera.SetToOrtho( Gdx.Graphics.Width, Gdx.Graphics.Height, false );
         App.Camera.Zoom = 0f;
-        
+
         Logger.Debug( "Camera:" );
         Logger.Debug( $"Width: {App.Camera.ViewportWidth}, Height: {App.Camera.ViewportHeight}" );
         Logger.Debug( $"X: {App.Camera.Position.X}, Y: {App.Camera.Position.Y}, Z: {App.Camera.Position.Z}" );
@@ -81,10 +82,7 @@ public class MainGame : ApplicationAdapter
                 App.SpriteBatch.Draw( _background, X, Y, _background.Width, _background.Height );
             }
 
-            if ( _libgdx != null )
-            {
-                App.SpriteBatch.Draw( _libgdx, X, Y, _libgdx.Width, _libgdx.Height );
-            }
+            _sprite?.Draw( App.SpriteBatch, 1.0f );
 
             App.SpriteBatch.End();
         }
@@ -110,6 +108,7 @@ public class MainGame : ApplicationAdapter
 
         _background?.Dispose();
         _libgdx?.Dispose();
+        _sprite = null;
         _assetManager.Dispose();
     }
 
@@ -132,8 +131,13 @@ public class MainGame : ApplicationAdapter
         _assetManager.DisplayMetrics();
         _assetManager.FinishLoading();
         _assetManager.DisplayMetrics();
-        
+
         _libgdx ??= _assetManager.Get( Assets.LIBGDX_LOGO ) as Texture;
+
+        if ( _libgdx != null )
+        {
+            _sprite = new Sprite( _libgdx );
+        }
     }
 
     // ------------------------------------------------------------------------

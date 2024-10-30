@@ -24,7 +24,8 @@
 
 namespace ConsoleApp1.Source;
 
-public class Assets
+public static class Assets
 {
     public const string LIBGDX_LOGO = "Assets/libgdx.png";
+    public const string ROVER_WHEEL = "Assets/rover_wheel.png";
 }

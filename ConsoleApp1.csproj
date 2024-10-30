@@ -13,10 +13,6 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <PackageReference Include="DotGLFW" Version="1.2.0" />
-    </ItemGroup>
-
-    <ItemGroup>
       <ProjectReference Include="..\LughSharp\Corelib\Corelib.csproj" />
       <ProjectReference Include="..\LughSharp\DesktopGLBackend\DesktopGLBackend.csproj" />
       <ProjectReference Include="..\LughSharp\Extensions\Extensions.csproj" />
@@ -54,10 +50,18 @@
       <Content Include="Assets\libgdx.png">
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </Content>
+      <None Remove="Assets\rover_wheel.png" />
+      <Content Include="Assets\rover_wheel.png">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Content>
     </ItemGroup>
 
     <ItemGroup>
       <Folder Include="bin\Debug\net7.0\" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="OpenTK" Version="4.8.2" />
     </ItemGroup>
 
 </Project>

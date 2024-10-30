@@ -16,8 +16,7 @@ public class MainGame : ApplicationAdapter
 
     private readonly AssetManager _assetManager = new();
     private readonly Texture?     _background   = null;
-    private          Texture?     _libgdx       = null;
-    private          Sprite?      _sprite       = null;
+    private          Texture?     _image        = null;
 
     // ------------------------------------------------------------------------
     // ------------------------------------------------------------------------
@@ -28,9 +27,10 @@ public class MainGame : ApplicationAdapter
         Logger.Checkpoint();
 
         App.SpriteBatch = new SpriteBatch();
-        App.Camera      = new OrthographicCamera();
-        App.Camera.SetToOrtho( Gdx.Graphics.Width, Gdx.Graphics.Height, false );
-        App.Camera.Zoom = 0f;
+        App.Camera = new OrthographicCamera( Gdx.Graphics.Width, Gdx.Graphics.Height )
+        {
+            Zoom = 0f,
+        };
 
         Logger.Debug( "Camera:" );
         Logger.Debug( $"Width: {App.Camera.ViewportWidth}, Height: {App.Camera.ViewportHeight}" );
@@ -52,12 +52,12 @@ public class MainGame : ApplicationAdapter
         // --------------------------------------------------------------------
         // --------------------------------------------------------------------
 
-//        Logger.Debug( "Setting up Keyboard" );
-//
-//        App.Keyboard         = new Keyboard();
-//        App.InputMultiplexer = new InputMultiplexer();
-//        App.InputMultiplexer.AddProcessor( App.Keyboard );
-//        Gdx.Input.InputProcessor = App.InputMultiplexer;
+        Logger.Debug( "Setting up Keyboard" );
+
+        App.Keyboard         = new Keyboard();
+        App.InputMultiplexer = new InputMultiplexer();
+        App.InputMultiplexer.AddProcessor( App.Keyboard );
+        Gdx.Input.InputProcessor = App.InputMultiplexer;
     }
 
     /// <inheritdoc />
@@ -82,7 +82,10 @@ public class MainGame : ApplicationAdapter
                 App.SpriteBatch.Draw( _background, X, Y, _background.Width, _background.Height );
             }
 
-            _sprite?.Draw( App.SpriteBatch, 1.0f );
+            if ( _image != null )
+            {
+                App.SpriteBatch.Draw( _image, X, Y, _image.Width, _image.Height );
+            }
 
             App.SpriteBatch.End();
         }
@@ -107,8 +110,7 @@ public class MainGame : ApplicationAdapter
         App.SpriteBatch?.Dispose();
 
         _background?.Dispose();
-        _libgdx?.Dispose();
-        _sprite = null;
+        _image?.Dispose();
         _assetManager.Dispose();
     }
 
@@ -122,9 +124,7 @@ public class MainGame : ApplicationAdapter
         Logger.Debug( "Loading assets...", true );
         Logger.Divider();
 
-        _assetManager.AddToLoadqueue( Assets.LIBGDX_LOGO, typeof( Texture ) );
-//        _assetManager.AddToLoadqueue( "biffbaff.png", typeof( Texture ) );
-//        _assetManager.AddToLoadqueue( "red7logo_small.png", typeof( Texture ) );
+        _assetManager.AddToLoadqueue( Assets.ROVER_WHEEL, typeof( Texture ) );
 
         Logger.Debug( "All assets queued for loading.", true );
 
@@ -132,12 +132,7 @@ public class MainGame : ApplicationAdapter
         _assetManager.FinishLoading();
         _assetManager.DisplayMetrics();
 
-        _libgdx ??= _assetManager.Get( Assets.LIBGDX_LOGO ) as Texture;
-
-        if ( _libgdx != null )
-        {
-            _sprite = new Sprite( _libgdx );
-        }
+        _image ??= _assetManager.Get( Assets.ROVER_WHEEL ) as Texture;
     }
 
     // ------------------------------------------------------------------------

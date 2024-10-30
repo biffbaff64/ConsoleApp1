@@ -68,7 +68,7 @@ public class MainGame : ApplicationAdapter
     /// <inheritdoc />
     public override void Render()
     {
-        ScreenUtils.Clear( Color.Blue );
+        ScreenUtils.Clear( Gdx.Graphics.WindowBackgroundColor );
 
         if ( ( App.Camera != null ) && ( App.SpriteBatch != null ) )
         {

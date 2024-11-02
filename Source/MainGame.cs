@@ -58,6 +58,8 @@ public class MainGame : ApplicationAdapter
         App.InputMultiplexer = new InputMultiplexer();
         App.InputMultiplexer.AddProcessor( App.Keyboard );
         Gdx.Input.InputProcessor = App.InputMultiplexer;
+        
+        Logger.Debug( "Done" );
     }
 
     /// <inheritdoc />

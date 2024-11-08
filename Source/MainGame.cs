@@ -107,13 +107,13 @@ public class MainGame : ApplicationAdapter
     /// <inheritdoc />
     public override void Dispose()
     {
-        GC.SuppressFinalize( this );
-
         App.SpriteBatch?.Dispose();
 
         _background?.Dispose();
         _image?.Dispose();
         _assetManager.Dispose();
+        
+        GC.SuppressFinalize( this );
     }
 
     // ------------------------------------------------------------------------

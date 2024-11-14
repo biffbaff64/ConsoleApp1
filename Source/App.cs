@@ -35,6 +35,6 @@ internal static class App
     public static OrthographicCamera? Camera           { get; set; }
     public static SpriteBatch?        SpriteBatch      { get; set; }
     
-    // ------------------------------------------------------------------------
+    // ========================================================================
 
 }

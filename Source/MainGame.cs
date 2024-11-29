@@ -4,7 +4,6 @@ using Corelib.LibCore.Graphics;
 using Corelib.LibCore.Graphics.Cameras;
 using Corelib.LibCore.Graphics.G2D;
 using Corelib.LibCore.Utils;
-using Color = Corelib.LibCore.Graphics.Color;
 
 namespace ConsoleApp1.Source;
 
@@ -24,8 +23,6 @@ public class MainGame : ApplicationAdapter
     /// <inheritdoc />
     public override void Create()
     {
-        Logger.Checkpoint();
-
         App.SpriteBatch = new SpriteBatch();
         App.Camera = new OrthographicCamera( Gdx.Graphics.Width, Gdx.Graphics.Height )
         {
@@ -39,26 +36,17 @@ public class MainGame : ApplicationAdapter
         // ====================================================================
         // ====================================================================
 
-//        var pm = new Pixmap( 100, 100, Pixmap.ColorFormat.RGBA8888 );
-//        _background = new Texture( pm, pm.Format );
-
-//        var pm = new Pixmap( new FileInfo( Gdx.Files.Internal( "libgdx.png" ).FileName ) );
-//        _background = new Texture( pm );
-
-//        _background = new Texture( "libgdx.png" );
-
-        LoadAssets();
-
-        // ====================================================================
-        // ====================================================================
-
         Logger.Debug( "Setting up Keyboard" );
-
         App.Keyboard         = new Keyboard();
         App.InputMultiplexer = new InputMultiplexer();
         App.InputMultiplexer.AddProcessor( App.Keyboard );
         Gdx.Input.InputProcessor = App.InputMultiplexer;
         
+        // ====================================================================
+        // ====================================================================
+
+        LoadAssets();
+
         Logger.Debug( "Done" );
     }
 
@@ -121,7 +109,6 @@ public class MainGame : ApplicationAdapter
 
     private void LoadAssets()
     {
-        Logger.Checkpoint();
         Logger.Divider();
         Logger.Debug( "Loading assets...", true );
         Logger.Divider();
@@ -135,6 +122,10 @@ public class MainGame : ApplicationAdapter
         _assetManager.DisplayMetrics();
 
         _image ??= _assetManager.Get( Assets.ROVER_WHEEL ) as Texture;
+        
+        _image?.Debug();
+        
+        Logger.Debug( _image!.GetManagedStatus() );
     }
 
     // ========================================================================

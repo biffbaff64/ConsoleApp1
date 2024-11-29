@@ -34,14 +34,11 @@ public class AssetManagerTest
 
     public AssetManagerTest()
     {
-        Logger.Checkpoint();
-        
         _assetManager = new AssetManager();
     }
 
     public void Run()
     {
-        Logger.Checkpoint();
         Logger.Divider();
         Logger.Debug( "Loading assets...", true );
         Logger.Divider();

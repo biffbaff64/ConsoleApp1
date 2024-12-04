@@ -3,7 +3,10 @@ using Corelib.LibCore.Core;
 using Corelib.LibCore.Graphics;
 using Corelib.LibCore.Graphics.Cameras;
 using Corelib.LibCore.Graphics.G2D;
+using Corelib.LibCore.Graphics.Playground;
 using Corelib.LibCore.Utils;
+
+using Extensions.Source.Freetype;
 
 namespace ConsoleApp1.Source;
 
@@ -16,6 +19,7 @@ public class MainGame : ApplicationAdapter
     private readonly AssetManager _assetManager = new();
     private readonly Texture?     _background   = null;
     private          Texture?     _image        = null;
+    private          BitmapFont?  _bitmapFont   = null;
 
     // ========================================================================
     // ========================================================================
@@ -41,7 +45,7 @@ public class MainGame : ApplicationAdapter
         App.InputMultiplexer = new InputMultiplexer();
         App.InputMultiplexer.AddProcessor( App.Keyboard );
         Gdx.Input.InputProcessor = App.InputMultiplexer;
-        
+
         // ====================================================================
         // ====================================================================
 
@@ -100,7 +104,7 @@ public class MainGame : ApplicationAdapter
         _background?.Dispose();
         _image?.Dispose();
         _assetManager.Dispose();
-        
+
         GC.SuppressFinalize( this );
     }
 
@@ -114,20 +118,20 @@ public class MainGame : ApplicationAdapter
         Logger.Divider();
 
         _assetManager.AddToLoadqueue( Assets.ROVER_WHEEL, typeof( Texture ) );
-
-        Logger.Debug( "All assets queued for loading.", true );
-
-        _assetManager.DisplayMetrics();
         _assetManager.FinishLoading();
-        _assetManager.DisplayMetrics();
 
         _image ??= _assetManager.Get( Assets.ROVER_WHEEL ) as Texture;
-        
-        _image?.Debug();
-        
-        Logger.Debug( _image!.GetManagedStatus() );
+
+        var generator = new FreeTypeFontGenerator( Gdx.Files.Internal( "arial-15.fnt" ) );
+
+        FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
+
+        parameter.Size = 20;
+
+        _bitmapFont = generator.GenerateFont( parameter );
+        _bitmapFont.SetColor( Color.White );
     }
 
-    // ========================================================================
-    // ========================================================================
+// ========================================================================
+// ========================================================================
 }

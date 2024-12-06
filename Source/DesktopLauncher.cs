@@ -1,6 +1,6 @@
 ﻿using DesktopGLBackend.Core;
-using Corelib.LibCore.Core;
-using Corelib.LibCore.Utils;
+using Corelib.Lugh.Core;
+using Corelib.Lugh.Utils;
 
 namespace ConsoleApp1.Source;
 

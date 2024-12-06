@@ -23,7 +23,7 @@
 // /////////////////////////////////////////////////////////////////////////////
 
 using JetBrains.Annotations;
-using Corelib.LibCore.Graphics;
+using Corelib.Lugh.Graphics;
 
 namespace ConsoleApp1.Source.Tests;
 

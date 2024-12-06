@@ -1,10 +1,9 @@
-﻿using Corelib.LibCore.Assets;
-using Corelib.LibCore.Core;
-using Corelib.LibCore.Graphics;
-using Corelib.LibCore.Graphics.Cameras;
-using Corelib.LibCore.Graphics.G2D;
-using Corelib.LibCore.Graphics.Playground;
-using Corelib.LibCore.Utils;
+﻿using Corelib.Lugh.Assets;
+using Corelib.Lugh.Core;
+using Corelib.Lugh.Graphics.Cameras;
+using Corelib.Lugh.Graphics.G2D;
+using Corelib.Lugh.Graphics.Images;
+using Corelib.Lugh.Utils;
 
 using Extensions.Source.Freetype;
 

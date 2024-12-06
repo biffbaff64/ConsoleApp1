@@ -22,9 +22,9 @@
 //  SOFTWARE.
 // /////////////////////////////////////////////////////////////////////////////
 
-using Corelib.LibCore.Core;
-using Corelib.LibCore.Graphics.Cameras;
-using Corelib.LibCore.Graphics.G2D;
+using Corelib.Lugh.Core;
+using Corelib.Lugh.Graphics.Cameras;
+using Corelib.Lugh.Graphics.G2D;
 
 namespace ConsoleApp1.Source;
 

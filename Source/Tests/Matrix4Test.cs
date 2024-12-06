@@ -23,8 +23,8 @@
 // /////////////////////////////////////////////////////////////////////////////
 
 using JetBrains.Annotations;
-using Corelib.LibCore.Maths;
-using Corelib.LibCore.Utils;
+using Corelib.Lugh.Maths;
+using Corelib.Lugh.Utils;
 
 namespace ConsoleApp1.Source.Tests;
 

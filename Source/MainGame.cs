@@ -19,7 +19,6 @@ public class MainGame : ApplicationAdapter
     private readonly AssetManager _assetManager = new();
     private readonly Texture?     _background   = null;
     private          Texture?     _image        = null;
-    private          BitmapFont?  _bitmapFont   = null;
 
     // ========================================================================
     // ========================================================================
@@ -121,17 +120,8 @@ public class MainGame : ApplicationAdapter
         _assetManager.FinishLoading();
 
         _image ??= _assetManager.Get( Assets.ROVER_WHEEL ) as Texture;
-
-        var generator = new FreeTypeFontGenerator( Gdx.Files.Internal( "arial-15.fnt" ) );
-
-        FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
-
-        parameter.Size = 20;
-
-        _bitmapFont = generator.GenerateFont( parameter );
-        _bitmapFont.SetColor( Color.White );
     }
 
-// ========================================================================
-// ========================================================================
+    // ========================================================================
+    // ========================================================================
 }

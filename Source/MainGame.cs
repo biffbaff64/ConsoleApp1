@@ -1,11 +1,12 @@
-﻿using Corelib.Lugh.Assets;
+﻿//#define KEYBOARD
+
+using Corelib.Lugh.Assets;
 using Corelib.Lugh.Core;
 using Corelib.Lugh.Graphics.Cameras;
 using Corelib.Lugh.Graphics.G2D;
 using Corelib.Lugh.Graphics.Images;
+using Corelib.Lugh.Graphics.OpenGL;
 using Corelib.Lugh.Utils;
-
-using Extensions.Source.Freetype;
 
 namespace ConsoleApp1.Source;
 
@@ -38,11 +39,13 @@ public class MainGame : ApplicationAdapter
         // ====================================================================
         // ====================================================================
 
+#if KEYBOARD
         Logger.Debug( "Setting up Keyboard" );
-        App.Keyboard         = new Keyboard();
+        App.Keyboard = new Keyboard();
         App.InputMultiplexer = new InputMultiplexer();
         App.InputMultiplexer.AddProcessor( App.Keyboard );
         Gdx.Input.InputProcessor = App.InputMultiplexer;
+#endif
 
         // ====================================================================
         // ====================================================================

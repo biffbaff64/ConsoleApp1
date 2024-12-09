@@ -1,7 +1,7 @@
 ﻿// /////////////////////////////////////////////////////////////////////////////
 //  MIT License
 // 
-//  Copyright (c) 2024 Richard Ikin / Red 7 Projects
+//  Copyright (c) 2024 Richard Ikin / LughSharp Team
 // 
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -30,15 +30,15 @@ namespace ConsoleApp1.Source.Tests;
 public class GlfwTest
 {
 //    private static long              windowHandle;
-//    private static GLFW.ErrorCallback errorCallback = GLFWErrorCallback.createPrint( System.err );
+//    private static Glfw.ErrorCallback errorCallback = GLFWErrorCallback.createPrint( System.err );
 //
 //    public static void main( String[] argv )
 //    {
-//        GLFW.glfwSetErrorCallback( errorCallback );
+//        Glfw.glfwSetErrorCallback( errorCallback );
 //
 //        if ( !glfwInit() )
 //        {
-//            System.out.println( "Couldn't initialize GLFW" );
+//            System.out.println( "Couldn't initialize Glfw" );
 //            System.exit( -1 );
 //        }
 //

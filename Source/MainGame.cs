@@ -1,11 +1,12 @@
 ﻿//#define KEYBOARD
 
+using System.Diagnostics.CodeAnalysis;
+
 using Corelib.Lugh.Assets;
 using Corelib.Lugh.Core;
 using Corelib.Lugh.Graphics.Cameras;
 using Corelib.Lugh.Graphics.G2D;
 using Corelib.Lugh.Graphics.Images;
-using Corelib.Lugh.Graphics.OpenGL;
 using Corelib.Lugh.Utils;
 
 namespace ConsoleApp1.Source;
@@ -112,6 +113,7 @@ public class MainGame : ApplicationAdapter
     // ========================================================================
     // ========================================================================
 
+    [SuppressMessage( "Interoperability", "CA1416:Validate platform compatibility" )]
     private void LoadAssets()
     {
         Logger.Divider();

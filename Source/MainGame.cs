@@ -27,11 +27,17 @@ public class MainGame : ApplicationAdapter
     /// <inheritdoc />
     public override void Create()
     {
+        Logger.Debug( $"GdxApi.Graphics       : {Gdx.GdxApi.Graphics}" );
+        Logger.Debug( $"GdxApi.Graphics.Width : {Gdx.GdxApi.Graphics.Width}" );
+        Logger.Debug( $"GdxApi.Graphics.Height: {Gdx.GdxApi.Graphics.Height}" );
+        
         App.SpriteBatch = new SpriteBatch();
-        App.Camera = new OrthographicCamera( Gdx.Graphics.Width, Gdx.Graphics.Height )
+        Logger.Checkpoint();
+        App.Camera = new OrthographicCamera( Gdx.GdxApi.Graphics.Width, Gdx.GdxApi.Graphics.Height )
         {
             Zoom = 0f,
         };
+        Logger.Checkpoint();
 
         Logger.Debug( "Camera:" );
         Logger.Debug( $"Width: {App.Camera.ViewportWidth}, Height: {App.Camera.ViewportHeight}" );
@@ -45,7 +51,7 @@ public class MainGame : ApplicationAdapter
         App.Keyboard = new Keyboard();
         App.InputMultiplexer = new InputMultiplexer();
         App.InputMultiplexer.AddProcessor( App.Keyboard );
-        Gdx.Input.InputProcessor = App.InputMultiplexer;
+        GdxApi.Input.InputProcessor = App.InputMultiplexer;
 #endif
 
         // ====================================================================
@@ -64,7 +70,7 @@ public class MainGame : ApplicationAdapter
     /// <inheritdoc />
     public override void Render()
     {
-        ScreenUtils.Clear( Gdx.Graphics.WindowBackgroundColor );
+        ScreenUtils.Clear( Gdx.GdxApi.Graphics.WindowBackgroundColor );
 
         if ( ( App.Camera != null ) && ( App.SpriteBatch != null ) )
         {

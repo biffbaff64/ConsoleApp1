@@ -1,4 +1,5 @@
 ﻿using DesktopGLBackend.Core;
+
 using Corelib.Lugh.Core;
 using Corelib.Lugh.Utils;
 
@@ -7,7 +8,8 @@ namespace ConsoleApp1.Source;
 // ReSharper disable once MemberCanBeInternal
 public static class DesktopLauncher
 {
-    public static void Main( string[] args )
+    [STAThread]
+    private static void Main( string[] args )
     {
         var config = new DesktopGLApplicationConfiguration
         {
@@ -17,18 +19,17 @@ public static class DesktopLauncher
             DisableAudio  = true,
         };
 
-        config.EnableGLDebugOutput( true, new StreamWriter( "GLDebug.log" ) );
+//        config.EnableGLDebugOutput( true, new StreamWriter( "GLDebug.log" ) );
         config.SetWindowedMode( 480, 320 );
 
-        if ( Environment.GetEnvironmentVariables().Contains( "DEV_MODE" ) )
-        {
-            Gdx.DevMode = Environment.GetEnvironmentVariable( "DEV_MODE" )!.Equals( "TRUE" );
-        }
-        
-        Logger.Debug( $"Gdx.DevMode: {Gdx.DevMode}" );
+        Gdx.GdxApi
+           .CheckEnableDevMode()
+           .CheckEnableGodMode();
+
+        Logger.Debug( $"DevMode: {Gdx.GdxApi.DevMode}" );
 
         var game = new DesktopGLApplication( new MainGame(), config );
-        
+
         game.Run();
     }
 }

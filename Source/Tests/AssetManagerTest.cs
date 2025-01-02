@@ -22,10 +22,10 @@
 //  SOFTWARE.
 // /////////////////////////////////////////////////////////////////////////////
 
-using Corelib.Lugh.Assets;
-using Corelib.Lugh.Graphics;
-using Corelib.Lugh.Graphics.Images;
-using Corelib.Lugh.Utils;
+using LughSharp.Lugh.Assets;
+using LughSharp.Lugh.Graphics;
+using LughSharp.Lugh.Graphics.Images;
+using LughSharp.Lugh.Utils;
 
 namespace ConsoleApp1.Source.Tests;
 

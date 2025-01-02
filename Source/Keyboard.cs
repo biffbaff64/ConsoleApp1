@@ -22,7 +22,7 @@
 //  SOFTWARE.
 // /////////////////////////////////////////////////////////////////////////////
 
-using Corelib.Lugh.Core;
+using LughSharp.Lugh.Core;
 
 namespace ConsoleApp1.Source;
 

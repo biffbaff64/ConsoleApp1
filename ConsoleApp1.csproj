@@ -15,9 +15,9 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\LughSharp\Corelib\Corelib.csproj" />
-      <ProjectReference Include="..\LughSharp\DesktopGLBackend\DesktopGLBackend.csproj" />
-      <ProjectReference Include="..\LughSharp\Extensions\Extensions.csproj" />
+      <ProjectReference Include="..\LughSharpFramework\DesktopGLBackend\DesktopGLBackend.csproj" />
+      <ProjectReference Include="..\LughSharpFramework\Extensions\Extensions.csproj" />
+      <ProjectReference Include="..\LughSharpFramework\LughSharp\LughSharp.csproj" />
     </ItemGroup>
 
     <ItemGroup>

@@ -20,6 +20,7 @@ public static class DesktopLauncher
         };
 
 //        config.EnableGLDebugOutput( true, new StreamWriter( "GLDebug.log" ) );
+        config.Debug = true;
         config.SetWindowedMode( 480, 320 );
 
         Gdx.GdxApi

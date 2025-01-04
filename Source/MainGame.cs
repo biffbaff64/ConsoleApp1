@@ -15,6 +15,8 @@ namespace ConsoleApp1.Source;
 // ReSharper disable once MemberCanBeInternal
 public class MainGame : ApplicationAdapter
 {
+    private const string TEST_ASSET = Assets.LIBGDX_LOGO;
+    
 //    private const int X = 0;
 //    private const int Y = 0;
 
@@ -123,10 +125,17 @@ public class MainGame : ApplicationAdapter
         Logger.Debug( "Loading assets...", true );
         Logger.Divider();
 
-        _assetManager.AddToLoadqueue( Assets.ROVER_WHEEL, typeof( Texture ) );
+        _assetManager.AddToLoadqueue( TEST_ASSET, typeof( Texture ) );
         _assetManager.FinishLoading();
 
-        _image ??= _assetManager.Get( Assets.ROVER_WHEEL ) as Texture;
+        if ( _assetManager.Contains( TEST_ASSET ) )
+        {
+            _image = _assetManager.Get( TEST_ASSET ) as Texture;
+
+            return;
+        }
+        
+        Logger.Debug( $"{TEST_ASSET} not found in AssetManager" );
     }
 
     // ========================================================================

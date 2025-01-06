@@ -50,7 +50,7 @@ public class AssetManagerTest
 
         Logger.Debug( "All assets queued for loading.", true );
         
-//        _assetManager.GetDiagnostics();
+        _assetManager.GetDiagnostics();
         
         Task.Run( () =>
         {

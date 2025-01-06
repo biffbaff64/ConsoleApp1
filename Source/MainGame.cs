@@ -3,6 +3,7 @@
 using System.Diagnostics.CodeAnalysis;
 
 using LughSharp.Lugh.Assets;
+using LughSharp.Lugh.Assets.Loaders;
 using LughSharp.Lugh.Core;
 using LughSharp.Lugh.Graphics;
 using LughSharp.Lugh.Graphics.Cameras;
@@ -16,13 +17,13 @@ namespace ConsoleApp1.Source;
 public class MainGame : ApplicationAdapter
 {
     private const string TEST_ASSET = Assets.LIBGDX_LOGO;
-    
+
 //    private const int X = 0;
 //    private const int Y = 0;
 
-    private readonly AssetManager _assetManager = new();
-    private readonly Texture?     _background   = null;
-    private          Texture?     _image        = null;
+    private AssetManager? _assetManager;
+    private Texture?      _background;
+    private Texture?      _image;
 
     // ========================================================================
     // ========================================================================
@@ -33,7 +34,7 @@ public class MainGame : ApplicationAdapter
         Logger.Debug( $"GdxApi.Graphics       : {Gdx.GdxApi.Graphics}" );
         Logger.Debug( $"GdxApi.Graphics.Width : {Gdx.GdxApi.Graphics.Width}" );
         Logger.Debug( $"GdxApi.Graphics.Height: {Gdx.GdxApi.Graphics.Height}" );
-        
+
         App.SpriteBatch = new SpriteBatch();
         Logger.Checkpoint();
         App.Camera = new OrthographicCamera( Gdx.GdxApi.Graphics.Width, Gdx.GdxApi.Graphics.Height )
@@ -41,7 +42,11 @@ public class MainGame : ApplicationAdapter
             Zoom = 0f,
         };
         Logger.Checkpoint();
-        
+
+        _assetManager = new AssetManager();
+        _background   = null;
+        _image        = null;
+
         // ====================================================================
         // ====================================================================
 
@@ -58,6 +63,7 @@ public class MainGame : ApplicationAdapter
 
         LoadAssets();
 
+        Logger.Debug( _assetManager.GetDiagnostics() );
         Logger.Debug( "Done" );
     }
 
@@ -125,16 +131,18 @@ public class MainGame : ApplicationAdapter
         Logger.Debug( "Loading assets...", true );
         Logger.Divider();
 
-        _assetManager.AddToLoadqueue( TEST_ASSET, typeof( Texture ) );
-        _assetManager.FinishLoading();
+        _assetManager?.AddToLoadqueue( TEST_ASSET,
+                                       typeof( Texture ),
+                                       new TextureLoader.TextureLoaderParameters() );
+        _assetManager!.FinishLoading();
 
-        if ( _assetManager.Contains( TEST_ASSET ) )
+        if ( _assetManager!.Contains( TEST_ASSET ) )
         {
             _image = _assetManager.Get( TEST_ASSET ) as Texture;
 
             return;
         }
-        
+
         Logger.Debug( $"{TEST_ASSET} not found in AssetManager" );
     }
 

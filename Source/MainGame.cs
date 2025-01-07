@@ -16,7 +16,7 @@ namespace ConsoleApp1.Source;
 // ReSharper disable once MemberCanBeInternal
 public class MainGame : ApplicationAdapter
 {
-    private const string TEST_ASSET = Assets.LIBGDX_LOGO;
+    private const string TEST_ASSET = Assets.ROVER_WHEEL;
 
 //    private const int X = 0;
 //    private const int Y = 0;
@@ -60,10 +60,12 @@ public class MainGame : ApplicationAdapter
 
         // ====================================================================
         // ====================================================================
+        
+        PNGUtils.AnalysePNG( TEST_ASSET );
 
-        LoadAssets();
+//        LoadAssets();
+//        Logger.Debug( _assetManager.GetDiagnostics() );
 
-        Logger.Debug( _assetManager.GetDiagnostics() );
         Logger.Debug( "Done" );
     }
 

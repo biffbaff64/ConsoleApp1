@@ -10,6 +10,7 @@ using LughSharp.Lugh.Graphics.Cameras;
 using LughSharp.Lugh.Graphics.G2D;
 using LughSharp.Lugh.Graphics.Images;
 using LughSharp.Lugh.Utils;
+using LughSharp.Lugh.Utils.Exceptions;
 
 namespace ConsoleApp1.Source;
 
@@ -31,9 +32,9 @@ public class MainGame : ApplicationAdapter
     /// <inheritdoc />
     public override void Create()
     {
-        Logger.Debug( $"GdxApi.Graphics       : {Gdx.GdxApi.Graphics}" );
-        Logger.Debug( $"GdxApi.Graphics.Width : {Gdx.GdxApi.Graphics.Width}" );
-        Logger.Debug( $"GdxApi.Graphics.Height: {Gdx.GdxApi.Graphics.Height}" );
+//        Logger.Debug( $"GdxApi.Graphics       : {Gdx.GdxApi.Graphics}" );
+//        Logger.Debug( $"GdxApi.Graphics.Width : {Gdx.GdxApi.Graphics.Width}" );
+//        Logger.Debug( $"GdxApi.Graphics.Height: {Gdx.GdxApi.Graphics.Height}" );
 
         App.SpriteBatch = new SpriteBatch();
         Logger.Checkpoint();
@@ -61,10 +62,10 @@ public class MainGame : ApplicationAdapter
         // ====================================================================
         // ====================================================================
         
-        PNGUtils.AnalysePNG( TEST_ASSET );
+//        PNGUtils.AnalysePNGToOutput( TEST_ASSET );
 
-//        LoadAssets();
-//        Logger.Debug( _assetManager.GetDiagnostics() );
+        LoadAssets();
+        Logger.Debug( _assetManager.GetDiagnostics() );
 
         Logger.Debug( "Done" );
     }
@@ -118,7 +119,7 @@ public class MainGame : ApplicationAdapter
 
         _background?.Dispose();
         _image?.Dispose();
-        _assetManager.Dispose();
+        _assetManager?.Dispose();
 
         GC.SuppressFinalize( this );
     }
@@ -129,18 +130,20 @@ public class MainGame : ApplicationAdapter
     [SuppressMessage( "Interoperability", "CA1416:Validate platform compatibility" )]
     private void LoadAssets()
     {
+        GdxRuntimeException.ThrowIfNull( _assetManager );
+        
         Logger.Divider();
         Logger.Debug( "Loading assets...", true );
         Logger.Divider();
 
-        _assetManager?.AddToLoadqueue( TEST_ASSET,
-                                       typeof( Texture ),
-                                       new TextureLoader.TextureLoaderParameters() );
-        _assetManager!.FinishLoading();
+        _assetManager.Load( TEST_ASSET, typeof( Texture ), new TextureLoader.TextureLoaderParameters() );
+        _assetManager.FinishLoading();
 
-        if ( _assetManager!.Contains( TEST_ASSET ) )
+        if ( _assetManager.Contains( TEST_ASSET ) )
         {
-            _image = _assetManager.Get( TEST_ASSET ) as Texture;
+            Logger.Debug( $"Asset {TEST_ASSET} successfully loaded." );
+            
+//            _image = _assetManager.GetTexture( TEST_ASSET );
 
             return;
         }

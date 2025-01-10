@@ -62,7 +62,7 @@ public class MainGame : ApplicationAdapter
         // ====================================================================
         // ====================================================================
         
-//        PNGUtils.AnalysePNGToOutput( TEST_ASSET );
+        PNGUtils.AnalysePNGToOutput( TEST_ASSET );
 
         LoadAssets();
         Logger.Debug( _assetManager.GetDiagnostics() );

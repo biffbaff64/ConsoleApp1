@@ -19,9 +19,6 @@ public class MainGame : ApplicationAdapter
 {
     private const string TEST_ASSET = Assets.ROVER_WHEEL;
 
-//    private const int X = 0;
-//    private const int Y = 0;
-
     private AssetManager? _assetManager;
     private Texture?      _background;
     private Texture?      _image;
@@ -32,17 +29,11 @@ public class MainGame : ApplicationAdapter
     /// <inheritdoc />
     public override void Create()
     {
-//        Logger.Debug( $"GdxApi.Graphics       : {Gdx.GdxApi.Graphics}" );
-//        Logger.Debug( $"GdxApi.Graphics.Width : {Gdx.GdxApi.Graphics.Width}" );
-//        Logger.Debug( $"GdxApi.Graphics.Height: {Gdx.GdxApi.Graphics.Height}" );
-
         App.SpriteBatch = new SpriteBatch();
-        Logger.Checkpoint();
         App.Camera = new OrthographicCamera( Gdx.GdxApi.Graphics.Width, Gdx.GdxApi.Graphics.Height )
         {
             Zoom = 0f,
         };
-        Logger.Checkpoint();
 
         _assetManager = new AssetManager();
         _background   = null;
@@ -59,13 +50,7 @@ public class MainGame : ApplicationAdapter
         GdxApi.Input.InputProcessor = App.InputMultiplexer;
 #endif
 
-        // ====================================================================
-        // ====================================================================
-        
-        PNGUtils.AnalysePNGToOutput( TEST_ASSET );
-
         LoadAssets();
-        Logger.Debug( _assetManager.GetDiagnostics() );
 
         Logger.Debug( "Done" );
     }

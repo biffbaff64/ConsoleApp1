@@ -19,6 +19,9 @@ public class MainGame : ApplicationAdapter
 {
     private const string TEST_ASSET = Assets.ROVER_WHEEL;
 
+    private const int X = 0;
+    private const int Y = 0;
+
     private AssetManager? _assetManager;
     private Texture?      _background;
     private Texture?      _image;
@@ -65,25 +68,25 @@ public class MainGame : ApplicationAdapter
     {
         ScreenUtils.Clear( Color.Blue );
 
-//        if ( ( App.Camera != null ) && ( App.SpriteBatch != null ) )
-//        {
-//            App.Camera.Update();
-//
-//            App.SpriteBatch.SetProjectionMatrix( App.Camera.Combined );
-//            App.SpriteBatch.Begin();
-//
-//            if ( _background != null )
-//            {
-//                App.SpriteBatch.Draw( _background, X, Y, _background.Width, _background.Height );
-//            }
-//
-//            if ( _image != null )
-//            {
-//                App.SpriteBatch.Draw( _image, X, Y, _image.Width, _image.Height );
-//            }
-//
-//            App.SpriteBatch.End();
-//        }
+        if ( ( App.Camera != null ) && ( App.SpriteBatch != null ) )
+        {
+            App.Camera.Update();
+
+            App.SpriteBatch.SetProjectionMatrix( App.Camera.Combined );
+            App.SpriteBatch.Begin();
+
+            if ( _background != null )
+            {
+                App.SpriteBatch.Draw( _background, X, Y, _background.Width, _background.Height );
+            }
+
+            if ( _image != null )
+            {
+                App.SpriteBatch.Draw( _image, X, Y, _image.Width, _image.Height );
+            }
+
+            App.SpriteBatch.End();
+        }
     }
 
     /// <inheritdoc />
@@ -116,7 +119,7 @@ public class MainGame : ApplicationAdapter
     private void LoadAssets()
     {
         GdxRuntimeException.ThrowIfNull( _assetManager );
-        
+
         Logger.Divider();
         Logger.Debug( "Loading assets...", true );
         Logger.Divider();
@@ -127,8 +130,8 @@ public class MainGame : ApplicationAdapter
         if ( _assetManager.Contains( TEST_ASSET ) )
         {
             Logger.Debug( $"Asset {TEST_ASSET} successfully loaded." );
-            
-//            _image = _assetManager.GetTexture( TEST_ASSET );
+
+            _image = _assetManager.GetTexture( TEST_ASSET );
 
             return;
         }

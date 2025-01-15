@@ -13,14 +13,15 @@ public static class DesktopLauncher
     {
         var config = new DesktopGLApplicationConfiguration
         {
-            Title         = "LughSharp Template",
-            VSyncEnabled  = true,
-            ForegroundFPS = 60,
-            DisableAudio  = true,
+            Title              = "LughSharp Template",
+            VSyncEnabled       = true,
+            ForegroundFPS      = 60,
+            DisableAudio       = true,
+            Debug              = true,
+            GLProfilingEnabled = false,
         };
 
-//        config.EnableGLDebugOutput( true, new StreamWriter( "GLDebug.log" ) );
-        config.Debug = true;
+        //        config.EnableGLDebugOutput( true, new StreamWriter( "GLDebug.log" ) );
         config.SetWindowedMode( 480, 320 );
 
         Gdx.GdxApi

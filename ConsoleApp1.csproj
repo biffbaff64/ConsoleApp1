@@ -15,9 +15,6 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\LughSharpFrameworkOpenTK\DesktopGLBackend\DesktopGLBackend.csproj" />
-      <ProjectReference Include="..\LughSharpFrameworkOpenTK\Extensions\Extensions.csproj" />
-      <ProjectReference Include="..\LughSharpFrameworkOpenTK\LughSharpOpenTK\LughSharpOpenTK.csproj" />
       <ProjectReference Include="..\LughSharpFramework\DesktopGLBackend\DesktopGLBackend.csproj" />
       <ProjectReference Include="..\LughSharpFramework\Extensions\Extensions.csproj" />
       <ProjectReference Include="..\LughSharpFramework\LughSharp\LughSharp.csproj" />

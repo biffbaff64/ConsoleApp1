@@ -21,14 +21,9 @@ public static class DesktopLauncher
             GLProfilingEnabled = false,
         };
 
-        //        config.EnableGLDebugOutput( true, new StreamWriter( "GLDebug.log" ) );
         config.SetWindowedMode( 480, 320 );
 
-        Gdx.GdxApi
-           .CheckEnableDevMode()
-           .CheckEnableGodMode();
-
-        Logger.Debug( $"DevMode: {Gdx.GdxApi.DevMode}" );
+        Gdx.GdxApi.CheckEnableDevMode().CheckEnableGodMode();
 
         var game = new DesktopGLApplication( new MainGame(), config );
 

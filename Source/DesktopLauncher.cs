@@ -18,7 +18,7 @@ public static class DesktopLauncher
             ForegroundFPS      = 60,
             DisableAudio       = true,
             Debug              = true,
-            GLProfilingEnabled = false,
+            GLProfilingEnabled = true,
         };
 
         config.SetWindowedMode( 480, 320 );

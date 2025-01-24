@@ -1,7 +1,5 @@
 ﻿//#define KEYBOARD
 
-using System.Diagnostics.CodeAnalysis;
-
 using LughSharp.Lugh.Assets;
 using LughSharp.Lugh.Assets.Loaders;
 using LughSharp.Lugh.Core;
@@ -17,7 +15,8 @@ namespace ConsoleApp1.Source;
 // ReSharper disable once MemberCanBeInternal
 public class MainGame : ApplicationAdapter
 {
-    private const string TEST_ASSET = Assets.ROVER_WHEEL;
+    private const string TEST_ASSET1 = Assets.ROVER_WHEEL;
+    private const string TEST_ASSET2 = Assets.LIBGDX_LOGO;
 
     private const int X = 0;
     private const int Y = 0;
@@ -115,7 +114,6 @@ public class MainGame : ApplicationAdapter
     // ========================================================================
     // ========================================================================
 
-    [SuppressMessage( "Interoperability", "CA1416:Validate platform compatibility" )]
     private void LoadAssets()
     {
         GdxRuntimeException.ThrowIfNull( _assetManager );
@@ -124,19 +122,20 @@ public class MainGame : ApplicationAdapter
         Logger.Debug( "Loading assets...", true );
         Logger.Divider();
 
-        _assetManager.Load( TEST_ASSET, typeof( Texture ), new TextureLoader.TextureLoaderParameters() );
+//        _assetManager.Load( TEST_ASSET2, typeof( Texture ), new TextureLoader.TextureLoaderParameters() );
+        _assetManager.Load( TEST_ASSET1, typeof( Texture ), new TextureLoader.TextureLoaderParameters() );
         _assetManager.FinishLoading();
 
-        if ( _assetManager.Contains( TEST_ASSET ) )
+//        if ( _assetManager.Contains( TEST_ASSET1 ) && _assetManager.Contains( TEST_ASSET2 ) )
+        if ( _assetManager.Contains( TEST_ASSET1 ) )
         {
-            Logger.Debug( $"Asset {TEST_ASSET} successfully loaded." );
-
-            _image = _assetManager.GetTexture( TEST_ASSET );
+            _image      = _assetManager.GetTexture( TEST_ASSET1 );
+//            _background = _assetManager.GetTexture( TEST_ASSET2 );
 
             return;
         }
 
-        Logger.Debug( $"{TEST_ASSET} not found in AssetManager" );
+        Logger.Error( "Failed to load assets" );
     }
 
     // ========================================================================

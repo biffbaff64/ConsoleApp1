@@ -122,12 +122,12 @@ public class MainGame : ApplicationAdapter
         Logger.Debug( "Loading assets...", true );
         Logger.Divider();
 
-//        _assetManager.Load( TEST_ASSET2, typeof( Texture ), new TextureLoader.TextureLoaderParameters() );
         _assetManager.Load( TEST_ASSET1, typeof( Texture ), new TextureLoader.TextureLoaderParameters() );
+//        _assetManager.Load( TEST_ASSET2, typeof( Texture ), new TextureLoader.TextureLoaderParameters() );
         _assetManager.FinishLoading();
 
-//        if ( _assetManager.Contains( TEST_ASSET1 ) && _assetManager.Contains( TEST_ASSET2 ) )
         if ( _assetManager.Contains( TEST_ASSET1 ) )
+//        if ( _assetManager.Contains( TEST_ASSET1 ) && _assetManager.Contains( TEST_ASSET2 ) )
         {
             _image      = _assetManager.GetTexture( TEST_ASSET1 );
 //            _background = _assetManager.GetTexture( TEST_ASSET2 );

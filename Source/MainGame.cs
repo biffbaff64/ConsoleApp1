@@ -18,13 +18,13 @@ public class MainGame : ApplicationAdapter
     private const string TEST_ASSET1 = Assets.ROVER_WHEEL;
     private const string TEST_ASSET2 = Assets.LIBGDX_LOGO;
 
-    private const int X = 0;
-    private const int Y = 0;
+    private const int X = 40;
+    private const int Y = 40;
 
     private AssetManager? _assetManager;
     private Texture?      _background;
     private Texture?      _image;
-
+        
     // ========================================================================
     // ========================================================================
 

@@ -34,7 +34,7 @@ public class MainGame : ApplicationAdapter
         App.SpriteBatch = new SpriteBatch();
         App.Camera = new OrthographicCamera( Gdx.GdxApi.Graphics.Width, Gdx.GdxApi.Graphics.Height )
         {
-            Zoom = 0f,
+            Zoom = 1f,
         };
 
         _assetManager = new AssetManager();
@@ -62,12 +62,14 @@ public class MainGame : ApplicationAdapter
     {
     }
 
+    private bool _canRender = true;
+
     /// <inheritdoc />
     public override void Render()
     {
         ScreenUtils.Clear( Color.Blue );
 
-        if ( ( App.Camera != null ) && ( App.SpriteBatch != null ) )
+        if ( _canRender && ( App.Camera != null ) && ( App.SpriteBatch != null ) )
         {
             App.Camera.Update();
 
@@ -85,6 +87,8 @@ public class MainGame : ApplicationAdapter
             }
 
             App.SpriteBatch.End();
+
+            _canRender = false;
         }
     }
 

@@ -74,6 +74,7 @@ public class MainGame : ApplicationAdapter
             App.Camera.Update();
 
             App.SpriteBatch.SetProjectionMatrix( App.Camera.Combined );
+            App.SpriteBatch.DisableBlending();
             App.SpriteBatch.Begin();
 
             if ( _background != null )

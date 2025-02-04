@@ -6,7 +6,9 @@ using LughSharp.Lugh.Core;
 using LughSharp.Lugh.Graphics;
 using LughSharp.Lugh.Graphics.Cameras;
 using LughSharp.Lugh.Graphics.G2D;
+using LughSharp.Lugh.Graphics.GLUtils;
 using LughSharp.Lugh.Graphics.Images;
+using LughSharp.Lugh.Graphics.OpenGL;
 using LughSharp.Lugh.Utils;
 using LughSharp.Lugh.Utils.Exceptions;
 
@@ -22,9 +24,9 @@ public class MainGame : ApplicationAdapter
     private const int Y = 40;
 
     private AssetManager? _assetManager;
-    private Texture?      _background;
-    private Texture?      _image;
-        
+    private Texture?      _image1;
+    private Texture?      _image2;
+
     // ========================================================================
     // ========================================================================
 
@@ -38,8 +40,8 @@ public class MainGame : ApplicationAdapter
         };
 
         _assetManager = new AssetManager();
-        _background   = null;
-        _image        = null;
+        _image1   = null;
+        _image2        = null;
 
         // ====================================================================
         // ====================================================================
@@ -74,17 +76,18 @@ public class MainGame : ApplicationAdapter
             App.Camera.Update();
 
             App.SpriteBatch.SetProjectionMatrix( App.Camera.Combined );
+            App.SpriteBatch.SetTransformMatrix( App.Camera.View );
             App.SpriteBatch.DisableBlending();
             App.SpriteBatch.Begin();
 
-            if ( _background != null )
+            if ( _image1 != null )
             {
-                App.SpriteBatch.Draw( _background, X, Y, _background.Width, _background.Height );
+                App.SpriteBatch.Draw( _image1, X, Y, _image1.Width, _image1.Height );
             }
 
-            if ( _image != null )
+            if ( _image2 != null )
             {
-                App.SpriteBatch.Draw( _image, X, Y, _image.Width, _image.Height );
+                App.SpriteBatch.Draw( _image2, X, Y, _image2.Width, _image2.Height );
             }
 
             App.SpriteBatch.End();
@@ -109,8 +112,8 @@ public class MainGame : ApplicationAdapter
     {
         App.SpriteBatch?.Dispose();
 
-        _background?.Dispose();
-        _image?.Dispose();
+        _image1?.Dispose();
+        _image2?.Dispose();
         _assetManager?.Dispose();
 
         GC.SuppressFinalize( this );
@@ -128,19 +131,25 @@ public class MainGame : ApplicationAdapter
         Logger.Divider();
 
         _assetManager.Load( TEST_ASSET1, typeof( Texture ), new TextureLoader.TextureLoaderParameters() );
+//        _assetManager.FinishLoadingAsset( TEST_ASSET1 );
+
 //        _assetManager.Load( TEST_ASSET2, typeof( Texture ), new TextureLoader.TextureLoaderParameters() );
-        _assetManager.FinishLoading();
+//        _assetManager.FinishLoading();
 
-        if ( _assetManager.Contains( TEST_ASSET1 ) )
-//        if ( _assetManager.Contains( TEST_ASSET1 ) && _assetManager.Contains( TEST_ASSET2 ) )
-        {
-            _image      = _assetManager.GetTexture( TEST_ASSET1 );
-//            _background = _assetManager.GetTexture( TEST_ASSET2 );
+//        if ( _assetManager.Contains( TEST_ASSET1 ) )
+//        {
+//            _image1 = _assetManager.GetTexture( TEST_ASSET1 );
+//        }
 
-            return;
-        }
+//        if ( _assetManager.Contains( TEST_ASSET2 ) )
+//        {
+//            _image2 = _assetManager.GetTexture( TEST_ASSET2 );
+//        }
 
-        Logger.Error( "Failed to load assets" );
+//        if ( ( _image1 != null ) && ( _image2 != null ) )
+//        {
+//            Logger.Debug( "Asset loading failed" );
+//        }
     }
 
     // ========================================================================

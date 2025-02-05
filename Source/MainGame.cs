@@ -1,5 +1,7 @@
 ﻿//#define KEYBOARD
 
+#define OGL_TEST
+
 using LughSharp.Lugh.Assets;
 using LughSharp.Lugh.Assets.Loaders;
 using LughSharp.Lugh.Core;
@@ -19,6 +21,7 @@ public class MainGame : ApplicationAdapter
 {
     private const string TEST_ASSET1 = Assets.ROVER_WHEEL;
     private const string TEST_ASSET2 = Assets.LIBGDX_LOGO;
+    private const string TEST_ASSET3 = Assets.RED7_LOGO;
 
     private const int X = 40;
     private const int Y = 40;
@@ -26,6 +29,11 @@ public class MainGame : ApplicationAdapter
     private AssetManager? _assetManager;
     private Texture?      _image1;
     private Texture?      _image2;
+    private Texture?      _image3;
+
+    #if OGL_TEST
+    private OpenGLTest _openGLTest = new();
+    #endif
 
     // ========================================================================
     // ========================================================================
@@ -40,8 +48,8 @@ public class MainGame : ApplicationAdapter
         };
 
         _assetManager = new AssetManager();
-        _image1   = null;
-        _image2        = null;
+        _image1       = null;
+        _image2       = null;
 
         // ====================================================================
         // ====================================================================
@@ -56,6 +64,10 @@ public class MainGame : ApplicationAdapter
 
         LoadAssets();
 
+        #if OGL_TEST
+        _openGLTest.Create();
+        #endif
+        
         Logger.Debug( "Done" );
     }
 
@@ -64,14 +76,12 @@ public class MainGame : ApplicationAdapter
     {
     }
 
-    private bool _canRender = true;
-
     /// <inheritdoc />
     public override void Render()
     {
         ScreenUtils.Clear( Color.Blue );
 
-        if ( _canRender && ( App.Camera != null ) && ( App.SpriteBatch != null ) )
+        if ( ( App.Camera != null ) && ( App.SpriteBatch != null ) )
         {
             App.Camera.Update();
 
@@ -90,9 +100,16 @@ public class MainGame : ApplicationAdapter
                 App.SpriteBatch.Draw( _image2, X, Y, _image2.Width, _image2.Height );
             }
 
-            App.SpriteBatch.End();
+            if ( _image3 != null )
+            {
+                App.SpriteBatch.Draw( _image3, X, Y, _image3.Width, _image3.Height );
+            }
 
-            _canRender = false;
+            #if OGL_TEST
+            _openGLTest.Render();
+            #endif
+
+            App.SpriteBatch.End();
         }
     }
 
@@ -131,22 +148,26 @@ public class MainGame : ApplicationAdapter
         Logger.Divider();
 
         _assetManager.Load( TEST_ASSET1, typeof( Texture ), new TextureLoader.TextureLoaderParameters() );
-//        _assetManager.FinishLoadingAsset( TEST_ASSET1 );
+        _assetManager.Load( TEST_ASSET2, typeof( Texture ), new TextureLoader.TextureLoaderParameters() );
+        _assetManager.Load( TEST_ASSET3, typeof( Texture ), new TextureLoader.TextureLoaderParameters() );
+        _assetManager.FinishLoading();
 
-//        _assetManager.Load( TEST_ASSET2, typeof( Texture ), new TextureLoader.TextureLoaderParameters() );
-//        _assetManager.FinishLoading();
+        if ( _assetManager.Contains( TEST_ASSET1 ) )
+        {
+            _image1 = _assetManager.GetTexture( TEST_ASSET1 );
+        }
 
-//        if ( _assetManager.Contains( TEST_ASSET1 ) )
-//        {
-//            _image1 = _assetManager.GetTexture( TEST_ASSET1 );
-//        }
+        if ( _assetManager.Contains( TEST_ASSET2 ) )
+        {
+            _image2 = _assetManager.GetTexture( TEST_ASSET2 );
+        }
 
-//        if ( _assetManager.Contains( TEST_ASSET2 ) )
-//        {
-//            _image2 = _assetManager.GetTexture( TEST_ASSET2 );
-//        }
+        if ( _assetManager.Contains( TEST_ASSET3 ) )
+        {
+            _image3 = _assetManager.GetTexture( TEST_ASSET3 );
+        }
 
-//        if ( ( _image1 != null ) && ( _image2 != null ) )
+//        if ( ( _image1 != null ) && ( _image2 != null ) && ( _image3 != null ) )
 //        {
 //            Logger.Debug( "Asset loading failed" );
 //        }

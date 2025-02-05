@@ -28,4 +28,5 @@ public static class Assets
 {
     public const string LIBGDX_LOGO = "Assets/libgdx.png";
     public const string ROVER_WHEEL = "Assets/rover_wheel.png";
+    public const string RED7_LOGO   = "Assets/red7logo_small.png";
 }

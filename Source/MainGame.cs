@@ -8,9 +8,7 @@ using LughSharp.Lugh.Core;
 using LughSharp.Lugh.Graphics;
 using LughSharp.Lugh.Graphics.Cameras;
 using LughSharp.Lugh.Graphics.G2D;
-using LughSharp.Lugh.Graphics.GLUtils;
 using LughSharp.Lugh.Graphics.Images;
-using LughSharp.Lugh.Graphics.OpenGL;
 using LughSharp.Lugh.Utils;
 using LughSharp.Lugh.Utils.Exceptions;
 
@@ -32,7 +30,7 @@ public class MainGame : ApplicationAdapter
     private Texture?      _image3;
 
     #if OGL_TEST
-    private OpenGLTest _openGLTest = new();
+    private readonly OpenGLTest _openGLTest = new();
     #endif
 
     // ========================================================================
@@ -87,7 +85,7 @@ public class MainGame : ApplicationAdapter
 
             App.SpriteBatch.SetProjectionMatrix( App.Camera.Combined );
             App.SpriteBatch.SetTransformMatrix( App.Camera.View );
-            App.SpriteBatch.DisableBlending();
+//            App.SpriteBatch.DisableBlending();
             App.SpriteBatch.Begin();
 
             if ( _image1 != null )

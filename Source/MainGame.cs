@@ -10,6 +10,7 @@ using LughSharp.Lugh.Graphics.Cameras;
 using LughSharp.Lugh.Graphics.G2D;
 using LughSharp.Lugh.Graphics.Images;
 using LughSharp.Lugh.Utils;
+using LughSharp.Lugh.Utils.Buffers.New;
 using LughSharp.Lugh.Utils.Exceptions;
 
 namespace ConsoleApp1.Source;
@@ -65,6 +66,9 @@ public class MainGame : ApplicationAdapter
         #if OGL_TEST
         _openGLTest.Create();
         #endif
+        
+        NewBufferTests test =  new NewBufferTests();
+        test.TestNewByteBuffer();
         
         Logger.Debug( "Done" );
     }

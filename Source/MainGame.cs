@@ -1,6 +1,5 @@
 ﻿//#define KEYBOARD
-
-#define OGL_TEST
+//#define OGL_TEST
 
 using LughSharp.Lugh.Assets;
 using LughSharp.Lugh.Assets.Loaders;
@@ -61,15 +60,14 @@ public class MainGame : ApplicationAdapter
         GdxApi.Input.InputProcessor = App.InputMultiplexer;
 #endif
 
-        LoadAssets();
+//        LoadAssets();
 
         #if OGL_TEST
         _openGLTest.Create();
         #endif
-        
-        NewBufferTests test =  new NewBufferTests();
-        test.TestNewByteBuffer();
-        
+
+        _ = new NewBufferTests();
+
         Logger.Debug( "Done" );
     }
 
@@ -89,6 +87,7 @@ public class MainGame : ApplicationAdapter
 
             App.SpriteBatch.SetProjectionMatrix( App.Camera.Combined );
             App.SpriteBatch.SetTransformMatrix( App.Camera.View );
+
 //            App.SpriteBatch.DisableBlending();
             App.SpriteBatch.Begin();
 

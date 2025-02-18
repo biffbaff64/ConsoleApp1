@@ -66,7 +66,7 @@ public class MainGame : ApplicationAdapter
         _openGLTest.Create();
         #endif
 
-        _ = new NewBufferTests();
+        _ = new BufferTests();
 
         Logger.Debug( "Done" );
     }

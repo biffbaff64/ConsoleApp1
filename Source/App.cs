@@ -25,6 +25,7 @@
 using LughSharp.Lugh.Core;
 using LughSharp.Lugh.Graphics.Cameras;
 using LughSharp.Lugh.Graphics.G2D;
+using LughSharp.Lugh.Input;
 
 namespace ConsoleApp1.Source;
 

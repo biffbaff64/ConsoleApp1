@@ -9,7 +9,6 @@ using LughSharp.Lugh.Graphics.Cameras;
 using LughSharp.Lugh.Graphics.G2D;
 using LughSharp.Lugh.Graphics.Images;
 using LughSharp.Lugh.Utils;
-using LughSharp.Lugh.Utils.Buffers.NewBuffers;
 using LughSharp.Lugh.Utils.Exceptions;
 
 namespace ConsoleApp1.Source;
@@ -60,13 +59,11 @@ public class MainGame : ApplicationAdapter
         GdxApi.Input.InputProcessor = App.InputMultiplexer;
 #endif
 
-//        LoadAssets();
+        LoadAssets();
 
         #if OGL_TEST
         _openGLTest.Create();
         #endif
-
-        _ = new BufferTests();
 
         Logger.Debug( "Done" );
     }
@@ -149,8 +146,8 @@ public class MainGame : ApplicationAdapter
         Logger.Divider();
 
         _assetManager.Load( TEST_ASSET1, typeof( Texture ), new TextureLoader.TextureLoaderParameters() );
-        _assetManager.Load( TEST_ASSET2, typeof( Texture ), new TextureLoader.TextureLoaderParameters() );
-        _assetManager.Load( TEST_ASSET3, typeof( Texture ), new TextureLoader.TextureLoaderParameters() );
+//        _assetManager.Load( TEST_ASSET2, typeof( Texture ), new TextureLoader.TextureLoaderParameters() );
+//        _assetManager.Load( TEST_ASSET3, typeof( Texture ), new TextureLoader.TextureLoaderParameters() );
         _assetManager.FinishLoading();
 
         if ( _assetManager.Contains( TEST_ASSET1 ) )

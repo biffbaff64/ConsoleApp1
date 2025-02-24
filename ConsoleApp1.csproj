@@ -15,50 +15,50 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\LughSharpFramework\DesktopGLBackend\DesktopGLBackend.csproj" />
-      <ProjectReference Include="..\LughSharpFramework\Extensions\Extensions.csproj" />
-      <ProjectReference Include="..\LughSharpFramework\LughSharp\LughSharp.csproj" />
+        <ProjectReference Include="..\LughSharpFramework\DesktopGLBackend\DesktopGLBackend.csproj"/>
+        <ProjectReference Include="..\LughSharpFramework\Extensions\Extensions.csproj"/>
+        <ProjectReference Include="..\LughSharpFramework\LughSharp\LughSharp.csproj"/>
     </ItemGroup>
 
     <ItemGroup>
-      <None Remove="Assets\LughLogo.png" />
-      <None Remove="Assets\Felix.png" />
+        <None Remove="Assets\LughLogo.png"/>
+        <None Remove="Assets\Felix.png"/>
     </ItemGroup>
 
     <ItemGroup>
-      <None Remove="Assets\red7logo_small.png" />
-      <Content Include="Assets\red7logo_small.png">
-        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      </Content>
-      <None Remove="Assets\arial-15.fnt" />
-      <Content Include="Assets\arial-15.fnt">
-        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      </Content>
-      <None Remove="Assets\arial-15.png" />
-      <Content Include="Assets\arial-15.png">
-        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      </Content>
-      <None Remove="Assets\lsans-15.fnt" />
-      <Content Include="Assets\lsans-15.fnt">
-        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      </Content>
-      <None Remove="Assets\lsans-15.png" />
-      <Content Include="Assets\lsans-15.png">
-        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      </Content>
-      <None Remove="Assets\red7logo_small.bmp" />
-      <None Remove="Assets\libgdx.png" />
-      <Content Include="Assets\libgdx.png">
-        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      </Content>
-      <None Remove="Assets\rover_wheel.png" />
-      <Content Include="Assets\rover_wheel.png">
-        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      </Content>
+        <None Remove="Assets\red7logo_small.png"/>
+        <Content Include="Assets\red7logo_small.png">
+            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </Content>
+        <None Remove="Assets\arial-15.fnt"/>
+        <Content Include="Assets\arial-15.fnt">
+            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </Content>
+        <None Remove="Assets\arial-15.png"/>
+        <Content Include="Assets\arial-15.png">
+            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </Content>
+        <None Remove="Assets\lsans-15.fnt"/>
+        <Content Include="Assets\lsans-15.fnt">
+            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </Content>
+        <None Remove="Assets\lsans-15.png"/>
+        <Content Include="Assets\lsans-15.png">
+            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </Content>
+        <None Remove="Assets\red7logo_small.bmp"/>
+        <None Remove="Assets\libgdx.png"/>
+        <Content Include="Assets\libgdx.png">
+            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </Content>
+        <None Remove="Assets\rover_wheel.png"/>
+        <Content Include="Assets\rover_wheel.png">
+            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </Content>
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="bin\Debug\" />
+        <Folder Include="bin\Debug\"/>
     </ItemGroup>
 
 </Project>

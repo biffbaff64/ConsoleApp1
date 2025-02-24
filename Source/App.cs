@@ -22,7 +22,6 @@
 //  SOFTWARE.
 // /////////////////////////////////////////////////////////////////////////////
 
-using LughSharp.Lugh.Core;
 using LughSharp.Lugh.Graphics.Cameras;
 using LughSharp.Lugh.Graphics.G2D;
 using LughSharp.Lugh.Input;
@@ -35,6 +34,6 @@ internal static class App
     public static Keyboard?           Keyboard         { get; set; }
     public static OrthographicCamera? Camera           { get; set; }
     public static SpriteBatch?        SpriteBatch      { get; set; }
-    
+
     // ========================================================================
 }

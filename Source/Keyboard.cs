@@ -22,7 +22,6 @@
 //  SOFTWARE.
 // /////////////////////////////////////////////////////////////////////////////
 
-using LughSharp.Lugh.Core;
 using LughSharp.Lugh.Input;
 
 namespace ConsoleApp1.Source;
@@ -38,14 +37,17 @@ public class Keyboard : InputAdapter
         {
             case IInput.Keys.UP:
                 flag = true;
+
                 break;
 
             case IInput.Keys.DOWN:
                 flag = true;
+
                 break;
 
             default:
                 flag = false;
+
                 break;
         }
 
@@ -68,6 +70,7 @@ public class Keyboard : InputAdapter
                 }
 
                 flag = true;
+
                 break;
 
             case IInput.Keys.DOWN:
@@ -79,10 +82,12 @@ public class Keyboard : InputAdapter
                 }
 
                 flag = true;
+
                 break;
 
             default:
                 flag = false;
+
                 break;
         }
 

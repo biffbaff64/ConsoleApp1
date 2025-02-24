@@ -23,6 +23,7 @@
 // /////////////////////////////////////////////////////////////////////////////
 
 using JetBrains.Annotations;
+
 using LughSharp.Lugh.Maths;
 using LughSharp.Lugh.Utils;
 
@@ -32,10 +33,6 @@ namespace ConsoleApp1.Source.Tests;
 public class Matrix4Test
 {
     private readonly Matrix4 _matrix4 = new();
-
-    public Matrix4Test()
-    {
-    }
 
     public void Run()
     {

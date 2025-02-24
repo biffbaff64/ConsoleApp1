@@ -146,6 +146,7 @@ public class MainGame : ApplicationAdapter
         Logger.Divider();
 
         _assetManager.Load( TEST_ASSET1, typeof( Texture ), new TextureLoader.TextureLoaderParameters() );
+
 //        _assetManager.Load( TEST_ASSET2, typeof( Texture ), new TextureLoader.TextureLoaderParameters() );
 //        _assetManager.Load( TEST_ASSET3, typeof( Texture ), new TextureLoader.TextureLoaderParameters() );
         _assetManager.FinishLoading();

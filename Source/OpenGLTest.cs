@@ -24,23 +24,20 @@
 
 using LughSharp.Lugh.Graphics.OpenGL;
 
+using GLBindings = LughSharp.Lugh.Graphics.OpenGL.GLBindings;
+
 namespace ConsoleApp1.Source;
 
 public unsafe class OpenGLTest
 {
-    private static GLBindings _gl = new();
+    private static readonly GLBindings _gl = new();
 
-    private uint _vao, _vbo, _ibo;
-    private uint _shaderProgram;
-
-    private readonly float[] vertices =
-    [
-        -0.5f, -0.5f, -.0f,
-        0.5f, -0.5f, 0.0f,
-        0.0f, 0.5f, 0.0f,
-    ];
-
-    private readonly short[] indices = [ 0, 1, 2 ];
+    private readonly string _fragmentShaderSource =
+        "#version 450 core\n" +
+        "out vec4 FragColor;\n" +
+        "void main() {\n" +
+        "    FragColor = vec4(1.0, 1.0, 1.0, 1.0);\n" +
+        "}\n";
 
     private readonly string _vertexShaderSource =
         "#version 450 core\n" +
@@ -49,12 +46,18 @@ public unsafe class OpenGLTest
         "    gl_Position = vec4(aPosition, 1.0);\n" +
         "}\n";
 
-    private readonly string _fragmentShaderSource =
-        "#version 450 core\n" +
-        "out vec4 FragColor;\n" +
-        "void main() {\n" +
-        "    FragColor = vec4(1.0, 1.0, 1.0, 1.0);\n" +
-        "}\n";
+    private readonly short[] indices = [ 0, 1, 2 ];
+
+    private readonly float[] vertices =
+    [
+        -0.5f, -0.5f, -.0f,
+        0.5f, -0.5f, 0.0f,
+        0.0f, 0.5f, 0.0f,
+    ];
+
+    private uint _shaderProgram;
+
+    private uint _vao, _vbo, _ibo;
 
     // ========================================================================
     // ========================================================================
@@ -71,10 +74,10 @@ public unsafe class OpenGLTest
 
         fixed ( float* ptr = vertices )
         {
-            _gl.BufferData( IGL.GL_ARRAY_BUFFER, vertices.Length * sizeof( float ), ptr, IGL.GL_STATIC_DRAW );
+            _gl.BufferData( IGL.GL_ARRAY_BUFFER, vertices.Length * sizeof( float ), ( IntPtr )ptr, IGL.GL_STATIC_DRAW );
         }
 
-        _gl.VertexAttribPointer( 0, 3, IGL.GL_FLOAT, false, 3 * sizeof( float ), 0 );
+        _gl.VertexAttribPointer( 0, 3, IGL.GL_FLOAT, false, 3 * sizeof( float ), 0u );
         _gl.EnableVertexAttribArray( 0 );
 
         _ibo = _gl.GenBuffer();
@@ -82,7 +85,7 @@ public unsafe class OpenGLTest
 
         fixed ( short* ptr = indices )
         {
-            _gl.BufferData( IGL.GL_ELEMENT_ARRAY_BUFFER, indices.Length * sizeof( short ), ptr, IGL.GL_STATIC_DRAW );
+            _gl.BufferData( IGL.GL_ELEMENT_ARRAY_BUFFER, indices.Length * sizeof( short ), ( IntPtr )ptr, IGL.GL_STATIC_DRAW );
         }
 
         _gl.BindVertexArray( 0 );
@@ -97,28 +100,27 @@ public unsafe class OpenGLTest
         _gl.BindBuffer( IGL.GL_ELEMENT_ARRAY_BUFFER, _ibo );
 
         var offsetInBytes = 0; //offset * sizeof( short );
-        _gl.DrawElements( IGL.GL_TRIANGLES, indices.Length, IGL.GL_UNSIGNED_SHORT, ( void* )offsetInBytes );
+        _gl.DrawElements( IGL.GL_TRIANGLES, indices.Length, IGL.GL_UNSIGNED_SHORT, offsetInBytes );
     }
-    
-    private uint CreateProgram( string vertexShaderSource, string fragementShaderSource )
+
+    private uint CreateProgram( string vertexShaderSource, string fragmentShaderSource )
     {
         var vertexShader = _gl.CreateShader( IGL.GL_VERTEX_SHADER );
-        _gl.ShaderSource( ( int )vertexShader, _vertexShaderSource );
+        _gl.ShaderSource( ( int )vertexShader, vertexShaderSource );
         _gl.CompileShader( ( int )vertexShader );
 
         var fragmentShader = _gl.CreateShader( IGL.GL_FRAGMENT_SHADER );
-        _gl.ShaderSource( ( int )fragmentShader, _fragmentShaderSource );
+        _gl.ShaderSource( ( int )fragmentShader, fragmentShaderSource );
         _gl.CompileShader( ( int )fragmentShader );
 
         var shaderProgram = _gl.CreateProgram();
         _gl.AttachShader( ( int )shaderProgram, ( int )vertexShader );
         _gl.AttachShader( ( int )shaderProgram, ( int )fragmentShader );
         _gl.LinkProgram( ( int )shaderProgram );
-        
+
         _gl.DeleteShader( ( int )vertexShader );
         _gl.DeleteShader( ( int )fragmentShader );
-        
+
         return shaderProgram;
     }
 }
-

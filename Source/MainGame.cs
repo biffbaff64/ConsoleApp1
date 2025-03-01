@@ -51,13 +51,13 @@ public class MainGame : ApplicationAdapter
         // ====================================================================
         // ====================================================================
 
-#if KEYBOARD
+        #if KEYBOARD
         Logger.Debug( "Setting up Keyboard" );
         App.Keyboard = new Keyboard();
         App.InputMultiplexer = new InputMultiplexer();
         App.InputMultiplexer.AddProcessor( App.Keyboard );
         GdxApi.Input.InputProcessor = App.InputMultiplexer;
-#endif
+        #endif
 
         LoadAssets();
 
@@ -146,7 +146,6 @@ public class MainGame : ApplicationAdapter
         Logger.Divider();
 
         _assetManager.Load( TEST_ASSET1, typeof( Texture ), new TextureLoader.TextureLoaderParameters() );
-
 //        _assetManager.Load( TEST_ASSET2, typeof( Texture ), new TextureLoader.TextureLoaderParameters() );
 //        _assetManager.Load( TEST_ASSET3, typeof( Texture ), new TextureLoader.TextureLoaderParameters() );
         _assetManager.FinishLoading();
@@ -154,16 +153,19 @@ public class MainGame : ApplicationAdapter
         if ( _assetManager.Contains( TEST_ASSET1 ) )
         {
             _image1 = _assetManager.GetTexture( TEST_ASSET1 );
+            Logger.Debug( "_image1 is SET" );
         }
 
         if ( _assetManager.Contains( TEST_ASSET2 ) )
         {
             _image2 = _assetManager.GetTexture( TEST_ASSET2 );
+            Logger.Debug( "_image2 is SET" );
         }
 
         if ( _assetManager.Contains( TEST_ASSET3 ) )
         {
             _image3 = _assetManager.GetTexture( TEST_ASSET3 );
+            Logger.Debug( "_image3 is SET" );
         }
 
 //        if ( ( _image1 != null ) && ( _image2 != null ) && ( _image3 != null ) )

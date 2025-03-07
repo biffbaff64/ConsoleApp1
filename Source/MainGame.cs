@@ -8,6 +8,8 @@ using LughSharp.Lugh.Graphics;
 using LughSharp.Lugh.Graphics.Cameras;
 using LughSharp.Lugh.Graphics.G2D;
 using LughSharp.Lugh.Graphics.Images;
+using LughSharp.Lugh.Graphics.Text;
+using LughSharp.Lugh.Graphics.TexturePacker;
 using LughSharp.Lugh.Utils;
 using LughSharp.Lugh.Utils.Exceptions;
 
@@ -26,11 +28,18 @@ public class MainGame : ApplicationAdapter
     private AssetManager? _assetManager;
     private Texture?      _image1;
     private Texture?      _image2;
-    private Texture?      _image3;
+
+    private Texture? _image3;
+
+//    private BitmapFont?         _bitmapFont;
+    private OrthographicCamera? _camera;
+    private SpriteBatch?        _spriteBatch;
 
     #if OGL_TEST
     private readonly OpenGLTest _openGLTest = new();
     #endif
+
+    private const bool RebuildAtlas = true;
 
     // ========================================================================
     // ========================================================================
@@ -38,8 +47,9 @@ public class MainGame : ApplicationAdapter
     /// <inheritdoc />
     public override void Create()
     {
-        App.SpriteBatch = new SpriteBatch();
-        App.Camera = new OrthographicCamera( Gdx.GdxApi.Graphics.Width, Gdx.GdxApi.Graphics.Height )
+        _spriteBatch = new SpriteBatch();
+
+        _camera = new OrthographicCamera( Gdx.GdxApi.Graphics.Width, Gdx.GdxApi.Graphics.Height )
         {
             Zoom = 1f,
         };
@@ -48,16 +58,20 @@ public class MainGame : ApplicationAdapter
         _image1       = null;
         _image2       = null;
 
+//        _bitmapFont   = new BitmapFont();
+
         // ====================================================================
         // ====================================================================
 
         #if KEYBOARD
         Logger.Debug( "Setting up Keyboard" );
-        App.Keyboard = new Keyboard();
-        App.InputMultiplexer = new InputMultiplexer();
-        App.InputMultiplexer.AddProcessor( App.Keyboard );
-        GdxApi.Input.InputProcessor = App.InputMultiplexer;
+        _keyboard = new Keyboard();
+        _inputMultiplexer = new InputMultiplexer();
+        _inputMultiplexer.AddProcessor( _keyboard );
+        GdxApi.Input.InputProcessor = _inputMultiplexer;
         #endif
+
+        PackImages();
 
         LoadAssets();
 
@@ -78,54 +92,54 @@ public class MainGame : ApplicationAdapter
     {
         ScreenUtils.Clear( Color.Blue );
 
-        if ( ( App.Camera != null ) && ( App.SpriteBatch != null ) )
+        if ( ( _camera != null ) && ( _spriteBatch != null ) )
         {
-            App.Camera.Update();
+            _camera.Update();
 
-            App.SpriteBatch.SetProjectionMatrix( App.Camera.Combined );
-            App.SpriteBatch.SetTransformMatrix( App.Camera.View );
+            _spriteBatch.SetProjectionMatrix( _camera.Combined );
+            _spriteBatch.SetTransformMatrix( _camera.View );
 
-//            App.SpriteBatch.DisableBlending();
-            App.SpriteBatch.Begin();
+//            _spriteBatch.DisableBlending();
+            _spriteBatch.Begin();
 
             if ( _image1 != null )
             {
-                App.SpriteBatch.Draw( _image1, X, Y, _image1.Width, _image1.Height );
+                _spriteBatch.Draw( _image1, X, Y, _image1.Width, _image1.Height );
             }
 
             if ( _image2 != null )
             {
-                App.SpriteBatch.Draw( _image2, X, Y, _image2.Width, _image2.Height );
+                _spriteBatch.Draw( _image2, X, Y, _image2.Width, _image2.Height );
             }
 
             if ( _image3 != null )
             {
-                App.SpriteBatch.Draw( _image3, X, Y, _image3.Width, _image3.Height );
+                _spriteBatch.Draw( _image3, X, Y, _image3.Width, _image3.Height );
             }
 
             #if OGL_TEST
             _openGLTest.Render();
             #endif
 
-            App.SpriteBatch.End();
+            _spriteBatch.End();
         }
     }
 
     /// <inheritdoc />
     public override void Resize( int width, int height )
     {
-        if ( App.Camera != null )
+        if ( _camera != null )
         {
-            App.Camera.ViewportWidth  = width;
-            App.Camera.ViewportHeight = height;
-            App.Camera.Update();
+            _camera.ViewportWidth  = width;
+            _camera.ViewportHeight = height;
+            _camera.Update();
         }
     }
 
     /// <inheritdoc />
     public override void Dispose()
     {
-        App.SpriteBatch?.Dispose();
+        _spriteBatch?.Dispose();
 
         _image1?.Dispose();
         _image2?.Dispose();
@@ -146,6 +160,7 @@ public class MainGame : ApplicationAdapter
         Logger.Divider();
 
         _assetManager.Load( TEST_ASSET1, typeof( Texture ), new TextureLoader.TextureLoaderParameters() );
+
 //        _assetManager.Load( TEST_ASSET2, typeof( Texture ), new TextureLoader.TextureLoaderParameters() );
 //        _assetManager.Load( TEST_ASSET3, typeof( Texture ), new TextureLoader.TextureLoaderParameters() );
         _assetManager.FinishLoading();
@@ -176,4 +191,30 @@ public class MainGame : ApplicationAdapter
 
     // ========================================================================
     // ========================================================================
+
+    private void PackImages()
+    {
+        if ( RebuildAtlas )
+        {
+            TexturePacker.Settings settings = new TexturePacker.Settings();
+
+            settings.maxWidth  = 2048; // Maximum Width of final atlas image
+            settings.maxHeight = 2048; // Maximum Height of final atlas image
+            settings.pot       = true;
+            settings.debug     = _drawDebugLines;
+            settings.alias     = _removeDuplicateImages;
+
+            //
+            // Build the Atlases from the specified parameters :-
+            // - configuration settings
+            // - source folder
+            // - destination folder
+            // - name of atlas, without extension (the extension '.atlas' will be added automatically)
+            TexturePacker.process( settings, "data/packedimages/objects", "data/packedimages/output", "objects" );
+            TexturePacker.process( settings, "data/packedimages/animations", "data/packedimages/output", "animations" );
+            TexturePacker.process( settings, "data/packedimages/achievements", "data/packedimages/output", "achievements" );
+            TexturePacker.process( settings, "data/packedimages/input", "data/packedimages/output", "buttons" );
+            TexturePacker.process( settings, "data/packedimages/text", "data/packedimages/output", "text" );
+        }
+    }
 }

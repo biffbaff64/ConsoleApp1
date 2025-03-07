@@ -23,6 +23,7 @@
 // /////////////////////////////////////////////////////////////////////////////
 
 using LughSharp.Lugh.Graphics.OpenGL;
+using LughSharp.Lugh.Graphics.OpenGL.Enums;
 
 using GLBindings = LughSharp.Lugh.Graphics.OpenGL.GLBindings;
 
@@ -70,11 +71,11 @@ public unsafe class OpenGLTest
         _gl.BindVertexArray( _vao );
 
         _vbo = _gl.GenBuffer();
-        _gl.BindBuffer( IGL.GL_ARRAY_BUFFER, _vbo );
+        _gl.BindBuffer( ( int )BufferTarget.ArrayBuffer, _vbo );
 
         fixed ( float* ptr = vertices )
         {
-            _gl.BufferData( IGL.GL_ARRAY_BUFFER, vertices.Length * sizeof( float ), ( IntPtr )ptr, IGL.GL_STATIC_DRAW );
+            _gl.BufferData( ( int )BufferTarget.ArrayBuffer, vertices.Length * sizeof( float ), ( IntPtr )ptr, IGL.GL_STATIC_DRAW );
         }
 
         _gl.VertexAttribPointer( 0, 3, IGL.GL_FLOAT, false, 3 * sizeof( float ), 0u );
@@ -89,7 +90,7 @@ public unsafe class OpenGLTest
         }
 
         _gl.BindVertexArray( 0 );
-        _gl.BindBuffer( IGL.GL_ARRAY_BUFFER, 0 );
+        _gl.BindBuffer( ( int )BufferTarget.ArrayBuffer, 0 );
         _gl.BindBuffer( IGL.GL_ELEMENT_ARRAY_BUFFER, 0 );
     }
 

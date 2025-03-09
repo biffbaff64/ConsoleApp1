@@ -8,8 +8,8 @@ using LughSharp.Lugh.Graphics;
 using LughSharp.Lugh.Graphics.Cameras;
 using LughSharp.Lugh.Graphics.G2D;
 using LughSharp.Lugh.Graphics.Images;
+using LughSharp.Lugh.Graphics.Packing;
 using LughSharp.Lugh.Graphics.Text;
-using LughSharp.Lugh.Graphics.TexturePacker;
 using LughSharp.Lugh.Utils;
 using LughSharp.Lugh.Utils.Exceptions;
 

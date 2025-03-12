@@ -39,7 +39,9 @@ public class MainGame : ApplicationAdapter
     private readonly OpenGLTest _openGLTest = new();
     #endif
 
-    private const bool RebuildAtlas = true;
+    private const bool RebuildAtlas          = true;
+    private const bool RemoveDuplicateImages = true;
+    private const bool DrawDebugLines        = false;
 
     // ========================================================================
     // ========================================================================
@@ -198,11 +200,11 @@ public class MainGame : ApplicationAdapter
         {
             TexturePacker.Settings settings = new TexturePacker.Settings();
 
-            settings.maxWidth  = 2048; // Maximum Width of final atlas image
-            settings.maxHeight = 2048; // Maximum Height of final atlas image
-            settings.pot       = true;
-            settings.debug     = _drawDebugLines;
-            settings.alias     = _removeDuplicateImages;
+            settings.MaxWidth  = 2048; // Maximum Width of final atlas image
+            settings.MaxHeight = 2048; // Maximum Height of final atlas image
+            settings.PowerOfTwo       = true;
+            settings.Debug     = DrawDebugLines;
+            settings.IsAlias     = RemoveDuplicateImages;
 
             //
             // Build the Atlases from the specified parameters :-
@@ -210,11 +212,11 @@ public class MainGame : ApplicationAdapter
             // - source folder
             // - destination folder
             // - name of atlas, without extension (the extension '.atlas' will be added automatically)
-            TexturePacker.process( settings, "data/packedimages/objects", "data/packedimages/output", "objects" );
-            TexturePacker.process( settings, "data/packedimages/animations", "data/packedimages/output", "animations" );
-            TexturePacker.process( settings, "data/packedimages/achievements", "data/packedimages/output", "achievements" );
-            TexturePacker.process( settings, "data/packedimages/input", "data/packedimages/output", "buttons" );
-            TexturePacker.process( settings, "data/packedimages/text", "data/packedimages/output", "text" );
+            TexturePacker.Process( settings, "data/packedimages/objects", "data/packedimages/output", "objects" );
+            TexturePacker.Process( settings, "data/packedimages/animations", "data/packedimages/output", "animations" );
+            TexturePacker.Process( settings, "data/packedimages/achievements", "data/packedimages/output", "achievements" );
+            TexturePacker.Process( settings, "data/packedimages/input", "data/packedimages/output", "buttons" );
+            TexturePacker.Process( settings, "data/packedimages/text", "data/packedimages/output", "text" );
         }
     }
 }

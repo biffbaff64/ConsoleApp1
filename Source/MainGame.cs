@@ -1,6 +1,8 @@
 ﻿//#define KEYBOARD
 //#define OGL_TEST
 
+using System.Runtime.Versioning;
+
 using LughSharp.Lugh.Assets;
 using LughSharp.Lugh.Assets.Loaders;
 using LughSharp.Lugh.Core;
@@ -39,9 +41,9 @@ public class MainGame : ApplicationAdapter
     private readonly OpenGLTest _openGLTest = new();
     #endif
 
-    private const bool RebuildAtlas          = true;
-    private const bool RemoveDuplicateImages = true;
-    private const bool DrawDebugLines        = false;
+    private const bool REBUILD_ATLAS          = true;
+    private const bool REMOVE_DUPLICATE_IMAGES = true;
+    private const bool DRAW_DEBUG_LINES        = false;
 
     // ========================================================================
     // ========================================================================
@@ -194,17 +196,19 @@ public class MainGame : ApplicationAdapter
     // ========================================================================
     // ========================================================================
 
+    [SupportedOSPlatform( "windows" )]
     private void PackImages()
     {
-        if ( RebuildAtlas )
+        if ( REBUILD_ATLAS )
         {
-            TexturePacker.Settings settings = new TexturePacker.Settings();
-
-            settings.MaxWidth  = 2048; // Maximum Width of final atlas image
-            settings.MaxHeight = 2048; // Maximum Height of final atlas image
-            settings.PowerOfTwo       = true;
-            settings.Debug     = DrawDebugLines;
-            settings.IsAlias     = RemoveDuplicateImages;
+            var settings = new TexturePacker.Settings
+            {
+                MaxWidth   = 2048, // Maximum Width of final atlas image
+                MaxHeight  = 2048, // Maximum Height of final atlas image
+                PowerOfTwo = true,
+                Debug      = DRAW_DEBUG_LINES,
+                IsAlias    = REMOVE_DUPLICATE_IMAGES,
+            };
 
             //
             // Build the Atlases from the specified parameters :-

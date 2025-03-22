@@ -57,8 +57,4 @@
         </Content>
     </ItemGroup>
 
-    <ItemGroup>
-        <Folder Include="bin\Debug\"/>
-    </ItemGroup>
-
 </Project>

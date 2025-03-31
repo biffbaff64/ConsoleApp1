@@ -41,7 +41,7 @@ public class MainGame : ApplicationAdapter
     private readonly OpenGLTest _openGLTest = new();
     #endif
 
-    private const bool REBUILD_ATLAS          = true;
+    private const bool REBUILD_ATLAS           = true;
     private const bool REMOVE_DUPLICATE_IMAGES = true;
     private const bool DRAW_DEBUG_LINES        = false;
 

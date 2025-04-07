@@ -1,5 +1,10 @@
 ﻿//#define KEYBOARD
 //#define OGL_TEST
+//#define JSON_TEST
+#define PACK_IMAGES
+//define LOAD_ASSETS
+
+// ============================================================================
 
 using System.Runtime.Versioning;
 
@@ -14,6 +19,7 @@ using LughSharp.Lugh.Graphics.Packing;
 using LughSharp.Lugh.Graphics.Text;
 using LughSharp.Lugh.Utils;
 using LughSharp.Lugh.Utils.Exceptions;
+using LughSharp.Tests.Source;
 
 namespace ConsoleApp1.Source;
 
@@ -41,6 +47,10 @@ public class MainGame : ApplicationAdapter
     private readonly OpenGLTest _openGLTest = new();
     #endif
 
+    #if JSON_TEST
+    private readonly JsonTest _jsonTest = new();
+    #endif
+    
     private const bool REBUILD_ATLAS           = true;
     private const bool REMOVE_DUPLICATE_IMAGES = true;
     private const bool DRAW_DEBUG_LINES        = false;
@@ -75,14 +85,22 @@ public class MainGame : ApplicationAdapter
         GdxApi.Input.InputProcessor = _inputMultiplexer;
         #endif
 
+        #if PACK_IMAGES
         PackImages();
-
+        #endif
+        
+        #if LOAD_ASSETS
         LoadAssets();
+        #endif
 
         #if OGL_TEST
         _openGLTest.Create();
         #endif
 
+        #if JSON_TEST
+        _jsonTest.Create();
+        #endif
+        
         Logger.Debug( "Done" );
     }
 
@@ -210,17 +228,16 @@ public class MainGame : ApplicationAdapter
                 IsAlias    = REMOVE_DUPLICATE_IMAGES,
             };
 
-            //
             // Build the Atlases from the specified parameters :-
             // - configuration settings
             // - source folder
             // - destination folder
             // - name of atlas, without extension (the extension '.atlas' will be added automatically)
             TexturePacker.Process( settings, "data/packedimages/objects", "data/packedimages/output", "objects" );
-            TexturePacker.Process( settings, "data/packedimages/animations", "data/packedimages/output", "animations" );
-            TexturePacker.Process( settings, "data/packedimages/achievements", "data/packedimages/output", "achievements" );
-            TexturePacker.Process( settings, "data/packedimages/input", "data/packedimages/output", "buttons" );
-            TexturePacker.Process( settings, "data/packedimages/text", "data/packedimages/output", "text" );
+//            TexturePacker.Process( settings, "data/packedimages/animations", "data/packedimages/output", "animations" );
+//            TexturePacker.Process( settings, "data/packedimages/achievements", "data/packedimages/output", "achievements" );
+//            TexturePacker.Process( settings, "data/packedimages/input", "data/packedimages/output", "buttons" );
+//            TexturePacker.Process( settings, "data/packedimages/text", "data/packedimages/output", "text" );
         }
     }
 }

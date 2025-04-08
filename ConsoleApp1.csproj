@@ -56,6 +56,178 @@
         <Content Include="Assets\rover_wheel.png">
             <CopyToOutputDirectory>Always</CopyToOutputDirectory>
         </Content>
+        <None Remove="Assets\PackedImages\Objects\bar.png" />
+        <Content Include="Assets\PackedImages\Objects\bar.png">
+          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </Content>
+        <None Remove="Assets\PackedImages\Objects\bar9.png" />
+        <Content Include="Assets\PackedImages\Objects\bar9.png">
+          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </Content>
+        <None Remove="Assets\PackedImages\Objects\bar9patch.png" />
+        <Content Include="Assets\PackedImages\Objects\bar9patch.png">
+          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </Content>
+        <None Remove="Assets\PackedImages\Objects\bar_green.png" />
+        <Content Include="Assets\PackedImages\Objects\bar_green.png">
+          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </Content>
+        <None Remove="Assets\PackedImages\Objects\bar_green9.png" />
+        <Content Include="Assets\PackedImages\Objects\bar_green9.png">
+          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </Content>
+        <None Remove="Assets\PackedImages\Objects\bar_grey.png" />
+        <Content Include="Assets\PackedImages\Objects\bar_grey.png">
+          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </Content>
+        <None Remove="Assets\PackedImages\Objects\bar_orange.png" />
+        <Content Include="Assets\PackedImages\Objects\bar_orange.png">
+          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </Content>
+        <None Remove="Assets\PackedImages\Objects\bar_orange9.png" />
+        <Content Include="Assets\PackedImages\Objects\bar_orange9.png">
+          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </Content>
+        <None Remove="Assets\PackedImages\Objects\bar_red.png" />
+        <Content Include="Assets\PackedImages\Objects\bar_red.png">
+          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </Content>
+        <None Remove="Assets\PackedImages\Objects\bar_red9.png" />
+        <Content Include="Assets\PackedImages\Objects\bar_red9.png">
+          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </Content>
+        <None Remove="Assets\PackedImages\Objects\bar_yellow.png" />
+        <Content Include="Assets\PackedImages\Objects\bar_yellow.png">
+          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </Content>
+        <None Remove="Assets\PackedImages\Objects\bar_yellow9.png" />
+        <Content Include="Assets\PackedImages\Objects\bar_yellow9.png">
+          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </Content>
+        <None Remove="Assets\PackedImages\Objects\big_block_cover_bottom.png" />
+        <Content Include="Assets\PackedImages\Objects\big_block_cover_bottom.png">
+          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </Content>
+        <None Remove="Assets\PackedImages\Objects\big_block_cover_left.png" />
+        <Content Include="Assets\PackedImages\Objects\big_block_cover_left.png">
+          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </Content>
+        <None Remove="Assets\PackedImages\Objects\big_block_cover_right.png" />
+        <Content Include="Assets\PackedImages\Objects\big_block_cover_right.png">
+          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </Content>
+        <None Remove="Assets\PackedImages\Objects\books_panel.png" />
+        <Content Include="Assets\PackedImages\Objects\books_panel.png">
+          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </Content>
+        <None Remove="Assets\PackedImages\Objects\compass.png" />
+        <Content Include="Assets\PackedImages\Objects\compass.png">
+          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </Content>
+        <None Remove="Assets\PackedImages\Objects\complete_star.png" />
+        <Content Include="Assets\PackedImages\Objects\complete_star.png">
+          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </Content>
+        <None Remove="Assets\PackedImages\Objects\completed_panel.png" />
+        <Content Include="Assets\PackedImages\Objects\completed_panel.png">
+          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </Content>
+        <None Remove="Assets\PackedImages\Objects\dialog_background.png" />
+        <Content Include="Assets\PackedImages\Objects\dialog_background.png">
+          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </Content>
+        <None Remove="Assets\PackedImages\Objects\divider.png" />
+        <Content Include="Assets\PackedImages\Objects\divider.png">
+          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </Content>
+        <None Remove="Assets\PackedImages\Objects\key_held_panel.png" />
+        <Content Include="Assets\PackedImages\Objects\key_held_panel.png">
+          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </Content>
+        <None Remove="Assets\PackedImages\Objects\loadbar_background.png" />
+        <Content Include="Assets\PackedImages\Objects\loadbar_background.png">
+          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </Content>
+        <None Remove="Assets\PackedImages\Objects\menu_arrows_green.png" />
+        <Content Include="Assets\PackedImages\Objects\menu_arrows_green.png">
+          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </Content>
+        <None Remove="Assets\PackedImages\Objects\menu_glow_blue01.png" />
+        <Content Include="Assets\PackedImages\Objects\menu_glow_blue01.png">
+          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </Content>
+        <None Remove="Assets\PackedImages\Objects\menu_glow_green01.png" />
+        <Content Include="Assets\PackedImages\Objects\menu_glow_green01.png">
+          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </Content>
+        <None Remove="Assets\PackedImages\Objects\message_panel1.png" />
+        <Content Include="Assets\PackedImages\Objects\message_panel1.png">
+          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </Content>
+        <None Remove="Assets\PackedImages\Objects\message_panel2.png" />
+        <Content Include="Assets\PackedImages\Objects\message_panel2.png">
+          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </Content>
+        <None Remove="Assets\PackedImages\Objects\message_panel3.png" />
+        <Content Include="Assets\PackedImages\Objects\message_panel3.png">
+          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </Content>
+        <None Remove="Assets\PackedImages\Objects\potions_panel.png" />
+        <Content Include="Assets\PackedImages\Objects\potions_panel.png">
+          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </Content>
+        <None Remove="Assets\PackedImages\Objects\red7logo.png" />
+        <Content Include="Assets\PackedImages\Objects\red7logo.png">
+          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </Content>
+        <None Remove="Assets\PackedImages\Objects\red7logo_large.png" />
+        <Content Include="Assets\PackedImages\Objects\red7logo_large.png">
+          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </Content>
+        <None Remove="Assets\PackedImages\Objects\red7logo_small.png" />
+        <Content Include="Assets\PackedImages\Objects\red7logo_small.png">
+          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </Content>
+        <None Remove="Assets\PackedImages\Objects\runes_panel.png" />
+        <Content Include="Assets\PackedImages\Objects\runes_panel.png">
+          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </Content>
+        <None Remove="Assets\PackedImages\Objects\smallbar9.png" />
+        <Content Include="Assets\PackedImages\Objects\smallbar9.png">
+          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </Content>
+        <None Remove="Assets\PackedImages\Objects\solid_black32x32.png" />
+        <Content Include="Assets\PackedImages\Objects\solid_black32x32.png">
+          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </Content>
+        <None Remove="Assets\PackedImages\Objects\solid_blue32x32.png" />
+        <Content Include="Assets\PackedImages\Objects\solid_blue32x32.png">
+          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </Content>
+        <None Remove="Assets\PackedImages\Objects\solid_clear32x32.png" />
+        <Content Include="Assets\PackedImages\Objects\solid_clear32x32.png">
+          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </Content>
+        <None Remove="Assets\PackedImages\Objects\solid_green32x32.png" />
+        <Content Include="Assets\PackedImages\Objects\solid_green32x32.png">
+          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </Content>
+        <None Remove="Assets\PackedImages\Objects\solid_lime32x32.png" />
+        <Content Include="Assets\PackedImages\Objects\solid_lime32x32.png">
+          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </Content>
+        <None Remove="Assets\PackedImages\Objects\solid_red32x32.png" />
+        <Content Include="Assets\PackedImages\Objects\solid_red32x32.png">
+          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </Content>
+        <None Remove="Assets\PackedImages\Objects\solid_white32x32.png" />
+        <Content Include="Assets\PackedImages\Objects\solid_white32x32.png">
+          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </Content>
+        <None Remove="Assets\PackedImages\Objects\solid_yellow32x32.png" />
+        <Content Include="Assets\PackedImages\Objects\solid_yellow32x32.png">
+          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </Content>
     </ItemGroup>
 
 </Project>

@@ -233,11 +233,11 @@ public class MainGame : ApplicationAdapter
             // - source folder
             // - destination folder
             // - name of atlas, without extension (the extension '.atlas' will be added automatically)
-            TexturePacker.Process( settings, "data/packedimages/objects", "data/packedimages/output", "objects" );
-//            TexturePacker.Process( settings, "data/packedimages/animations", "data/packedimages/output", "animations" );
-//            TexturePacker.Process( settings, "data/packedimages/achievements", "data/packedimages/output", "achievements" );
-//            TexturePacker.Process( settings, "data/packedimages/input", "data/packedimages/output", "buttons" );
-//            TexturePacker.Process( settings, "data/packedimages/text", "data/packedimages/output", "text" );
+            TexturePacker.Process( settings, "Assets/PackedImages/Objects", "Assets/PackedImages/output", "objects" );
+//            TexturePacker.Process( settings, "packedimages/animations", "packedimages/output", "animations" );
+//            TexturePacker.Process( settings, "packedimages/achievements", "packedimages/output", "achievements" );
+//            TexturePacker.Process( settings, "packedimages/input", "packedimages/output", "buttons" );
+//            TexturePacker.Process( settings, "packedimages/text", "packedimages/output", "text" );
         }
     }
 }

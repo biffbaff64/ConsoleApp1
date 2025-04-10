@@ -215,7 +215,7 @@ public class MainGame : ApplicationAdapter
     // ========================================================================
 
     [SupportedOSPlatform( "windows" )]
-    private void PackImages()
+    private static void PackImages()
     {
         if ( REBUILD_ATLAS )
         {

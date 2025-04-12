@@ -11,6 +11,7 @@ using System.Runtime.Versioning;
 using LughSharp.Lugh.Assets;
 using LughSharp.Lugh.Assets.Loaders;
 using LughSharp.Lugh.Core;
+using LughSharp.Lugh.Files;
 using LughSharp.Lugh.Graphics;
 using LughSharp.Lugh.Graphics.Cameras;
 using LughSharp.Lugh.Graphics.G2D;
@@ -233,7 +234,11 @@ public class MainGame : ApplicationAdapter
             // - source folder
             // - destination folder
             // - name of atlas, without extension (the extension '.atlas' will be added automatically)
-            TexturePacker.Process( settings, "Assets/PackedImages/Objects", "Assets/PackedImages/output", "objects" );
+            TexturePacker.Process( settings,
+                                   $@"{IOData.InternalPath}\Assets\PackedImages\Objects",
+                                   $@"{IOData.InternalPath}\Assets\PackedImages\output",
+                                   "objects" );
+            
 //            TexturePacker.Process( settings, "packedimages/animations", "packedimages/output", "animations" );
 //            TexturePacker.Process( settings, "packedimages/achievements", "packedimages/output", "achievements" );
 //            TexturePacker.Process( settings, "packedimages/input", "packedimages/output", "buttons" );

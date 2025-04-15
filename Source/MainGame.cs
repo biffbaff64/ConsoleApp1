@@ -1,23 +1,18 @@
 ﻿//#define KEYBOARD
 //#define OGL_TEST
-//#define JSON_TEST
-#define PACK_IMAGES
+#define JSON_TEST
+//#define PACK_IMAGES
 //define LOAD_ASSETS
 
 // ============================================================================
 
-using System.Runtime.Versioning;
-
 using LughSharp.Lugh.Assets;
 using LughSharp.Lugh.Assets.Loaders;
 using LughSharp.Lugh.Core;
-using LughSharp.Lugh.Files;
 using LughSharp.Lugh.Graphics;
 using LughSharp.Lugh.Graphics.Cameras;
 using LughSharp.Lugh.Graphics.G2D;
 using LughSharp.Lugh.Graphics.Images;
-using LughSharp.Lugh.Graphics.Packing;
-using LughSharp.Lugh.Graphics.Text;
 using LughSharp.Lugh.Utils;
 using LughSharp.Lugh.Utils.Exceptions;
 using LughSharp.Tests.Source;
@@ -52,10 +47,12 @@ public class MainGame : ApplicationAdapter
     private readonly JsonTest _jsonTest = new();
     #endif
     
+    #if PACK_IMAGES
     private const bool REBUILD_ATLAS           = true;
     private const bool REMOVE_DUPLICATE_IMAGES = true;
     private const bool DRAW_DEBUG_LINES        = false;
-
+    #endif
+    
     // ========================================================================
     // ========================================================================
 
@@ -215,6 +212,7 @@ public class MainGame : ApplicationAdapter
     // ========================================================================
     // ========================================================================
 
+    #if PACK_IMAGES
     [SupportedOSPlatform( "windows" )]
     private static void PackImages()
     {
@@ -245,4 +243,6 @@ public class MainGame : ApplicationAdapter
 //            TexturePacker.Process( settings, "packedimages/text", "packedimages/output", "text" );
         }
     }
+    #endif
 }
+

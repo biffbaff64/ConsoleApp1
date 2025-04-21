@@ -1,18 +1,24 @@
 ﻿//#define KEYBOARD
 //#define OGL_TEST
-#define JSON_TEST
-//#define PACK_IMAGES
+//#define JSON_TEST
+
+#define PACK_IMAGES
+
 //define LOAD_ASSETS
 
 // ============================================================================
 
+using System.Runtime.Versioning;
+
 using LughSharp.Lugh.Assets;
 using LughSharp.Lugh.Assets.Loaders;
 using LughSharp.Lugh.Core;
+using LughSharp.Lugh.Files;
 using LughSharp.Lugh.Graphics;
 using LughSharp.Lugh.Graphics.Cameras;
 using LughSharp.Lugh.Graphics.G2D;
 using LughSharp.Lugh.Graphics.Images;
+using LughSharp.Lugh.Graphics.Packing;
 using LughSharp.Lugh.Utils;
 using LughSharp.Lugh.Utils.Exceptions;
 using LughSharp.Tests.Source;
@@ -29,13 +35,10 @@ public class MainGame : ApplicationAdapter
     private const int X = 40;
     private const int Y = 40;
 
-    private AssetManager? _assetManager;
-    private Texture?      _image1;
-    private Texture?      _image2;
-
-    private Texture? _image3;
-
-//    private BitmapFont?         _bitmapFont;
+    private AssetManager?       _assetManager;
+    private Texture?            _image1;
+    private Texture?            _image2;
+    private Texture?            _image3;
     private OrthographicCamera? _camera;
     private SpriteBatch?        _spriteBatch;
 
@@ -46,13 +49,13 @@ public class MainGame : ApplicationAdapter
     #if JSON_TEST
     private readonly JsonTest _jsonTest = new();
     #endif
-    
+
     #if PACK_IMAGES
     private const bool REBUILD_ATLAS           = true;
     private const bool REMOVE_DUPLICATE_IMAGES = true;
     private const bool DRAW_DEBUG_LINES        = false;
     #endif
-    
+
     // ========================================================================
     // ========================================================================
 
@@ -70,8 +73,6 @@ public class MainGame : ApplicationAdapter
         _image1       = null;
         _image2       = null;
 
-//        _bitmapFont   = new BitmapFont();
-
         // ====================================================================
         // ====================================================================
 
@@ -86,7 +87,7 @@ public class MainGame : ApplicationAdapter
         #if PACK_IMAGES
         PackImages();
         #endif
-        
+
         #if LOAD_ASSETS
         LoadAssets();
         #endif
@@ -98,7 +99,7 @@ public class MainGame : ApplicationAdapter
         #if JSON_TEST
         _jsonTest.Create();
         #endif
-        
+
         Logger.Debug( "Done" );
     }
 
@@ -171,6 +172,7 @@ public class MainGame : ApplicationAdapter
     // ========================================================================
     // ========================================================================
 
+    #if LOAD_ASSETS
     private void LoadAssets()
     {
         GdxRuntimeException.ThrowIfNull( _assetManager );
@@ -208,7 +210,8 @@ public class MainGame : ApplicationAdapter
 //            Logger.Debug( "Asset loading failed" );
 //        }
     }
-
+    #endif
+    
     // ========================================================================
     // ========================================================================
 
@@ -236,7 +239,7 @@ public class MainGame : ApplicationAdapter
                                    $@"{IOData.InternalPath}\Assets\PackedImages\Objects",
                                    $@"{IOData.InternalPath}\Assets\PackedImages\output",
                                    "objects" );
-            
+
 //            TexturePacker.Process( settings, "packedimages/animations", "packedimages/output", "animations" );
 //            TexturePacker.Process( settings, "packedimages/achievements", "packedimages/output", "achievements" );
 //            TexturePacker.Process( settings, "packedimages/input", "packedimages/output", "buttons" );
@@ -245,4 +248,3 @@ public class MainGame : ApplicationAdapter
     }
     #endif
 }
-

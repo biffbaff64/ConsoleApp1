@@ -37,7 +37,7 @@
   "Grid": false,
   "Scale": [ 1 ],
   "ScaleSuffix": [ "" ],
-  "ScaleResampling": [ "bicubic" ],
+  "ScaleResampling": [ "Bicubic" ],
   "AtlasExtension": ".atlas",
   "PrettyPrint": true,
   "LegacyOutput": true

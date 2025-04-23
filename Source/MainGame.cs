@@ -230,6 +230,9 @@ public class MainGame : ApplicationAdapter
                 IsAlias    = REMOVE_DUPLICATE_IMAGES,
             };
 
+//            settings.WriteToJsonFile( "ExampleSettings.json" );
+//            settings.ScaleResamplingTest4();
+            
             // Build the Atlases from the specified parameters :-
             // - configuration settings
             // - source folder

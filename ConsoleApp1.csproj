@@ -114,10 +114,6 @@
         <None Remove="Assets\PackedImages\Objects\solid_red32x32.png" />
         <None Remove="Assets\PackedImages\Objects\solid_white32x32.png" />
         <None Remove="Assets\PackedImages\Objects\solid_yellow32x32.png" />
-        <None Remove="Assets\PackedImages\Objects\pack.json" />
-        <Content Include="Assets\PackedImages\Objects\pack.json">
-          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-        </Content>
     </ItemGroup>
 
 </Project>

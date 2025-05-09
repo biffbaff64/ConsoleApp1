@@ -239,8 +239,8 @@ public class MainGame : ApplicationAdapter
             // - destination folder
             // - name of atlas, without extension (the extension '.atlas' will be added automatically)
             TexturePacker.Process( settings,
-                                   $@"{IOData.InternalPath}\Assets\PackedImages\Objects",
-                                   $@"{IOData.InternalPath}\Assets\PackedImages\output",
+                                   @"\Assets\PackedImages\Objects",
+                                   @"\Assets\PackedImages\output",
                                    "objects" );
 
 //            TexturePacker.Process( settings, "packedimages/animations", "packedimages/output", "animations" );

@@ -28,6 +28,15 @@
 
     <ItemGroup>
         <None Remove="Assets\red7logo_small.png" />
+        <Content Include="Assets\PackedImages\Objects\bar_orange.png">
+          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </Content>
+        <Content Include="Assets\PackedImages\Objects\bar_red.png">
+          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </Content>
+        <Content Include="Assets\PackedImages\Objects\bar_yellow.png">
+          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </Content>
         <Content Include="Assets\red7logo_small.png">
             <CopyToOutputDirectory>Always</CopyToOutputDirectory>
         </Content>
@@ -61,21 +70,12 @@
           <CopyToOutputDirectory>Always</CopyToOutputDirectory>
         </Content>
         <None Remove="Assets\PackedImages\Objects\bar9.png" />
-        <Content Include="Assets\PackedImages\Objects\bar9.png">
-          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-        </Content>
         <None Remove="Assets\PackedImages\Objects\bar9patch.png" />
-        <Content Include="Assets\PackedImages\Objects\bar9patch.png">
-          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-        </Content>
         <None Remove="Assets\PackedImages\Objects\bar_green.png" />
         <Content Include="Assets\PackedImages\Objects\bar_green.png">
           <CopyToOutputDirectory>Always</CopyToOutputDirectory>
         </Content>
         <None Remove="Assets\PackedImages\Objects\bar_green9.png" />
-        <Content Include="Assets\PackedImages\Objects\bar_green9.png">
-          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-        </Content>
         <None Remove="Assets\PackedImages\Objects\bar_grey.png" />
         <None Remove="Assets\PackedImages\Objects\bar_orange.png" />
         <None Remove="Assets\PackedImages\Objects\bar_orange9.png" />

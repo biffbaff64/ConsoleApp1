@@ -37,8 +37,8 @@
         <Content Include="Assets\PackedImages\Objects\bar_yellow.png">
           <CopyToOutputDirectory>Always</CopyToOutputDirectory>
         </Content>
-        <Content Include="Assets\red7logo_small.png">
-            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        <Content Include="Assets\PackedImages\Objects\red7logo_small.png">
+          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
         </Content>
         <None Remove="Assets\arial-15.fnt" />
         <Content Include="Assets\arial-15.fnt">
@@ -58,13 +58,7 @@
         </Content>
         <None Remove="Assets\red7logo_small.bmp" />
         <None Remove="Assets\libgdx.png" />
-        <Content Include="Assets\libgdx.png">
-            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-        </Content>
         <None Remove="Assets\rover_wheel.png" />
-        <Content Include="Assets\rover_wheel.png">
-            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-        </Content>
         <None Remove="Assets\PackedImages\Objects\bar.png" />
         <Content Include="Assets\PackedImages\Objects\bar.png">
           <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -114,6 +108,14 @@
         <None Remove="Assets\PackedImages\Objects\solid_red32x32.png" />
         <None Remove="Assets\PackedImages\Objects\solid_white32x32.png" />
         <None Remove="Assets\PackedImages\Objects\solid_yellow32x32.png" />
+        <None Remove="Assets\PackedImages\Objects\libgdx.png" />
+        <Content Include="Assets\PackedImages\Objects\libgdx.png">
+          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </Content>
+        <None Remove="Assets\PackedImages\Objects\rover_wheel.png" />
+        <Content Include="Assets\PackedImages\Objects\rover_wheel.png">
+          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </Content>
     </ItemGroup>
 
 </Project>

@@ -1,10 +1,9 @@
 ﻿//#define KEYBOARD
 //#define OGL_TEST
 //#define JSON_TEST
+//#define PACK_IMAGES
 
-#define PACK_IMAGES
-
-//define LOAD_ASSETS
+#define LOAD_ASSETS
 
 // ============================================================================
 
@@ -13,12 +12,15 @@ using System.Runtime.Versioning;
 using Extensions.Source.Tools.ImagePacker;
 
 using LughSharp.Lugh.Assets;
+using LughSharp.Lugh.Assets.Loaders;
 using LughSharp.Lugh.Core;
+using LughSharp.Lugh.Files;
 using LughSharp.Lugh.Graphics;
 using LughSharp.Lugh.Graphics.Cameras;
 using LughSharp.Lugh.Graphics.G2D;
 using LughSharp.Lugh.Graphics.Images;
 using LughSharp.Lugh.Utils;
+using LughSharp.Lugh.Utils.Exceptions;
 
 namespace ConsoleApp1.Source;
 
@@ -32,12 +34,12 @@ public class MainGame : ApplicationAdapter
     private const int X = 40;
     private const int Y = 40;
 
-    private AssetManager?       _assetManager;
-    private Texture?            _image1;
-    private Texture?            _image2;
-    private Texture?            _image3;
-    private OrthographicCamera? _camera;
-    private SpriteBatch?        _spriteBatch;
+    private AssetManager?           _assetManager;
+    private Texture?                _image1;
+    private Texture?                _image2;
+    private Texture?                _image3;
+    private OrthographicGameCamera? _camera;
+    private SpriteBatch?            _spriteBatch;
 
     #if OGL_TEST
     private readonly OpenGLTest _openGLTest = new();
@@ -48,9 +50,9 @@ public class MainGame : ApplicationAdapter
     #endif
 
     #if PACK_IMAGES
-    private const bool REBUILD_ATLAS           = true;
+    private const bool REBUILD_ATLAS = true;
     private const bool REMOVE_DUPLICATE_IMAGES = true;
-    private const bool DRAW_DEBUG_LINES        = false;
+    private const bool DRAW_DEBUG_LINES = false;
     #endif
 
     // ========================================================================
@@ -61,9 +63,11 @@ public class MainGame : ApplicationAdapter
     {
         _spriteBatch = new SpriteBatch();
 
-        _camera = new OrthographicCamera( Gdx.GdxApi.Graphics.Width, Gdx.GdxApi.Graphics.Height )
+        _camera = new OrthographicGameCamera( Gdx.GdxApi.Graphics.Width, Gdx.GdxApi.Graphics.Height )
         {
-            Zoom = 1f,
+            CameraZoom       = 1f,
+            PPM              = 32.0f,
+            IsLerpingEnabled = false,
         };
 
         _assetManager = new AssetManager();
@@ -97,6 +101,8 @@ public class MainGame : ApplicationAdapter
         _jsonTest.Create();
         #endif
 
+        IOUtils.DebugPaths();
+
         Logger.Debug( "Done" );
     }
 
@@ -112,34 +118,40 @@ public class MainGame : ApplicationAdapter
 
         if ( ( _camera != null ) && ( _spriteBatch != null ) )
         {
-            _camera.Update();
-
-            _spriteBatch.SetProjectionMatrix( _camera.Combined );
-            _spriteBatch.SetTransformMatrix( _camera.View );
-
-//            _spriteBatch.DisableBlending();
-            _spriteBatch.Begin();
-
-            if ( _image1 != null )
+            if ( _camera.IsInUse )
             {
-                _spriteBatch.Draw( _image1, X, Y, _image1.Width, _image1.Height );
+                _camera.Viewport?.Apply();
+                _spriteBatch.SetProjectionMatrix( _camera.Camera.Combined );
+                _spriteBatch.SetTransformMatrix( _camera.Camera.View );
+
+                _spriteBatch.EnableBlending();
+                _spriteBatch.Begin();
+
+                _camera.Position.X = 0 + ( Gdx.GdxApi.Graphics.Width / 2f );
+                _camera.Position.Y = 0 + ( Gdx.GdxApi.Graphics.Height / 2f );
+                _camera.Position.Z = 0;
+                
+                if ( _image1 != null )
+                {
+                    _spriteBatch.Draw( _image1, X, Y, _image1.Width, _image1.Height );
+                }
+
+                if ( _image2 != null )
+                {
+                    _spriteBatch.Draw( _image2, X, Y, _image2.Width, _image2.Height );
+                }
+
+                if ( _image3 != null )
+                {
+                    _spriteBatch.Draw( _image3, X, Y, _image3.Width, _image3.Height );
+                }
+
+                #if OGL_TEST
+                _openGLTest.Render();
+                #endif
+
+                _spriteBatch.End();
             }
-
-            if ( _image2 != null )
-            {
-                _spriteBatch.Draw( _image2, X, Y, _image2.Width, _image2.Height );
-            }
-
-            if ( _image3 != null )
-            {
-                _spriteBatch.Draw( _image3, X, Y, _image3.Width, _image3.Height );
-            }
-
-            #if OGL_TEST
-            _openGLTest.Render();
-            #endif
-
-            _spriteBatch.End();
         }
     }
 
@@ -148,9 +160,9 @@ public class MainGame : ApplicationAdapter
     {
         if ( _camera != null )
         {
-            _camera.ViewportWidth  = width;
-            _camera.ViewportHeight = height;
-            _camera.Update();
+            _camera.Camera.ViewportWidth  = width;
+            _camera.Camera.ViewportHeight = height;
+            _camera.Camera.Update();
         }
     }
 
@@ -208,7 +220,7 @@ public class MainGame : ApplicationAdapter
 //        }
     }
     #endif
-    
+
     // ========================================================================
     // ========================================================================
 
@@ -220,11 +232,11 @@ public class MainGame : ApplicationAdapter
         {
             var settings = new TexturePacker.Settings
             {
-                MaxWidth   = 2048, // Maximum Width of final atlas image
-                MaxHeight  = 2048, // Maximum Height of final atlas image
+                MaxWidth = 2048, // Maximum Width of final atlas image
+                MaxHeight = 2048, // Maximum Height of final atlas image
                 PowerOfTwo = true,
-                Debug      = DRAW_DEBUG_LINES,
-                IsAlias    = REMOVE_DUPLICATE_IMAGES,
+                Debug = DRAW_DEBUG_LINES,
+                IsAlias = REMOVE_DUPLICATE_IMAGES,
             };
 
 //            settings.WriteToJsonFile( "ExampleSettings.json" );

@@ -26,7 +26,7 @@ namespace ConsoleApp1.Source;
 
 public static class Assets
 {
-    public const string LIBGDX_LOGO = "Assets/libgdx.png";
-    public const string ROVER_WHEEL = "Assets/rover_wheel.png";
-    public const string RED7_LOGO   = "Assets/red7logo_small.png";
+    public const string LIBGDX_LOGO = "Assets/PackedImages/Objects/libgdx.png";
+    public const string ROVER_WHEEL = "Assets/PackedImages/Objects/rover_wheel.png";
+    public const string RED7_LOGO   = "Assets/PackedImages/Objects/red7logo_small.png";
 }

@@ -41,21 +41,9 @@
           <CopyToOutputDirectory>Always</CopyToOutputDirectory>
         </Content>
         <None Remove="Assets\arial-15.fnt" />
-        <Content Include="Assets\arial-15.fnt">
-            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-        </Content>
         <None Remove="Assets\arial-15.png" />
-        <Content Include="Assets\arial-15.png">
-            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-        </Content>
         <None Remove="Assets\lsans-15.fnt" />
-        <Content Include="Assets\lsans-15.fnt">
-            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-        </Content>
         <None Remove="Assets\lsans-15.png" />
-        <Content Include="Assets\lsans-15.png">
-            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-        </Content>
         <None Remove="Assets\red7logo_small.bmp" />
         <None Remove="Assets\libgdx.png" />
         <None Remove="Assets\rover_wheel.png" />
@@ -116,6 +104,28 @@
         <Content Include="Assets\PackedImages\Objects\rover_wheel.png">
           <CopyToOutputDirectory>Always</CopyToOutputDirectory>
         </Content>
+        <None Remove="Assets\Fonts\Acme-Regular.ttf" />
+        <None Remove="Assets\Fonts\arial-15.fnt" />
+        <None Remove="Assets\Fonts\arial-15.png" />
+        <None Remove="Assets\Fonts\Cave-Stone.ttf" />
+        <None Remove="Assets\Fonts\CENSCBK.TTF" />
+        <None Remove="Assets\Fonts\galaxy.ttf" />
+        <None Remove="Assets\Fonts\JMH Cthulhumbus UG.ttf" />
+        <None Remove="Assets\Fonts\JMH Cthulhumbus UGalt1.ttf" />
+        <None Remove="Assets\Fonts\JMH Cthulhumbus UGalt2.ttf" />
+        <None Remove="Assets\Fonts\lsans-15.fnt" />
+        <None Remove="Assets\Fonts\lsans-15.png" />
+        <None Remove="Assets\Fonts\MoriaCitadel.TTF" />
+        <None Remove="Assets\Fonts\Orbitron Bold.ttf" />
+        <None Remove="Assets\Fonts\OrcHordeBB_Reg.ttf" />
+        <None Remove="Assets\Fonts\OrcHordeInlineBB_Reg.ttf" />
+        <None Remove="Assets\Fonts\paraaminobenzoic.ttf" />
+        <None Remove="Assets\Fonts\ProFontWindows.ttf" />
+        <Content Include="Assets\Fonts\ProFontWindows.ttf">
+          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </Content>
+        <None Remove="Assets\Fonts\sansation.ttf" />
+        <None Remove="Assets\Fonts\videophreak.ttf" />
     </ItemGroup>
 
 </Project>

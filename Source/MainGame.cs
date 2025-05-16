@@ -2,11 +2,13 @@
 //#define OGL_TEST
 //#define JSON_TEST
 //#define PACK_IMAGES
+//#define LOAD_ASSETS
 
-#define LOAD_ASSETS
+#define FONTS
 
 // ============================================================================
 
+using System.Diagnostics;
 using System.Runtime.Versioning;
 
 using Extensions.Source.Tools.ImagePacker;
@@ -19,6 +21,9 @@ using LughSharp.Lugh.Graphics;
 using LughSharp.Lugh.Graphics.Cameras;
 using LughSharp.Lugh.Graphics.G2D;
 using LughSharp.Lugh.Graphics.Images;
+using LughSharp.Lugh.Graphics.Text;
+using LughSharp.Lugh.Graphics.Text.Freetype;
+using LughSharp.Lugh.Maths;
 using LughSharp.Lugh.Utils;
 using LughSharp.Lugh.Utils.Exceptions;
 
@@ -28,18 +33,16 @@ namespace ConsoleApp1.Source;
 public class MainGame : ApplicationAdapter
 {
     private const string TEST_ASSET1 = Assets.ROVER_WHEEL;
-    private const string TEST_ASSET2 = Assets.LIBGDX_LOGO;
-    private const string TEST_ASSET3 = Assets.RED7_LOGO;
 
     private const int X = 40;
     private const int Y = 40;
 
-    private AssetManager?           _assetManager;
-    private Texture?                _image1;
-    private Texture?                _image2;
-    private Texture?                _image3;
-    private OrthographicGameCamera? _camera;
-    private SpriteBatch?            _spriteBatch;
+    private          AssetManager?           _assetManager;
+    private          Texture?                _image1;
+    private          OrthographicGameCamera? _camera;
+    private readonly Vector3                 _cameraPos = Vector3.Zero;
+    private          SpriteBatch?            _spriteBatch;
+    private          BitmapFont?             _font;
 
     #if OGL_TEST
     private readonly OpenGLTest _openGLTest = new();
@@ -70,9 +73,15 @@ public class MainGame : ApplicationAdapter
             IsLerpingEnabled = false,
         };
 
+        _camera.SetStretchViewport();
+        _camera.SetZoomDefault( OrthographicGameCamera.DEFAULT_ZOOM );
+
         _assetManager = new AssetManager();
         _image1       = null;
-        _image2       = null;
+
+        #if FONTS
+        _font = CreateFont( "Assets/Fonts/ProFontWindows.ttf", 16 );
+        #endif
 
         // ====================================================================
         // ====================================================================
@@ -101,7 +110,7 @@ public class MainGame : ApplicationAdapter
         _jsonTest.Create();
         #endif
 
-        IOUtils.DebugPaths();
+//        IOUtils.DebugPaths();
 
         Logger.Debug( "Done" );
     }
@@ -121,29 +130,21 @@ public class MainGame : ApplicationAdapter
             if ( _camera.IsInUse )
             {
                 _camera.Viewport?.Apply();
-                _spriteBatch.SetProjectionMatrix( _camera.Camera.Combined );
-                _spriteBatch.SetTransformMatrix( _camera.Camera.View );
 
+                _spriteBatch.SetProjectionMatrix( _camera.Camera!.Combined );
+                _spriteBatch.SetTransformMatrix( _camera.Camera.View );
                 _spriteBatch.EnableBlending();
                 _spriteBatch.Begin();
 
-                _camera.Position.X = 0 + ( Gdx.GdxApi.Graphics.Width / 2f );
-                _camera.Position.Y = 0 + ( Gdx.GdxApi.Graphics.Height / 2f );
-                _camera.Position.Z = 0;
-                
+                _cameraPos.X = 0 + ( Gdx.GdxApi.Graphics.Width / 2f );
+                _cameraPos.Y = 0 + ( Gdx.GdxApi.Graphics.Height / 2f );
+                _cameraPos.Z = 0;
+
+                _camera.SetPosition( _cameraPos );
+
                 if ( _image1 != null )
                 {
                     _spriteBatch.Draw( _image1, X, Y, _image1.Width, _image1.Height );
-                }
-
-                if ( _image2 != null )
-                {
-                    _spriteBatch.Draw( _image2, X, Y, _image2.Width, _image2.Height );
-                }
-
-                if ( _image3 != null )
-                {
-                    _spriteBatch.Draw( _image3, X, Y, _image3.Width, _image3.Height );
                 }
 
                 #if OGL_TEST
@@ -160,7 +161,7 @@ public class MainGame : ApplicationAdapter
     {
         if ( _camera != null )
         {
-            _camera.Camera.ViewportWidth  = width;
+            _camera.Camera!.ViewportWidth = width;
             _camera.Camera.ViewportHeight = height;
             _camera.Camera.Update();
         }
@@ -170,9 +171,7 @@ public class MainGame : ApplicationAdapter
     public override void Dispose()
     {
         _spriteBatch?.Dispose();
-
         _image1?.Dispose();
-        _image2?.Dispose();
         _assetManager?.Dispose();
 
         GC.SuppressFinalize( this );
@@ -191,9 +190,6 @@ public class MainGame : ApplicationAdapter
         Logger.Divider();
 
         _assetManager.Load( TEST_ASSET1, typeof( Texture ), new TextureLoader.TextureLoaderParameters() );
-
-//        _assetManager.Load( TEST_ASSET2, typeof( Texture ), new TextureLoader.TextureLoaderParameters() );
-//        _assetManager.Load( TEST_ASSET3, typeof( Texture ), new TextureLoader.TextureLoaderParameters() );
         _assetManager.FinishLoading();
 
         if ( _assetManager.Contains( TEST_ASSET1 ) )
@@ -202,22 +198,10 @@ public class MainGame : ApplicationAdapter
             Logger.Debug( "_image1 is SET" );
         }
 
-        if ( _assetManager.Contains( TEST_ASSET2 ) )
+        if ( _image1 != null )
         {
-            _image2 = _assetManager.GetTexture( TEST_ASSET2 );
-            Logger.Debug( "_image2 is SET" );
+            Logger.Debug( "Asset loading failed" );
         }
-
-        if ( _assetManager.Contains( TEST_ASSET3 ) )
-        {
-            _image3 = _assetManager.GetTexture( TEST_ASSET3 );
-            Logger.Debug( "_image3 is SET" );
-        }
-
-//        if ( ( _image1 != null ) && ( _image2 != null ) && ( _image3 != null ) )
-//        {
-//            Logger.Debug( "Asset loading failed" );
-//        }
     }
     #endif
 
@@ -259,4 +243,48 @@ public class MainGame : ApplicationAdapter
         }
     }
     #endif
+
+    public BitmapFont CreateFont( string fontFile, int size, Color color )
+    {
+        BitmapFont font;
+
+        try
+        {
+            font = CreateFont( fontFile, size );
+            font.SetColor( color );
+        }
+        catch ( Exception e )
+        {
+            Logger.Warning( e.Message );
+
+            font = new BitmapFont();
+        }
+
+        return font;
+    }
+
+    public BitmapFont CreateFont( string fontFile, int size )
+    {
+        BitmapFont font;
+
+        try
+        {
+            var generator = new FreeTypeFontGenerator( Gdx.GdxApi.Files.Internal( fontFile ) );
+            var parameter = new FreeTypeFontGenerator.FreeTypeFontParameter()
+            {
+                Size = size,
+            };
+
+            font = generator.GenerateFont( parameter );
+            font.SetColor( Color.White );
+        }
+        catch ( Exception e )
+        {
+            Logger.Warning( e.Message );
+
+            font = new BitmapFont();
+        }
+
+        return font;
+    }
 }

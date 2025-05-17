@@ -3,8 +3,7 @@
 //#define JSON_TEST
 //#define PACK_IMAGES
 //#define LOAD_ASSETS
-
-#define FONTS
+//#define FONTS
 
 // ============================================================================
 
@@ -110,7 +109,7 @@ public class MainGame : ApplicationAdapter
         _jsonTest.Create();
         #endif
 
-//        IOUtils.DebugPaths();
+        IOUtils.DebugPaths();
 
         Logger.Debug( "Done" );
     }
@@ -269,6 +268,8 @@ public class MainGame : ApplicationAdapter
 
         try
         {
+            Logger.Debug( $"{Gdx.GdxApi.Files.Internal( fontFile )}" );
+            
             var generator = new FreeTypeFontGenerator( Gdx.GdxApi.Files.Internal( fontFile ) );
             var parameter = new FreeTypeFontGenerator.FreeTypeFontParameter()
             {

@@ -2,7 +2,7 @@
 //#define OGL_TEST
 //#define JSON_TEST
 //#define PACK_IMAGES
-//#define LOAD_ASSETS
+#define LOAD_ASSETS
 //#define FONTS
 
 // ============================================================================
@@ -78,6 +78,8 @@ public class MainGame : ApplicationAdapter
         _assetManager = new AssetManager();
         _image1       = null;
 
+//        IOUtils.DebugPaths();
+
         #if FONTS
         _font = CreateFont( "Assets/Fonts/ProFontWindows.ttf", 16 );
         #endif
@@ -108,8 +110,6 @@ public class MainGame : ApplicationAdapter
         #if JSON_TEST
         _jsonTest.Create();
         #endif
-
-        IOUtils.DebugPaths();
 
         Logger.Debug( "Done" );
     }
@@ -190,14 +190,16 @@ public class MainGame : ApplicationAdapter
 
         _assetManager.Load( TEST_ASSET1, typeof( Texture ), new TextureLoader.TextureLoaderParameters() );
         _assetManager.FinishLoading();
-
+        
         if ( _assetManager.Contains( TEST_ASSET1 ) )
         {
+            Logger.Checkpoint();
+            
             _image1 = _assetManager.GetTexture( TEST_ASSET1 );
-            Logger.Debug( "_image1 is SET" );
+            _image1?.Debug();
         }
 
-        if ( _image1 != null )
+        if ( _image1 == null )
         {
             Logger.Debug( "Asset loading failed" );
         }

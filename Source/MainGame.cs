@@ -193,10 +193,7 @@ public class MainGame : ApplicationAdapter
         
         if ( _assetManager.Contains( TEST_ASSET1 ) )
         {
-            Logger.Checkpoint();
-            
             _image1 = _assetManager.GetTexture( TEST_ASSET1 );
-            _image1?.Debug();
         }
 
         if ( _image1 == null )

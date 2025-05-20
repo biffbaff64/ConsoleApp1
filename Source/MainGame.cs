@@ -2,8 +2,8 @@
 //#define OGL_TEST
 //#define JSON_TEST
 //#define PACK_IMAGES
-#define LOAD_ASSETS
-//#define FONTS
+//#define LOAD_ASSETS
+#define FONTS
 
 // ============================================================================
 
@@ -22,6 +22,7 @@ using LughSharp.Lugh.Graphics.G2D;
 using LughSharp.Lugh.Graphics.Images;
 using LughSharp.Lugh.Graphics.Text;
 using LughSharp.Lugh.Graphics.Text.Freetype;
+using LughSharp.Lugh.Graphics.Utils;
 using LughSharp.Lugh.Maths;
 using LughSharp.Lugh.Utils;
 using LughSharp.Lugh.Utils.Exceptions;
@@ -74,6 +75,7 @@ public class MainGame : ApplicationAdapter
 
         _camera.SetStretchViewport();
         _camera.SetZoomDefault( OrthographicGameCamera.DEFAULT_ZOOM );
+        _camera.IsInUse = true;
 
         _assetManager = new AssetManager();
         _image1       = null;
@@ -81,7 +83,7 @@ public class MainGame : ApplicationAdapter
 //        IOUtils.DebugPaths();
 
         #if FONTS
-        _font = CreateFont( "Assets/Fonts/ProFontWindows.ttf", 16 );
+        _font = CreateFont( "Assets/Fonts/arial-15.fnt", 16 );
         #endif
 
         // ====================================================================
@@ -190,15 +192,34 @@ public class MainGame : ApplicationAdapter
 
         _assetManager.Load( TEST_ASSET1, typeof( Texture ), new TextureLoader.TextureLoaderParameters() );
         _assetManager.FinishLoading();
-        
+
         if ( _assetManager.Contains( TEST_ASSET1 ) )
         {
-            _image1 = _assetManager.GetTexture( TEST_ASSET1 );
+            _image1 = _assetManager.GetAs< Texture >( TEST_ASSET1 );
         }
 
         if ( _image1 == null )
         {
             Logger.Debug( "Asset loading failed" );
+        }
+        else
+        {
+            Logger.Debug( "Asset loaded" );
+
+//            var data = _image1.GetImageData();
+//
+//            if ( data != null )
+//            {
+//                for ( var i = 0; i < 20; i++ )
+//                {
+//                    for ( var j = 0; j < 20; j++ )
+//                    {
+//                        Logger.Data( $"[{data[ ( i * 20 ) + j ]:X}]", false );
+//                    }
+//                    
+//                    Logger.NewLine();
+//                }
+//            }
         }
     }
     #endif
@@ -267,16 +288,22 @@ public class MainGame : ApplicationAdapter
 
         try
         {
-            Logger.Debug( $"{Gdx.GdxApi.Files.Internal( fontFile )}" );
-            
-            var generator = new FreeTypeFontGenerator( Gdx.GdxApi.Files.Internal( fontFile ) );
+            var fileInfo  = new FileInfo( IOUtils.ValidateAssetPath( fontFile ) );
+
+            Logger.Debug( $"{fileInfo.FullName}" );
+
+            var generator = new FreeTypeFontGenerator( fileInfo );
+            Logger.Checkpoint();
             var parameter = new FreeTypeFontGenerator.FreeTypeFontParameter()
             {
                 Size = size,
             };
+            Logger.Checkpoint();
 
             font = generator.GenerateFont( parameter );
+            Logger.Checkpoint();
             font.SetColor( Color.White );
+            Logger.Checkpoint();
         }
         catch ( Exception e )
         {
@@ -285,6 +312,8 @@ public class MainGame : ApplicationAdapter
             font = new BitmapFont();
         }
 
+        Logger.Checkpoint();
+        
         return font;
     }
 }

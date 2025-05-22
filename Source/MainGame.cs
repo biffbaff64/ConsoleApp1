@@ -1,17 +1,16 @@
 ﻿//#define KEYBOARD
-//#define OGL_TEST
-//#define JSON_TEST
 //#define PACK_IMAGES
 //#define LOAD_ASSETS
-#define FONTS
 
 // ============================================================================
 
 using System.Diagnostics;
+using System.Globalization;
 using System.Runtime.Versioning;
 
 using Extensions.Source.Tools.ImagePacker;
 
+using LughSharp.Tests.Source;
 using LughSharp.Lugh.Assets;
 using LughSharp.Lugh.Assets.Loaders;
 using LughSharp.Lugh.Core;
@@ -21,7 +20,6 @@ using LughSharp.Lugh.Graphics.Cameras;
 using LughSharp.Lugh.Graphics.G2D;
 using LughSharp.Lugh.Graphics.Images;
 using LughSharp.Lugh.Graphics.Text;
-using LughSharp.Lugh.Graphics.Text.Freetype;
 using LughSharp.Lugh.Graphics.Utils;
 using LughSharp.Lugh.Maths;
 using LughSharp.Lugh.Utils;
@@ -43,14 +41,6 @@ public class MainGame : ApplicationAdapter
     private readonly Vector3                 _cameraPos = Vector3.Zero;
     private          SpriteBatch?            _spriteBatch;
     private          BitmapFont?             _font;
-
-    #if OGL_TEST
-    private readonly OpenGLTest _openGLTest = new();
-    #endif
-
-    #if JSON_TEST
-    private readonly JsonTest _jsonTest = new();
-    #endif
 
     #if PACK_IMAGES
     private const bool REBUILD_ATLAS = true;
@@ -79,13 +69,8 @@ public class MainGame : ApplicationAdapter
 
         _assetManager = new AssetManager();
         _image1       = null;
-
-//        IOUtils.DebugPaths();
-
-        #if FONTS
-        _font = CreateFont( "Assets/Fonts/arial-15.fnt", 16 );
-        #endif
-
+        _font         = new BitmapFont();
+        
         // ====================================================================
         // ====================================================================
 
@@ -103,14 +88,6 @@ public class MainGame : ApplicationAdapter
 
         #if LOAD_ASSETS
         LoadAssets();
-        #endif
-
-        #if OGL_TEST
-        _openGLTest.Create();
-        #endif
-
-        #if JSON_TEST
-        _jsonTest.Create();
         #endif
 
         Logger.Debug( "Done" );
@@ -148,10 +125,8 @@ public class MainGame : ApplicationAdapter
                     _spriteBatch.Draw( _image1, X, Y, _image1.Width, _image1.Height );
                 }
 
-                #if OGL_TEST
-                _openGLTest.Render();
-                #endif
-
+                _font?.Draw( _spriteBatch, "Hello World!", 10, 10 );
+                
                 _spriteBatch.End();
             }
         }
@@ -262,58 +237,4 @@ public class MainGame : ApplicationAdapter
         }
     }
     #endif
-
-    public BitmapFont CreateFont( string fontFile, int size, Color color )
-    {
-        BitmapFont font;
-
-        try
-        {
-            font = CreateFont( fontFile, size );
-            font.SetColor( color );
-        }
-        catch ( Exception e )
-        {
-            Logger.Warning( e.Message );
-
-            font = new BitmapFont();
-        }
-
-        return font;
-    }
-
-    public BitmapFont CreateFont( string fontFile, int size )
-    {
-        BitmapFont font;
-
-        try
-        {
-            var fileInfo  = new FileInfo( IOUtils.ValidateAssetPath( fontFile ) );
-
-            Logger.Debug( $"{fileInfo.FullName}" );
-
-            var generator = new FreeTypeFontGenerator( fileInfo );
-            Logger.Checkpoint();
-            var parameter = new FreeTypeFontGenerator.FreeTypeFontParameter()
-            {
-                Size = size,
-            };
-            Logger.Checkpoint();
-
-            font = generator.GenerateFont( parameter );
-            Logger.Checkpoint();
-            font.SetColor( Color.White );
-            Logger.Checkpoint();
-        }
-        catch ( Exception e )
-        {
-            Logger.Warning( e.Message );
-
-            font = new BitmapFont();
-        }
-
-        Logger.Checkpoint();
-        
-        return font;
-    }
 }

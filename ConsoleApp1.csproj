@@ -28,10 +28,16 @@
 
     <ItemGroup>
         <None Remove="Assets\red7logo_small.png" />
+        <Content Include="Assets\Fonts\Acme-Regular.ttf">
+          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </Content>
         <Content Include="Assets\Fonts\arial-15.fnt">
           <CopyToOutputDirectory>Always</CopyToOutputDirectory>
         </Content>
         <Content Include="Assets\Fonts\arial-15.png">
+          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </Content>
+        <Content Include="Assets\Fonts\CENSCBK.TTF">
           <CopyToOutputDirectory>Always</CopyToOutputDirectory>
         </Content>
         <Content Include="Assets\Fonts\lsans-15.fnt">

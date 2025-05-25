@@ -31,10 +31,11 @@ namespace ConsoleApp1.Source;
 public class MainGame : ApplicationAdapter
 {
     private const string TEST_ASSET1 = Assets.ROVER_WHEEL;
+    private const int    X           = 40;
+    private const int    Y           = 40;
 
-    private const int X = 40;
-    private const int Y = 40;
-
+    // ========================================================================
+    
     private          AssetManager?           _assetManager;
     private          Texture?                _image1;
     private          OrthographicGameCamera? _camera;
@@ -42,6 +43,8 @@ public class MainGame : ApplicationAdapter
     private          SpriteBatch?            _spriteBatch;
     private          BitmapFont?             _font;
 
+    // ========================================================================
+    
     #if PACK_IMAGES
     private const bool REBUILD_ATLAS = true;
     private const bool REMOVE_DUPLICATE_IMAGES = true;
@@ -70,12 +73,13 @@ public class MainGame : ApplicationAdapter
         _assetManager = new AssetManager();
         _image1       = null;
         _font         = new BitmapFont();
-        
+
         // ====================================================================
         // ====================================================================
 
         #if KEYBOARD
         Logger.Debug( "Setting up Keyboard" );
+
         _keyboard = new Keyboard();
         _inputMultiplexer = new InputMultiplexer();
         _inputMultiplexer.AddProcessor( _keyboard );
@@ -126,7 +130,7 @@ public class MainGame : ApplicationAdapter
                 }
 
                 _font?.Draw( _spriteBatch, "Hello World!", 10, 10 );
-                
+
                 _spriteBatch.End();
             }
         }

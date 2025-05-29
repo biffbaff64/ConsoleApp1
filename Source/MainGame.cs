@@ -1,4 +1,5 @@
 ﻿//#define KEYBOARD
+//#define CAMERA
 //#define PACK_IMAGES
 //#define LOAD_ASSETS
 
@@ -27,24 +28,24 @@ using LughSharp.Lugh.Utils.Exceptions;
 
 namespace ConsoleApp1.Source;
 
-// ReSharper disable once MemberCanBeInternal
 public class MainGame : ApplicationAdapter
 {
     private const string TEST_ASSET1 = Assets.ROVER_WHEEL;
-    private const int    X           = 40;
-    private const int    Y           = 40;
 
     // ========================================================================
+
+    #if CAMERA
+    private readonly Vector3 _cameraPos = Vector3.Zero;
+//    private OrthographicGameCamera? _camera;
+    #endif
     
-    private          AssetManager?           _assetManager;
-    private          Texture?                _image1;
-    private          OrthographicGameCamera? _camera;
-    private readonly Vector3                 _cameraPos = Vector3.Zero;
-    private          SpriteBatch?            _spriteBatch;
-    private          BitmapFont?             _font;
+    private AssetManager?           _assetManager;
+    private Texture?                _image1;
+    private SpriteBatch?            _spriteBatch;
+    private BitmapFont?             _font;
 
     // ========================================================================
-    
+
     #if PACK_IMAGES
     private const bool REBUILD_ATLAS = true;
     private const bool REMOVE_DUPLICATE_IMAGES = true;
@@ -57,8 +58,12 @@ public class MainGame : ApplicationAdapter
     /// <inheritdoc />
     public override void Create()
     {
-        _spriteBatch = new SpriteBatch();
+        _assetManager = new AssetManager();
+        _image1       = null;
+        _font         = new BitmapFont();
+        _spriteBatch  = new SpriteBatch();
 
+        #if CAMERA
         _camera = new OrthographicGameCamera( Gdx.GdxApi.Graphics.Width, Gdx.GdxApi.Graphics.Height )
         {
             CameraZoom       = 1f,
@@ -69,11 +74,8 @@ public class MainGame : ApplicationAdapter
         _camera.SetStretchViewport();
         _camera.SetZoomDefault( OrthographicGameCamera.DEFAULT_ZOOM );
         _camera.IsInUse = true;
-
-        _assetManager = new AssetManager();
-        _image1       = null;
-        _font         = new BitmapFont();
-
+        #endif
+        
         // ====================================================================
         // ====================================================================
 
@@ -94,6 +96,9 @@ public class MainGame : ApplicationAdapter
         LoadAssets();
         #endif
 
+        _image1 = new Texture( TEST_ASSET1 );
+        _image1.Debug();
+
         Logger.Debug( "Done" );
     }
 
@@ -107,44 +112,44 @@ public class MainGame : ApplicationAdapter
     {
         ScreenUtils.Clear( Color.Blue );
 
-        if ( ( _camera != null ) && ( _spriteBatch != null ) )
+        if ( /*( _camera != null ) &&*/ ( _spriteBatch != null ) )
         {
-            if ( _camera.IsInUse )
-            {
-                _camera.Viewport?.Apply();
+//            if ( _camera.IsInUse )
+//            {
+//                _camera.Viewport?.Apply();
 
-                _spriteBatch.SetProjectionMatrix( _camera.Camera!.Combined );
-                _spriteBatch.SetTransformMatrix( _camera.Camera.View );
-                _spriteBatch.EnableBlending();
+//                _spriteBatch.SetProjectionMatrix( _camera.Camera!.Combined );
+//                _spriteBatch.SetTransformMatrix( _camera.Camera.View );
+//                _spriteBatch.EnableBlending();
                 _spriteBatch.Begin();
 
-                _cameraPos.X = 0 + ( Gdx.GdxApi.Graphics.Width / 2f );
-                _cameraPos.Y = 0 + ( Gdx.GdxApi.Graphics.Height / 2f );
-                _cameraPos.Z = 0;
+//                _cameraPos.X = 0 + ( _camera.Camera.ViewportWidth / 2f );
+//                _cameraPos.Y = 0 + ( _camera.Camera.ViewportHeight / 2f );
+//                _cameraPos.Z = 0;
 
-                _camera.SetPosition( _cameraPos );
+//                _camera.SetPosition( _cameraPos );
 
                 if ( _image1 != null )
                 {
-                    _spriteBatch.Draw( _image1, X, Y, _image1.Width, _image1.Height );
+                    _spriteBatch.Draw( _image1, 140, 210 );
                 }
 
-                _font?.Draw( _spriteBatch, "Hello World!", 10, 10 );
+//                _font?.Draw( _spriteBatch, "Hello World!", 10, 10 );
 
                 _spriteBatch.End();
-            }
+//            }
         }
     }
 
     /// <inheritdoc />
     public override void Resize( int width, int height )
     {
-        if ( _camera != null )
-        {
-            _camera.Camera!.ViewportWidth = width;
-            _camera.Camera.ViewportHeight = height;
-            _camera.Camera.Update();
-        }
+//        if ( _camera != null )
+//        {
+//            _camera.Camera!.ViewportWidth = width;
+//            _camera.Camera.ViewportHeight = height;
+//            _camera.Camera.Update();
+//        }
     }
 
     /// <inheritdoc />
@@ -153,6 +158,7 @@ public class MainGame : ApplicationAdapter
         _spriteBatch?.Dispose();
         _image1?.Dispose();
         _assetManager?.Dispose();
+//        _camera?.Dispose();
 
         GC.SuppressFinalize( this );
     }

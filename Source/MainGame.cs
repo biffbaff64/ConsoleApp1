@@ -1,58 +1,43 @@
-﻿//#define KEYBOARD
-//#define CAMERA
-//#define PACK_IMAGES
-//#define LOAD_ASSETS
-
-// ============================================================================
-
-using System.Diagnostics;
-using System.Globalization;
-using System.Runtime.Versioning;
-
-using Extensions.Source.Tools.ImagePacker;
-
-using LughSharp.Tests.Source;
+﻿
 using LughSharp.Lugh.Assets;
-using LughSharp.Lugh.Assets.Loaders;
 using LughSharp.Lugh.Core;
-using LughSharp.Lugh.Files;
-using LughSharp.Lugh.Graphics;
 using LughSharp.Lugh.Graphics.Cameras;
 using LughSharp.Lugh.Graphics.G2D;
 using LughSharp.Lugh.Graphics.Images;
+using LughSharp.Lugh.Graphics.OpenGL;
+using LughSharp.Lugh.Graphics.OpenGL.Enums;
 using LughSharp.Lugh.Graphics.Text;
-using LughSharp.Lugh.Graphics.Utils;
 using LughSharp.Lugh.Maths;
 using LughSharp.Lugh.Utils;
-using LughSharp.Lugh.Utils.Exceptions;
+
+using Color = LughSharp.Lugh.Graphics.Color;
+using PixelFormat = LughSharp.Lugh.Graphics.OpenGL.Enums.PixelFormat;
+using PixelType = LughSharp.Lugh.Graphics.OpenGL.Enums.PixelType;
 
 namespace ConsoleApp1.Source;
 
+/// <summary>
+/// TEST class, used for testing the framework.
+/// </summary>
 public class MainGame : ApplicationAdapter
 {
-    private const string TEST_ASSET1 = Assets.ROVER_WHEEL;
+    private const string TEST_ASSET1             = Assets.ROVER_WHEEL;
+    private const bool   REBUILD_ATLAS           = true;
+    private const bool   REMOVE_DUPLICATE_IMAGES = true;
+    private const bool   DRAW_DEBUG_LINES        = false;
 
     // ========================================================================
 
-    #if CAMERA
-    private readonly Vector3 _cameraPos = Vector3.Zero;
-//    private OrthographicGameCamera? _camera;
-    #endif
-    
-    private AssetManager?           _assetManager;
-    private Texture?                _image1;
-    private SpriteBatch?            _spriteBatch;
-    private BitmapFont?             _font;
+    private Vector3                 _cameraPos;
+    private OrthographicGameCamera? _orthoGameCam;
 
-    // ========================================================================
+    private AssetManager? _assetManager;
+    private Texture?      _image1;
+    private SpriteBatch?  _spriteBatch;
+    private BitmapFont?   _font;
 
-    #if PACK_IMAGES
-    private const bool REBUILD_ATLAS = true;
-    private const bool REMOVE_DUPLICATE_IMAGES = true;
-    private const bool DRAW_DEBUG_LINES = false;
-    #endif
+    private uint _whitePixel;
 
-    // ========================================================================
     // ========================================================================
 
     /// <inheritdoc />
@@ -63,19 +48,19 @@ public class MainGame : ApplicationAdapter
         _font         = new BitmapFont();
         _spriteBatch  = new SpriteBatch();
 
-        #if CAMERA
-        _camera = new OrthographicGameCamera( Gdx.GdxApi.Graphics.Width, Gdx.GdxApi.Graphics.Height )
+        _orthoGameCam = new OrthographicGameCamera( Gdx.GdxApi.Graphics.Width, Gdx.GdxApi.Graphics.Height )
         {
             CameraZoom       = 1f,
             PPM              = 32.0f,
             IsLerpingEnabled = false,
         };
 
-        _camera.SetStretchViewport();
-        _camera.SetZoomDefault( OrthographicGameCamera.DEFAULT_ZOOM );
-        _camera.IsInUse = true;
-        #endif
-        
+        _orthoGameCam.SetStretchViewport();
+        _orthoGameCam.SetZoomDefault( OrthographicGameCamera.DEFAULT_ZOOM );
+        _orthoGameCam.IsInUse = true;
+
+        _cameraPos = Vector3.Zero;
+
         // ====================================================================
         // ====================================================================
 
@@ -97,8 +82,7 @@ public class MainGame : ApplicationAdapter
         #endif
 
         _image1 = new Texture( TEST_ASSET1 );
-        _image1.Debug();
-
+        
         Logger.Debug( "Done" );
     }
 
@@ -112,44 +96,44 @@ public class MainGame : ApplicationAdapter
     {
         ScreenUtils.Clear( Color.Blue );
 
-        if ( /*( _camera != null ) &&*/ ( _spriteBatch != null ) )
+        if ( ( _orthoGameCam != null ) && ( _spriteBatch != null ) )
         {
-//            if ( _camera.IsInUse )
-//            {
-//                _camera.Viewport?.Apply();
+            if ( _orthoGameCam.IsInUse )
+            {
+                _orthoGameCam.Viewport?.Apply();
 
-//                _spriteBatch.SetProjectionMatrix( _camera.Camera!.Combined );
-//                _spriteBatch.SetTransformMatrix( _camera.Camera.View );
-//                _spriteBatch.EnableBlending();
+                _spriteBatch.SetProjectionMatrix( _orthoGameCam.Camera!.Combined );
+                _spriteBatch.SetTransformMatrix( _orthoGameCam.Camera.View );
+                _spriteBatch.EnableBlending();
                 _spriteBatch.Begin();
 
-//                _cameraPos.X = 0 + ( _camera.Camera.ViewportWidth / 2f );
-//                _cameraPos.Y = 0 + ( _camera.Camera.ViewportHeight / 2f );
-//                _cameraPos.Z = 0;
+                _cameraPos.X = 0 + ( _orthoGameCam.Camera.ViewportWidth / 2f );
+                _cameraPos.Y = 0 + ( _orthoGameCam.Camera.ViewportHeight / 2f );
+                _cameraPos.Z = 0;
 
-//                _camera.SetPosition( _cameraPos );
-
+                _orthoGameCam.SetPosition( _cameraPos );
+                _orthoGameCam.Update();
+                
                 if ( _image1 != null )
                 {
+                    // Nothing is getting drawn here???
                     _spriteBatch.Draw( _image1, 140, 210 );
                 }
 
-//                _font?.Draw( _spriteBatch, "Hello World!", 10, 10 );
-
                 _spriteBatch.End();
-//            }
+            }
         }
     }
-
+    
     /// <inheritdoc />
     public override void Resize( int width, int height )
     {
-//        if ( _camera != null )
-//        {
-//            _camera.Camera!.ViewportWidth = width;
-//            _camera.Camera.ViewportHeight = height;
-//            _camera.Camera.Update();
-//        }
+        if ( _orthoGameCam != null )
+        {
+            _orthoGameCam.Camera!.ViewportWidth = width;
+            _orthoGameCam.Camera.ViewportHeight = height;
+            _orthoGameCam.Camera.Update();
+        }
     }
 
     /// <inheritdoc />
@@ -158,13 +142,77 @@ public class MainGame : ApplicationAdapter
         _spriteBatch?.Dispose();
         _image1?.Dispose();
         _assetManager?.Dispose();
-//        _camera?.Dispose();
+        _orthoGameCam?.Dispose();
+
+        Gdx.GL.DeleteTextures( _whitePixel );
 
         GC.SuppressFinalize( this );
     }
 
     // ========================================================================
     // ========================================================================
+
+    private void CheckViewportCoverage()
+    {
+        var viewport = new int[ 4 ];
+
+        Gdx.GL.GetIntegerv( IGL.GL_VIEWPORT, ref viewport );
+
+        var windowWidth  = Gdx.GdxApi.Graphics.Width;
+        var windowHeight = Gdx.GdxApi.Graphics.Height;
+
+        var isFullyCovered = ( viewport[ 0 ] == 0 )                // Left edge at 0
+                             && ( viewport[ 1 ] == 0 )             // Bottom edge at 0
+                             && ( viewport[ 2 ] == windowWidth )   // Width matches
+                             && ( viewport[ 3 ] == windowHeight ); // Height matches
+
+        if ( !isFullyCovered )
+        {
+            Logger.Debug( "WARNING: Viewport doesn't cover entire window!" );
+            Logger.Debug( $"Window: {windowWidth}x{windowHeight}" );
+            Logger.Debug( $"Viewport: {viewport[ 2 ]}x{viewport[ 3 ]} at ({viewport[ 0 ]},{viewport[ 1 ]})" );
+
+            if ( ( viewport[ 0 ] != 0 ) || ( viewport[ 1 ] != 0 ) )
+            {
+                Logger.Debug( "Viewport is offset from window origin!" );
+            }
+
+            if ( ( viewport[ 2 ] != windowWidth ) || ( viewport[ 3 ] != windowHeight ) )
+            {
+                Logger.Debug( "Viewport size doesn't match window size!" );
+            }
+        }
+    }
+
+    private void CreateWhitePixelTexture()
+    {
+        _whitePixel = Gdx.GL.GenTexture();
+
+        Gdx.GL.BindTexture( TextureTarget.Texture2D, _whitePixel );
+
+        // Create a single white pixel
+        var pixel = new byte[] { 255, 255, 255, 255 }; // R,G,B,A = White, fully opaque
+
+        // Upload the pixel data
+        Gdx.GL.TexImage2D( ( int )TextureTarget.Texture2D,  // Target
+                           0,                               // Level
+                           ( int )PixelInternalFormat.Rgba, // Internal format
+                           1,                               // Width (1 pixel)
+                           1,                               // Height (1 pixel)
+                           0,                               // Border
+                           ( int )PixelFormat.Rgba,         // Format
+                           ( int )PixelType.UnsignedByte,   // Type
+                           pixel );                         // Data
+
+        // Set texture parameters
+        Gdx.GL.TexParameteri( ( int )TextureTarget.Texture2D,
+                              ( int )TextureParameterName.TextureMinFilter,
+                              ( int )TextureMinFilter.Nearest );
+        
+        Gdx.GL.TexParameteri( ( int )TextureTarget.Texture2D,
+                              ( int )TextureParameterName.TextureMagFilter,
+                              ( int )TextureMagFilter.Nearest );
+    }
 
     #if LOAD_ASSETS
     private void LoadAssets()

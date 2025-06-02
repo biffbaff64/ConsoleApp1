@@ -7,6 +7,7 @@ namespace ConsoleApp1.Source;
 /// <summary>
 /// 
 /// </summary>
+
 // ReSharper disable once MemberCanBeInternal
 public static class DesktopLauncher
 {
@@ -26,9 +27,9 @@ public static class DesktopLauncher
             DisableAudio       = true,
             Debug              = true,
             GLProfilingEnabled = true,
+            WindowWidth        = 480,
+            WindowHeight       = 320,
         };
-
-        config.SetWindowedMode( 480, 320 );
 
         Gdx.GdxApi.CheckEnableDevMode().CheckEnableGodMode();
 

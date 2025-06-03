@@ -1,4 +1,6 @@
-﻿
+﻿using System.ComponentModel.DataAnnotations;
+using System.Diagnostics;
+
 using LughSharp.Lugh.Assets;
 using LughSharp.Lugh.Core;
 using LughSharp.Lugh.Graphics.Cameras;
@@ -28,13 +30,13 @@ public class MainGame : ApplicationAdapter
 
     // ========================================================================
 
-    private Vector3                 _cameraPos;
-    private OrthographicGameCamera? _orthoGameCam;
+    private readonly Vector3 _cameraPos = Vector3.Zero;
 
-    private AssetManager? _assetManager;
-    private Texture?      _image1;
-    private SpriteBatch?  _spriteBatch;
-    private BitmapFont?   _font;
+    private static OrthographicGameCamera? _orthoGameCam;
+    private        AssetManager?           _assetManager;
+    private        Texture?                _image1;
+    private        SpriteBatch?            _spriteBatch;
+    private        BitmapFont?             _font;
 
     private uint _whitePixel;
 
@@ -59,30 +61,27 @@ public class MainGame : ApplicationAdapter
         _orthoGameCam.SetZoomDefault( OrthographicGameCamera.DEFAULT_ZOOM );
         _orthoGameCam.IsInUse = true;
 
-        _cameraPos = Vector3.Zero;
-
         // ====================================================================
         // ====================================================================
 
-        #if KEYBOARD
-        Logger.Debug( "Setting up Keyboard" );
+//        Logger.Debug( "Setting up Keyboard" );
+//        _keyboard = new Keyboard();
+//        _inputMultiplexer = new InputMultiplexer();
+//        _inputMultiplexer.AddProcessor( _keyboard );
+//        GdxApi.Input.InputProcessor = _inputMultiplexer;
 
-        _keyboard = new Keyboard();
-        _inputMultiplexer = new InputMultiplexer();
-        _inputMultiplexer.AddProcessor( _keyboard );
-        GdxApi.Input.InputProcessor = _inputMultiplexer;
-        #endif
+        // ====================================================================
 
-        #if PACK_IMAGES
-        PackImages();
-        #endif
+//        PackImages();
 
-        #if LOAD_ASSETS
-        LoadAssets();
-        #endif
+        // ====================================================================
+
+//        LoadAssets();
+
+        // ====================================================================
 
         _image1 = new Texture( TEST_ASSET1 );
-        
+
         Logger.Debug( "Done" );
     }
 
@@ -113,7 +112,7 @@ public class MainGame : ApplicationAdapter
 
                 _orthoGameCam.SetPosition( _cameraPos );
                 _orthoGameCam.Update();
-                
+
                 if ( _image1 != null )
                 {
                     // Nothing is getting drawn here???
@@ -124,7 +123,7 @@ public class MainGame : ApplicationAdapter
             }
         }
     }
-    
+
     /// <inheritdoc />
     public override void Resize( int width, int height )
     {
@@ -208,7 +207,7 @@ public class MainGame : ApplicationAdapter
         Gdx.GL.TexParameteri( ( int )TextureTarget.Texture2D,
                               ( int )TextureParameterName.TextureMinFilter,
                               ( int )TextureMinFilter.Nearest );
-        
+
         Gdx.GL.TexParameteri( ( int )TextureTarget.Texture2D,
                               ( int )TextureParameterName.TextureMagFilter,
                               ( int )TextureMagFilter.Nearest );

@@ -1,7 +1,12 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.Diagnostics;
+using System.Drawing;
+using System.Runtime.Versioning;
+
+using Extensions.Source.Tools.ImagePacker;
 
 using LughSharp.Lugh.Assets;
+using LughSharp.Lugh.Assets.Loaders;
 using LughSharp.Lugh.Core;
 using LughSharp.Lugh.Graphics.Cameras;
 using LughSharp.Lugh.Graphics.G2D;
@@ -11,6 +16,7 @@ using LughSharp.Lugh.Graphics.OpenGL.Enums;
 using LughSharp.Lugh.Graphics.Text;
 using LughSharp.Lugh.Maths;
 using LughSharp.Lugh.Utils;
+using LughSharp.Lugh.Utils.Exceptions;
 
 using Color = LughSharp.Lugh.Graphics.Color;
 using PixelFormat = LughSharp.Lugh.Graphics.OpenGL.Enums.PixelFormat;
@@ -80,6 +86,8 @@ public class MainGame : ApplicationAdapter
 
         // ====================================================================
 
+        CreateWhitePixelTexture();
+
         _image1 = new Texture( TEST_ASSET1 );
 
         Logger.Debug( "Done" );
@@ -119,6 +127,8 @@ public class MainGame : ApplicationAdapter
                     _spriteBatch.Draw( _image1, 140, 210 );
                 }
 
+//                DrawViewportBounds();
+                
                 _spriteBatch.End();
             }
         }
@@ -151,7 +161,7 @@ public class MainGame : ApplicationAdapter
     // ========================================================================
     // ========================================================================
 
-    private void CheckViewportCoverage()
+    private static void CheckViewportCoverage()
     {
         var viewport = new int[ 4 ];
 
@@ -183,6 +193,37 @@ public class MainGame : ApplicationAdapter
         }
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="thickness"></param>
+    public void DrawViewportBounds(float thickness = 2f)
+    {
+        // Get the actual viewport dimensions
+        var viewport = new int[4];
+        Gdx.GL.GetIntegerv((int)GetPName.Viewport, ref viewport);
+    
+        var width  = viewport[2];
+        var height = viewport[3];
+
+        // Early exit if viewport has invalid dimensions
+        if (( width <= 0 ) || ( height <= 0 ))
+        {
+            Console.WriteLine($"Warning: Invalid viewport dimensions: {width}x{height}");
+            return;
+        }
+
+        // Draw borders in different colors to easily identify edges
+        // Top - Red
+        _spriteBatch?.Draw(_whitePixel, new Rectangle(0, 0, width, (int)thickness), Color.Red);
+        // Bottom - Blue
+        _spriteBatch?.Draw(_whitePixel, new Rectangle(0, height - (int)thickness, width, (int)thickness), Color.Blue);
+        // Left - Green
+        _spriteBatch?.Draw(_whitePixel, new Rectangle(0, 0, (int)thickness, height), Color.Green);
+        // Right - Yellow
+        _spriteBatch?.Draw(_whitePixel, new Rectangle(width - (int)thickness, 0, (int)thickness, height), Color.Yellow);
+    }
+    
     private void CreateWhitePixelTexture()
     {
         _whitePixel = Gdx.GL.GenTexture();
@@ -213,7 +254,6 @@ public class MainGame : ApplicationAdapter
                               ( int )TextureMagFilter.Nearest );
     }
 
-    #if LOAD_ASSETS
     private void LoadAssets()
     {
         GdxRuntimeException.ThrowIfNull( _assetManager );
@@ -238,28 +278,26 @@ public class MainGame : ApplicationAdapter
         {
             Logger.Debug( "Asset loaded" );
 
-//            var data = _image1.GetImageData();
-//
-//            if ( data != null )
-//            {
-//                for ( var i = 0; i < 20; i++ )
-//                {
-//                    for ( var j = 0; j < 20; j++ )
-//                    {
-//                        Logger.Data( $"[{data[ ( i * 20 ) + j ]:X}]", false );
-//                    }
-//                    
-//                    Logger.NewLine();
-//                }
-//            }
+            var data = _image1.GetImageData();
+
+            if ( data != null )
+            {
+                for ( var i = 0; i < 20; i++ )
+                {
+                    for ( var j = 0; j < 20; j++ )
+                    {
+                        Logger.Data( $"[{data[ ( i * 20 ) + j ]:X}]", false );
+                    }
+
+                    Logger.NewLine();
+                }
+            }
         }
     }
-    #endif
 
     // ========================================================================
     // ========================================================================
 
-    #if PACK_IMAGES
     [SupportedOSPlatform( "windows" )]
     private static void PackImages()
     {
@@ -267,16 +305,16 @@ public class MainGame : ApplicationAdapter
         {
             var settings = new TexturePacker.Settings
             {
-                MaxWidth = 2048, // Maximum Width of final atlas image
-                MaxHeight = 2048, // Maximum Height of final atlas image
+                MaxWidth   = 2048, // Maximum Width of final atlas image
+                MaxHeight  = 2048, // Maximum Height of final atlas image
                 PowerOfTwo = true,
-                Debug = DRAW_DEBUG_LINES,
-                IsAlias = REMOVE_DUPLICATE_IMAGES,
+                Debug      = DRAW_DEBUG_LINES,
+                IsAlias    = REMOVE_DUPLICATE_IMAGES,
             };
 
 //            settings.WriteToJsonFile( "ExampleSettings.json" );
 //            settings.ScaleResamplingTest4();
-            
+
             // Build the Atlases from the specified parameters :-
             // - configuration settings
             // - source folder
@@ -293,5 +331,54 @@ public class MainGame : ApplicationAdapter
 //            TexturePacker.Process( settings, "packedimages/text", "packedimages/output", "text" );
         }
     }
-    #endif
+
+    private unsafe void DrawViewportBounds( SpriteBatch spriteBatch )
+    {
+        // Get the actual viewport dimensions
+        var viewport = new int[ 4 ];
+
+        Gdx.GL.GetIntegerv( IGL.GL_VIEWPORT, ref viewport );
+
+        var width  = viewport[ 2 ];
+        var height = viewport[ 3 ];
+
+        spriteBatch.Begin();
+
+        // Draw borders in different colors to easily identify edges
+        var thickness = 2f; // Make it visible
+
+        // Top - Red
+        spriteBatch.Draw( _whitePixel, new Rectangle( 0, 0, width, ( int )thickness ), Color.Red );
+
+        // Bottom - Blue
+        spriteBatch.Draw( _whitePixel, new Rectangle( 0, height - ( int )thickness, width, ( int )thickness ), Color.Blue );
+
+        // Left - Green
+        spriteBatch.Draw( _whitePixel, new Rectangle( 0, 0, ( int )thickness, height ), Color.Green );
+
+        // Right - Yellow
+        spriteBatch.Draw( _whitePixel, new Rectangle( width - ( int )thickness, 0, ( int )thickness, height ), Color.Yellow );
+
+        spriteBatch.End();
+    }
+
+    private void DebugViewportState()
+    {
+        var viewport = new int[ 4 ];
+        Gdx.GL.GetIntegerv( ( int )GetPName.Viewport, ref viewport );
+
+        Console.WriteLine( $"Viewport: X={viewport[ 0 ]}, Y={viewport[ 1 ]}, Width={viewport[ 2 ]}, Height={viewport[ 3 ]}" );
+
+        // Check scissors test
+        var scissorEnabled = Gdx.GL.IsEnabled( ( int )EnableCap.ScissorTest );
+        Console.WriteLine( $"Scissor Test Enabled: {scissorEnabled}" );
+
+        if ( scissorEnabled )
+        {
+            var scissors = new int[ 4 ];
+            Gdx.GL.GetIntegerv( ( int )GetPName.ScissorBox, ref scissors );
+            Console.WriteLine( $"Scissors: X={scissors[ 0 ]}, Y={scissors[ 1 ]}, Width={scissors[ 2 ]}, Height={scissors[ 3 ]}" );
+        }
+    }
 }
+

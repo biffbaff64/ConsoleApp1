@@ -78,6 +78,9 @@ public class MainGame : ApplicationAdapter
 
         // ====================================================================
 
+        var packer = new ImagePackerRevised( 512, 512, 1, true );
+        packer.Test();
+        
 //        PackImages();
 
         // ====================================================================
@@ -160,6 +163,7 @@ public class MainGame : ApplicationAdapter
 
     // ========================================================================
     // ========================================================================
+    // ========================================================================
 
     private static void CheckViewportCoverage()
     {
@@ -193,6 +197,8 @@ public class MainGame : ApplicationAdapter
         }
     }
 
+    // ========================================================================
+    
     /// <summary>
     /// 
     /// </summary>
@@ -224,6 +230,8 @@ public class MainGame : ApplicationAdapter
         _spriteBatch?.Draw(_whitePixel, new Rectangle(width - (int)thickness, 0, (int)thickness, height), Color.Yellow);
     }
     
+    // ========================================================================
+    
     private void CreateWhitePixelTexture()
     {
         _whitePixel = Gdx.GL.GenTexture();
@@ -254,6 +262,8 @@ public class MainGame : ApplicationAdapter
                               ( int )TextureMagFilter.Nearest );
     }
 
+    // ========================================================================
+    
     private void LoadAssets()
     {
         GdxRuntimeException.ThrowIfNull( _assetManager );
@@ -296,9 +306,7 @@ public class MainGame : ApplicationAdapter
     }
 
     // ========================================================================
-    // ========================================================================
 
-    [SupportedOSPlatform( "windows" )]
     private static void PackImages()
     {
         if ( REBUILD_ATLAS )
@@ -313,7 +321,6 @@ public class MainGame : ApplicationAdapter
             };
 
 //            settings.WriteToJsonFile( "ExampleSettings.json" );
-//            settings.ScaleResamplingTest4();
 
             // Build the Atlases from the specified parameters :-
             // - configuration settings
@@ -332,7 +339,9 @@ public class MainGame : ApplicationAdapter
         }
     }
 
-    private unsafe void DrawViewportBounds( SpriteBatch spriteBatch )
+    // ========================================================================
+    
+    private void DrawViewportBounds( SpriteBatch spriteBatch )
     {
         // Get the actual viewport dimensions
         var viewport = new int[ 4 ];
@@ -362,6 +371,8 @@ public class MainGame : ApplicationAdapter
         spriteBatch.End();
     }
 
+    // ========================================================================
+    
     private void DebugViewportState()
     {
         var viewport = new int[ 4 ];

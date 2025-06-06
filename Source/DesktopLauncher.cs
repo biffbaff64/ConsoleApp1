@@ -5,10 +5,9 @@ using LughSharp.Lugh.Core;
 namespace ConsoleApp1.Source;
 
 /// <summary>
-/// 
+/// Example DesktopLauncher class which is the entry point for the
+/// desktop application.
 /// </summary>
-
-// ReSharper disable once MemberCanBeInternal
 public static class DesktopLauncher
 {
     /// <summary>

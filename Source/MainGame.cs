@@ -63,7 +63,6 @@ public class MainGame : ApplicationAdapter
             IsLerpingEnabled = false,
         };
 
-        _orthoGameCam.SetStretchViewport();
         _orthoGameCam.SetZoomDefault( OrthographicGameCamera.DEFAULT_ZOOM );
         _orthoGameCam.IsInUse = true;
 
@@ -78,9 +77,6 @@ public class MainGame : ApplicationAdapter
 
         // ====================================================================
 
-        var packer = new ImagePackerRevised( 512, 512, 1, true );
-        packer.Test();
-        
 //        PackImages();
 
         // ====================================================================
@@ -89,7 +85,7 @@ public class MainGame : ApplicationAdapter
 
         // ====================================================================
 
-        CreateWhitePixelTexture();
+//        CreateWhitePixelTexture();
 
         _image1 = new Texture( TEST_ASSET1 );
 
@@ -99,6 +95,12 @@ public class MainGame : ApplicationAdapter
     /// <inheritdoc />
     public override void Update()
     {
+        Logger.Divider();
+        
+        var viewport = new int[ 4 ];
+        Gdx.GL.GetIntegerv( ( int )GetPName.Viewport, ref viewport );
+        
+        Logger.Debug( $"Viewport: X={viewport[ 0 ]}, Y={viewport[ 1 ]}, Width={viewport[ 2 ]}, Height={viewport[ 3 ]}" );
     }
 
     /// <inheritdoc />
@@ -110,7 +112,7 @@ public class MainGame : ApplicationAdapter
         {
             if ( _orthoGameCam.IsInUse )
             {
-                _orthoGameCam.Viewport?.Apply();
+                _orthoGameCam.Viewport.Apply();
 
                 _spriteBatch.SetProjectionMatrix( _orthoGameCam.Camera!.Combined );
                 _spriteBatch.SetTransformMatrix( _orthoGameCam.Camera.View );
@@ -130,8 +132,6 @@ public class MainGame : ApplicationAdapter
                     _spriteBatch.Draw( _image1, 140, 210 );
                 }
 
-//                DrawViewportBounds();
-                
                 _spriteBatch.End();
             }
         }

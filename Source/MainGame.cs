@@ -14,6 +14,7 @@ using LughSharp.Lugh.Graphics.Images;
 using LughSharp.Lugh.Graphics.OpenGL;
 using LughSharp.Lugh.Graphics.OpenGL.Enums;
 using LughSharp.Lugh.Graphics.Text;
+using LughSharp.Lugh.Input;
 using LughSharp.Lugh.Maths;
 using LughSharp.Lugh.Utils;
 using LughSharp.Lugh.Utils.Exceptions;
@@ -43,6 +44,8 @@ public class MainGame : ApplicationAdapter
     private        Texture?                _image1;
     private        SpriteBatch?            _spriteBatch;
     private        BitmapFont?             _font;
+    private        InputMultiplexer?       _inputMultiplexer;
+    private        Keyboard?               _keyboard;
 
     private uint _whitePixel;
 
@@ -56,24 +59,18 @@ public class MainGame : ApplicationAdapter
         _font         = new BitmapFont();
         _spriteBatch  = new SpriteBatch();
 
-        _orthoGameCam = new OrthographicGameCamera( Gdx.GdxApi.Graphics.Width, Gdx.GdxApi.Graphics.Height )
-        {
-            CameraZoom       = 1f,
-            PPM              = 32.0f,
-            IsLerpingEnabled = false,
-        };
-
-        _orthoGameCam.SetZoomDefault( OrthographicGameCamera.DEFAULT_ZOOM );
+        _orthoGameCam = new OrthographicGameCamera( Gdx.GdxApi.Graphics.Width, Gdx.GdxApi.Graphics.Height );
+        _orthoGameCam.SetZoomDefault( CameraData.DEFAULT_ZOOM );
         _orthoGameCam.IsInUse = true;
 
         // ====================================================================
         // ====================================================================
 
-//        Logger.Debug( "Setting up Keyboard" );
-//        _keyboard = new Keyboard();
-//        _inputMultiplexer = new InputMultiplexer();
-//        _inputMultiplexer.AddProcessor( _keyboard );
-//        GdxApi.Input.InputProcessor = _inputMultiplexer;
+        Logger.Debug( "Setting up Keyboard" );
+        _keyboard         = new Keyboard();
+        _inputMultiplexer = new InputMultiplexer();
+        _inputMultiplexer.AddProcessor( _keyboard );
+        Gdx.GdxApi.Input.InputProcessor = _inputMultiplexer;
 
         // ====================================================================
 
@@ -87,7 +84,7 @@ public class MainGame : ApplicationAdapter
 
 //        CreateWhitePixelTexture();
 
-        _image1 = new Texture( TEST_ASSET1 );
+//        _image1 = new Texture( TEST_ASSET1 );
 
         Logger.Debug( "Done" );
     }
@@ -95,12 +92,6 @@ public class MainGame : ApplicationAdapter
     /// <inheritdoc />
     public override void Update()
     {
-        Logger.Divider();
-        
-        var viewport = new int[ 4 ];
-        Gdx.GL.GetIntegerv( ( int )GetPName.Viewport, ref viewport );
-        
-        Logger.Debug( $"Viewport: X={viewport[ 0 ]}, Y={viewport[ 1 ]}, Width={viewport[ 2 ]}, Height={viewport[ 3 ]}" );
     }
 
     /// <inheritdoc />
@@ -108,33 +99,35 @@ public class MainGame : ApplicationAdapter
     {
         ScreenUtils.Clear( Color.Blue );
 
-        if ( ( _orthoGameCam != null ) && ( _spriteBatch != null ) )
-        {
-            if ( _orthoGameCam.IsInUse )
-            {
-                _orthoGameCam.Viewport.Apply();
-
-                _spriteBatch.SetProjectionMatrix( _orthoGameCam.Camera!.Combined );
-                _spriteBatch.SetTransformMatrix( _orthoGameCam.Camera.View );
-                _spriteBatch.EnableBlending();
-                _spriteBatch.Begin();
-
-                _cameraPos.X = 0 + ( _orthoGameCam.Camera.ViewportWidth / 2f );
-                _cameraPos.Y = 0 + ( _orthoGameCam.Camera.ViewportHeight / 2f );
-                _cameraPos.Z = 0;
-
-                _orthoGameCam.SetPosition( _cameraPos );
-                _orthoGameCam.Update();
-
-                if ( _image1 != null )
-                {
-                    // Nothing is getting drawn here???
-                    _spriteBatch.Draw( _image1, 140, 210 );
-                }
-
-                _spriteBatch.End();
-            }
-        }
+//        if ( ( _orthoGameCam != null ) && ( _spriteBatch != null ) )
+//        {
+//            if ( _orthoGameCam.IsInUse )
+//            {
+//                _orthoGameCam.Viewport?.Apply();
+//
+//                _spriteBatch.SetProjectionMatrix( _orthoGameCam.Camera!.Combined );
+//                _spriteBatch.SetTransformMatrix( _orthoGameCam.Camera.View );
+//                _spriteBatch.EnableBlending();
+//                _spriteBatch.Begin();
+//
+//                _cameraPos.X = 0 + ( _orthoGameCam.Camera.ViewportWidth / 2f );
+//                _cameraPos.Y = 0 + ( _orthoGameCam.Camera.ViewportHeight / 2f );
+//                _cameraPos.Z = 0;
+//
+//                _orthoGameCam.SetPosition( _cameraPos );
+//                _orthoGameCam.Update();
+//
+//                if ( _image1 != null )
+//                {
+//                    // Nothing is getting drawn here???
+//                    _spriteBatch.Draw( _image1, 140, 210 );
+//                }
+//
+//                DrawViewportBounds();
+//                
+//                _spriteBatch.End();
+//            }
+//        }
     }
 
     /// <inheritdoc />
@@ -198,40 +191,7 @@ public class MainGame : ApplicationAdapter
     }
 
     // ========================================================================
-    
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="thickness"></param>
-    public void DrawViewportBounds(float thickness = 2f)
-    {
-        // Get the actual viewport dimensions
-        var viewport = new int[4];
-        Gdx.GL.GetIntegerv((int)GetPName.Viewport, ref viewport);
-    
-        var width  = viewport[2];
-        var height = viewport[3];
 
-        // Early exit if viewport has invalid dimensions
-        if (( width <= 0 ) || ( height <= 0 ))
-        {
-            Console.WriteLine($"Warning: Invalid viewport dimensions: {width}x{height}");
-            return;
-        }
-
-        // Draw borders in different colors to easily identify edges
-        // Top - Red
-        _spriteBatch?.Draw(_whitePixel, new Rectangle(0, 0, width, (int)thickness), Color.Red);
-        // Bottom - Blue
-        _spriteBatch?.Draw(_whitePixel, new Rectangle(0, height - (int)thickness, width, (int)thickness), Color.Blue);
-        // Left - Green
-        _spriteBatch?.Draw(_whitePixel, new Rectangle(0, 0, (int)thickness, height), Color.Green);
-        // Right - Yellow
-        _spriteBatch?.Draw(_whitePixel, new Rectangle(width - (int)thickness, 0, (int)thickness, height), Color.Yellow);
-    }
-    
-    // ========================================================================
-    
     private void CreateWhitePixelTexture()
     {
         _whitePixel = Gdx.GL.GenTexture();
@@ -263,7 +223,7 @@ public class MainGame : ApplicationAdapter
     }
 
     // ========================================================================
-    
+
     private void LoadAssets()
     {
         GdxRuntimeException.ThrowIfNull( _assetManager );
@@ -340,7 +300,44 @@ public class MainGame : ApplicationAdapter
     }
 
     // ========================================================================
-    
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="thickness"></param>
+    public void DrawViewportBounds( float thickness = 2f )
+    {
+        // Get the actual viewport dimensions
+        var viewport = new int[ 4 ];
+        Gdx.GL.GetIntegerv( ( int )GetPName.Viewport, ref viewport );
+
+        var width  = viewport[ 2 ];
+        var height = viewport[ 3 ];
+
+        // Early exit if viewport has invalid dimensions
+        if ( ( width <= 0 ) || ( height <= 0 ) )
+        {
+            Console.WriteLine( $"Warning: Invalid viewport dimensions: {width}x{height}" );
+
+            return;
+        }
+
+        // Draw borders in different colors to easily identify edges
+        // Top - Red
+        _spriteBatch?.Draw( _whitePixel, new Rectangle( 0, 0, width, ( int )thickness ), Color.Red );
+
+        // Bottom - Blue
+        _spriteBatch?.Draw( _whitePixel, new Rectangle( 0, height - ( int )thickness, width, ( int )thickness ), Color.Blue );
+
+        // Left - Green
+        _spriteBatch?.Draw( _whitePixel, new Rectangle( 0, 0, ( int )thickness, height ), Color.Green );
+
+        // Right - Yellow
+        _spriteBatch?.Draw( _whitePixel, new Rectangle( width - ( int )thickness, 0, ( int )thickness, height ), Color.Yellow );
+    }
+
+    // ========================================================================
+
     private void DrawViewportBounds( SpriteBatch spriteBatch )
     {
         // Get the actual viewport dimensions
@@ -357,22 +354,22 @@ public class MainGame : ApplicationAdapter
         var thickness = 2f; // Make it visible
 
         // Top - Red
-        spriteBatch.Draw( _whitePixel, new Rectangle( 0, 0, width, ( int )thickness ), Color.Red );
+        spriteBatch.Draw( _whitePixel, new Rectangle( 0, 0, width, ( int )thickness ), Color.White );
 
         // Bottom - Blue
-        spriteBatch.Draw( _whitePixel, new Rectangle( 0, height - ( int )thickness, width, ( int )thickness ), Color.Blue );
+        spriteBatch.Draw( _whitePixel, new Rectangle( 0, height - ( int )thickness, width, ( int )thickness ), Color.White );
 
         // Left - Green
-        spriteBatch.Draw( _whitePixel, new Rectangle( 0, 0, ( int )thickness, height ), Color.Green );
+        spriteBatch.Draw( _whitePixel, new Rectangle( 0, 0, ( int )thickness, height ), Color.White );
 
         // Right - Yellow
-        spriteBatch.Draw( _whitePixel, new Rectangle( width - ( int )thickness, 0, ( int )thickness, height ), Color.Yellow );
+        spriteBatch.Draw( _whitePixel, new Rectangle( width - ( int )thickness, 0, ( int )thickness, height ), Color.White );
 
         spriteBatch.End();
     }
 
     // ========================================================================
-    
+
     private void DebugViewportState()
     {
         var viewport = new int[ 4 ];
@@ -392,4 +389,3 @@ public class MainGame : ApplicationAdapter
         }
     }
 }
-

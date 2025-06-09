@@ -30,7 +30,7 @@ public static class DesktopLauncher
             WindowHeight       = 320,
         };
 
-        Gdx.GdxApi.CheckEnableDevMode().CheckEnableGodMode();
+        Engine.Api.CheckEnableDevMode().CheckEnableGodMode();
 
         var game = new DesktopGLApplication( new MainGame(), config );
 

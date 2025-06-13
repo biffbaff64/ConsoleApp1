@@ -31,6 +31,8 @@ public class MainGame : ApplicationAdapter
     private const bool   REBUILD_ATLAS           = true;
     private const bool   REMOVE_DUPLICATE_IMAGES = true;
     private const bool   DRAW_DEBUG_LINES        = false;
+    private const int    TEST_WIDTH              = 64;
+    private const int    TEST_HEIGHT             = 64;
 
     // ========================================================================
 
@@ -41,7 +43,7 @@ public class MainGame : ApplicationAdapter
     private        Texture?                _image1;
 
     private SpriteBatch? _spriteBatch;
-    private SpriteBatch? _spriteBatch2;
+    private Texture?     _testTexture;
 
 //    private        BitmapFont?             _font;
 //    private        InputMultiplexer?       _inputMultiplexer;
@@ -56,58 +58,49 @@ public class MainGame : ApplicationAdapter
     {
         _assetManager = new AssetManager();
         _image1       = null;
-//        _spriteBatch  = new SpriteBatch();
-//
-//        _orthoGameCam = new OrthographicGameCamera( Engine.Api.Graphics.Width,
-//                                                    Engine.Api.Graphics.Height,
-//                                                    ppm: 1f );
-//        _orthoGameCam.SetZoomDefault( CameraData.DEFAULT_ZOOM );
-//        _orthoGameCam.IsInUse = true;
+        _spriteBatch  = new SpriteBatch();
 
-        // ====================================================================
-        // ====================================================================
-
-//        Logger.Debug( "Setting up Keyboard" );
-//        _keyboard         = new Keyboard();
-//        _inputMultiplexer = new InputMultiplexer();
-//        _inputMultiplexer.AddProcessor( _keyboard );
-//        Engine.Api.Input.InputProcessor = _inputMultiplexer;
-
-        // ====================================================================
-
-//        PackImages();
-
-        // ====================================================================
-
-//        LoadAssets();
-
-        Logger.Debug( "Creating SpriteBatch tests." );
-        
-        var test = new SpriteBatchTests();
-        test.Setup();
-
-        Logger.Debug( "SpriteBatch tests starting" );
-
-        try
+        if ( _spriteBatch == null )
         {
-            test.Begin_WhenCalled_SetsCorrectDefaultState();
-            test.Draw_WhenCalledBetweenBeginAndEnd_SuccessfullyDrawsTexture();
-//            test.Draw_WhenCalledOutsideBeginEnd_ThrowsException();
-            test.SetProjectionMatrix_UpdatesMatrixCorrectly();
-            test.Blending_CanBeToggledCorrectly();
-            test.Color_CanBeSetAndRetrieved();
+            Logger.Warning( "Failed to create SpriteBatch" );
+
+            return;
         }
-        catch ( Exception ex )
+
+        _orthoGameCam = new OrthographicGameCamera( Engine.Api.Graphics.Width,
+                                                    Engine.Api.Graphics.Height,
+                                                    ppm: 1f );
+        _orthoGameCam.SetZoomDefault( CameraData.DEFAULT_ZOOM );
+        _orthoGameCam.IsInUse = true;
+
+        // ====================================================================
+
+        // When creating the texture
+        var pixmap = new Pixmap( TEST_WIDTH, TEST_HEIGHT, PixelType.Format.RGBA8888 );
+        pixmap.SetColor( Color.Magenta );
+        pixmap.FillWithCurrentColor();
+
+        _testTexture = new Texture( new PixmapTextureData( pixmap, PixelType.Format.RGBA8888, false, false ) );
+
+        // Set texture parameters
+        Engine.GL.BindTexture( IGL.GL_TEXTURE_2D, _testTexture.TextureID );
+        Engine.GL.TexParameteri( IGL.GL_TEXTURE_2D, IGL.GL_TEXTURE_MIN_FILTER, IGL.GL_NEAREST );
+        Engine.GL.TexParameteri( IGL.GL_TEXTURE_2D, IGL.GL_TEXTURE_MAG_FILTER, IGL.GL_NEAREST );
+        Engine.GL.TexParameteri( IGL.GL_TEXTURE_2D, IGL.GL_TEXTURE_WRAP_S, IGL.GL_CLAMP_TO_EDGE );
+        Engine.GL.TexParameteri( IGL.GL_TEXTURE_2D, IGL.GL_TEXTURE_WRAP_T, IGL.GL_CLAMP_TO_EDGE );
+
+        pixmap.Dispose();
+
+        // Validate texture creation
+        if ( !Engine.GL.IsTexture( _testTexture.TextureID ) )
         {
-            Logger.Debug( $"Exception thrown: {ex.Message}" );
+            Logger.Debug( "Failed to create texture" );
+
+            return;
         }
-        finally
-        {
-            test.Teardown();
-        }
-        
-        Logger.Debug("SpriteBatch tests completed");
-        
+
+        // ====================================================================
+
         Logger.Debug( "Done" );
     }
 
@@ -121,68 +114,54 @@ public class MainGame : ApplicationAdapter
     /// <inheritdoc />
     public override void Render()
     {
-        ScreenUtils.Clear( Color.Blue );
+        // Clear and set viewport
+        Engine.GL.Viewport( 0, 0, Engine.Api.Graphics.Width, Engine.Api.Graphics.Height );
+        ScreenUtils.Clear( Color.Clear, clearDepth: false );
 
-//        if ( ( _orthoGameCam != null ) && ( _spriteBatch != null ) )
-//        {
-//            if ( _orthoGameCam.IsInUse )
-//            {
-//                _orthoGameCam.Update();
-//                _orthoGameCam.Viewport?.Apply();
-//
-//                _spriteBatch.SetProjectionMatrix( _orthoGameCam.Camera.Combined );
-//                _spriteBatch.SetTransformMatrix( _orthoGameCam.Camera.ViewMatrix );
-//                _spriteBatch.EnableBlending();
-//
-//                // ------------------------------
-//                
-//                Engine.GL.BlendFunc( ( int )BlendingFactor.SrcAlpha, ( int )BlendingFactor.OneMinusSrcAlpha );
-//                Engine.GL.Disable((int)EnableCap.DepthTest);
-//                Engine.GL.DepthMask(false);
-//
-//                // ------------------------------
-//                
-//                _spriteBatch.Begin();
-//                _orthoGameCam.Position.Set( 0, 0, 0 );
-//
-//                // ------------------------------
-//                
-//                if ( _image1 != null )
-//                {
-//                    _spriteBatch.Draw( _image1, 100, 100, 68, 68 );
-//                }
-//
-//                Engine.GL.Enable((int)EnableCap.DepthTest);
-//                Engine.GL.DepthMask(true);
-//
-//                // ------------------------------
-//                
-//                _spriteBatch.End();
-//
-//                // ------------------------------
-//
-//                // Check for any GL errors at the end of the frame
-//                var error = Engine.GL.GetError();
-//
-//                if ( error != ( int )ErrorCode.NoError )
-//                {
-//                    Logger.Debug( $"GL Error at end of frame: {error}" );
-//                }
-//            }
-//        }
+        // Enable blending
+        Engine.GL.Enable( IGL.GL_BLEND );
+        Engine.GL.BlendFunc( IGL.GL_SRC_ALPHA, IGL.GL_ONE_MINUS_SRC_ALPHA );
+
+        if ( ( _spriteBatch != null ) && _orthoGameCam is { IsInUse: true } )
+        {
+            _orthoGameCam.Update();
+            _orthoGameCam.Viewport?.Apply();
+
+            // Set up projection matrix
+            _spriteBatch.SetProjectionMatrix( _orthoGameCam.Camera!.Combined );
+            _spriteBatch.SetTransformMatrix( _orthoGameCam.Camera.ViewMatrix );
+            _spriteBatch.EnableBlending();
+            Engine.GL.BlendFunc( ( int )BlendingFactor.SrcAlpha,
+                                 ( int )BlendingFactor.OneMinusSrcAlpha );
+
+            _spriteBatch.Begin( depthMaskEnabled: false );
+
+            if ( _image1 != null )
+            {
+                // Draw in center of screen
+                const float width  = 200f;
+                const float height = 200f;
+
+                var x = ( Engine.Api.Graphics.Width - width ) / 2;
+                var y = ( Engine.Api.Graphics.Height - height ) / 2;
+
+                // Bind texture before drawing
+                Engine.GL.ActiveTexture( IGL.GL_TEXTURE0 );
+                Engine.GL.BindTexture( IGL.GL_TEXTURE_2D, _image1.TextureID );
+
+                _spriteBatch.Draw( _image1, x, y, width, height );
+            }
+
+            _spriteBatch.End();
+        }
+
+        GLUtils.CheckGLError( "MainGame.Render" );
     }
 
     /// <inheritdoc />
     public override void Resize( int width, int height )
     {
-        if ( _orthoGameCam != null )
-        {
-            Logger.Debug( $"Current viewport: {_orthoGameCam.Camera.ViewportWidth}"
-                          + $"x{_orthoGameCam.Camera.ViewportHeight}" );
-            Logger.Debug( $"Resizing to {width}x{height}, CentreCamera = false" );
-
-            _orthoGameCam.ResizeViewport( width, height );
-        }
+        _orthoGameCam?.ResizeViewport( width, height );
     }
 
     /// <inheritdoc />
@@ -444,4 +423,3 @@ public class MainGame : ApplicationAdapter
         }
     }
 }
-

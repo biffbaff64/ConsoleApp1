@@ -46,17 +46,7 @@ public class SpriteBatchTests
     private SpriteBatch? _spriteBatch;
     private Texture?     _testTexture;
 
-//    private TestApplicationBase? _testApp;
-
     // ========================================================================
-
-//    [OneTimeSetUp]
-//    public void OneTimeSetup()
-//    {
-    // Initialize test environment once for all tests
-//        _testApp = new TestApplicationBase();
-//        _testApp.Initialize();
-//    }
 
     [SetUp]
     public void Setup()
@@ -113,15 +103,15 @@ public class SpriteBatchTests
 
         Assert.Multiple( () =>
         {
-//            Assert.That( _spriteBatch, Is.Not.Null );
-//            Assert.That( _testTexture, Is.Not.Null );
+            Assert.That( _spriteBatch, Is.Not.Null );
+            Assert.That( _testTexture, Is.Not.Null );
 
-//            Assert.That( _testTexture?.Width, Is.Not.Null );
-//            Assert.That( _testTexture?.Height, Is.Not.Null );
+            Assert.That( _testTexture?.Width, Is.Not.Null );
+            Assert.That( _testTexture?.Height, Is.Not.Null );
 
             // Verify texture dimensions before drawing
-//            Assert.That( _testTexture?.Width, Is.EqualTo( TEST_WIDTH ) );
-//            Assert.That( _testTexture?.Height, Is.EqualTo( TEST_HEIGHT ) );
+            Assert.That( _testTexture?.Width, Is.EqualTo( TEST_WIDTH ) );
+            Assert.That( _testTexture?.Height, Is.EqualTo( TEST_HEIGHT ) );
 
             _spriteBatch?.Begin();
             Assert.DoesNotThrow( () => _spriteBatch?.Draw( _testTexture!, 0, 0, TEST_WIDTH, TEST_HEIGHT ) );
@@ -222,73 +212,6 @@ public class SpriteBatchTests
 //        _spriteBatch?.Dispose();
         _testTexture?.Dispose();
     }
-
-//    [OneTimeTearDown]
-//    public void OneTimeTearDown()
-//    {
-//        _testApp?.Dispose();
-//    }
-
-    // ========================================================================
-    // ========================================================================
-
-//    // Test helper class
-//    private class TestApplicationBase : IDisposable
-//    {
-//        public void Initialize()
-//        {
-//            // Initialize minimal test environment
-//            var config = new DesktopGLApplicationConfiguration
-//            {
-//                WindowWidth       = 1,
-//                WindowHeight      = 1,
-//                VSyncEnabled      = false,
-//                InitialVisibility = false // Don't show window for tests
-//            };
-//
-//            // Set up dummy application listener
-//            var listener = new DummyListener();
-//
-//            // Create application in hidden mode
-//            Engine.Initialize( listener, config );
-//        }
-//
-//        public void Dispose()
-//        {
-//            Engine.Shutdown();
-//        }
-//    }
-//
-//    private class DummyListener : IApplicationListener
-//    {
-//        public void Create()
-//        {
-//        }
-//
-//        public void Dispose()
-//        {
-//        }
-//
-//        public void Pause()
-//        {
-//        }
-//
-//        public void Render()
-//        {
-//        }
-//
-//        public void Resume()
-//        {
-//        }
-//
-//        public void Resize( int width, int height )
-//        {
-//        }
-//
-//        public void Update()
-//        {
-//        }
-//    }
 }
 
 // ========================================================================

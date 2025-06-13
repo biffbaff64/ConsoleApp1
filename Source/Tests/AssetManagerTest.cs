@@ -26,33 +26,39 @@ using LughSharp.Lugh.Assets;
 using LughSharp.Lugh.Graphics.Images;
 using LughSharp.Lugh.Utils;
 
+using NUnit.Framework;
+
 namespace ConsoleApp1.Source.Tests;
 
+[TestFixture]
 public class AssetManagerTest
 {
-    private readonly AssetManager _assetManager;
+    private AssetManager? _assetManager;
 
-    public AssetManagerTest()
+    [SetUp]
+    public void Setup()
     {
         _assetManager = new AssetManager();
     }
 
+    [Test]
     public void Run()
     {
         Logger.Divider();
         Logger.Debug( "Loading assets...", true );
         Logger.Divider();
 
-        _assetManager.Load( "libgdx.png", typeof( Texture ) );
-        _assetManager.Load( "biffbaff.png", typeof( Texture ) );
-        _assetManager.Load( "red7logo_small.png", typeof( Texture ) );
+        _assetManager?.Load( "libgdx.png", typeof( Texture ) );
+        _assetManager?.Load( "biffbaff.png", typeof( Texture ) );
+        _assetManager?.Load( "red7logo_small.png", typeof( Texture ) );
 
         Logger.Debug( "All assets queued for loading.", true );
 
-        _assetManager.GetDiagnostics();
+        _assetManager?.GetDiagnostics();
 
-        Task.Run( () => { _assetManager.FinishLoading(); } );
+        Task.Run( () => { _assetManager?.FinishLoading(); } );
 
         Logger.Debug( "Finished!", true );
     }
 }
+

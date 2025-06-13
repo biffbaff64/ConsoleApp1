@@ -146,4 +146,8 @@
         <None Remove="Assets\Fonts\videophreak.ttf" />
     </ItemGroup>
 
+    <ItemGroup>
+      <PackageReference Include="NUnit" Version="4.3.2" />
+    </ItemGroup>
+
 </Project>

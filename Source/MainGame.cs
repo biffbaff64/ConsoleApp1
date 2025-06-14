@@ -391,7 +391,7 @@ public class MainGame : ApplicationAdapter
         var height = viewport[ 3 ];
 
         // Draw borders in different colors to easily identify edges
-        var thickness = 2f; // Make it visible
+//        var thickness = 2f; // Make it visible
 
         if ( _whitePixelTexture != null )
         {

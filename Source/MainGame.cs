@@ -1,19 +1,23 @@
-﻿using ConsoleApp1.Source.Tests;
+﻿using System.Runtime.Versioning;
+
+using ConsoleApp1.Source.Tests;
 
 using DotGLFW;
 
 using Extensions.Source.Tools.ImagePacker;
 
+using JetBrains.Annotations;
+
 using LughSharp.Lugh.Assets;
 using LughSharp.Lugh.Assets.Loaders;
 using LughSharp.Lugh.Core;
+using LughSharp.Lugh.Files;
 using LughSharp.Lugh.Graphics.Cameras;
 using LughSharp.Lugh.Graphics.G2D;
 using LughSharp.Lugh.Graphics.Images;
 using LughSharp.Lugh.Graphics.OpenGL;
 using LughSharp.Lugh.Graphics.OpenGL.Enums;
 using LughSharp.Lugh.Graphics.Utils;
-using LughSharp.Lugh.Maths;
 using LughSharp.Lugh.Utils;
 using LughSharp.Lugh.Utils.Exceptions;
 
@@ -25,6 +29,7 @@ namespace ConsoleApp1.Source;
 /// <summary>
 /// TEST class, used for testing the framework.
 /// </summary>
+[PublicAPI]
 public class MainGame : ApplicationAdapter
 {
     private const string TEST_ASSET1             = Assets.ROVER_WHEEL;
@@ -36,20 +41,19 @@ public class MainGame : ApplicationAdapter
 
     // ========================================================================
 
-    private readonly Vector3 _cameraPos = Vector3.Zero;
+//    private readonly Vector3 _cameraPos = Vector3.Zero;
 
     private static OrthographicGameCamera? _orthoGameCam;
-    private        AssetManager?           _assetManager;
-    private        Texture?                _image1;
 
-    private SpriteBatch? _spriteBatch;
-    private Texture?     _testTexture;
+    private AssetManager? _assetManager;
+    private Texture?      _image1;
+    private SpriteBatch?  _spriteBatch;
+    private Texture?      _testTexture;
+    private Texture?      _whitePixelTexture;
 
-//    private        BitmapFont?             _font;
-//    private        InputMultiplexer?       _inputMultiplexer;
-//    private        Keyboard?               _keyboard;
-
-    private Texture? _whitePixelTexture;
+//    private BitmapFont?       _font;
+//    private InputMultiplexer? _inputMultiplexer;
+//    private Keyboard?         _keyboard;
 
     // ========================================================================
 
@@ -73,6 +77,12 @@ public class MainGame : ApplicationAdapter
         _orthoGameCam.SetZoomDefault( CameraData.DEFAULT_ZOOM );
         _orthoGameCam.IsInUse = true;
 
+        // ====================================================================
+
+        var test = new TexturePackerTest();
+        test.Run();
+        return;
+        
         // ====================================================================
 
         // When creating the texture
@@ -128,7 +138,7 @@ public class MainGame : ApplicationAdapter
             _orthoGameCam.Viewport?.Apply();
 
             // Set up projection matrix
-            _spriteBatch.SetProjectionMatrix( _orthoGameCam.Camera!.Combined );
+            _spriteBatch.SetProjectionMatrix( _orthoGameCam.Camera.Combined );
             _spriteBatch.SetTransformMatrix( _orthoGameCam.Camera.ViewMatrix );
             _spriteBatch.EnableBlending();
             Engine.GL.BlendFunc( ( int )BlendingFactor.SrcAlpha,
@@ -226,6 +236,7 @@ public class MainGame : ApplicationAdapter
 
     // ========================================================================
 
+    [SupportedOSPlatform( "windows" )]
     private static void PackImages()
     {
         if ( REBUILD_ATLAS )
@@ -246,15 +257,10 @@ public class MainGame : ApplicationAdapter
             // - source folder
             // - destination folder
             // - name of atlas, without extension (the extension '.atlas' will be added automatically)
-            TexturePacker.Process( settings,
-                                   @"\Assets\PackedImages\Objects",
-                                   @"\Assets\PackedImages\output",
-                                   "objects" );
-
-//            TexturePacker.Process( settings, "packedimages/animations", "packedimages/output", "animations" );
-//            TexturePacker.Process( settings, "packedimages/achievements", "packedimages/output", "achievements" );
-//            TexturePacker.Process( settings, "packedimages/input", "packedimages/output", "buttons" );
-//            TexturePacker.Process( settings, "packedimages/text", "packedimages/output", "text" );
+//            TexturePacker.Process( @"\Assets\PackedImages\Objects",
+//                                   @"\Assets\PackedImages\output",
+//                                   "objects",
+//                                  settings );
         }
     }
 
@@ -387,8 +393,8 @@ public class MainGame : ApplicationAdapter
 
         Engine.GL.GetIntegerv( IGL.GL_VIEWPORT, ref viewport );
 
-        var width  = viewport[ 2 ];
-        var height = viewport[ 3 ];
+//        var width  = viewport[ 2 ];
+//        var height = viewport[ 3 ];
 
         // Draw borders in different colors to easily identify edges
 //        var thickness = 2f; // Make it visible

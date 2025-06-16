@@ -22,98 +22,56 @@
     </ItemGroup>
 
     <ItemGroup>
-        <None Remove="Assets\LughLogo.png" />
-        <None Remove="Assets\Felix.png" />
-    </ItemGroup>
-
-    <ItemGroup>
-        <None Remove="Assets\red7logo_small.png" />
+<!---->
+        <None Remove="Assets\Fonts\Acme-Regular.ttf" />
         <Content Include="Assets\Fonts\Acme-Regular.ttf">
           <CopyToOutputDirectory>Always</CopyToOutputDirectory>
         </Content>
+        <None Remove="Assets\Fonts\arial-15.fnt" />
         <Content Include="Assets\Fonts\arial-15.fnt">
           <CopyToOutputDirectory>Always</CopyToOutputDirectory>
         </Content>
+        <None Remove="Assets\Fonts\arial-15.png" />
         <Content Include="Assets\Fonts\arial-15.png">
           <CopyToOutputDirectory>Always</CopyToOutputDirectory>
         </Content>
-        <Content Include="Assets\Fonts\CENSCBK.TTF">
-          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-        </Content>
+        <None Remove="Assets\Fonts\lsans-15.fnt" />
         <Content Include="Assets\Fonts\lsans-15.fnt">
           <CopyToOutputDirectory>Always</CopyToOutputDirectory>
         </Content>
+        <None Remove="Assets\Fonts\lsans-15.png" />
         <Content Include="Assets\Fonts\lsans-15.png">
           <CopyToOutputDirectory>Always</CopyToOutputDirectory>
         </Content>
-        <Content Include="Assets\PackedImages\Objects\bar_orange.png">
-          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        <None Remove="Assets\Fonts\ProFontWindows.ttf" />
+        <Content Include="Assets\Fonts\ProFontWindows.ttf">
+            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
         </Content>
-        <Content Include="Assets\PackedImages\Objects\bar_red.png">
-          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-        </Content>
-        <Content Include="Assets\PackedImages\Objects\bar_yellow.png">
-          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-        </Content>
-        <Content Include="Assets\PackedImages\Objects\red7logo_small.png">
-          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-        </Content>
-        <None Remove="Assets\arial-15.fnt" />
-        <None Remove="Assets\arial-15.png" />
-        <None Remove="Assets\lsans-15.fnt" />
-        <None Remove="Assets\lsans-15.png" />
-        <None Remove="Assets\red7logo_small.bmp" />
-        <None Remove="Assets\libgdx.png" />
-        <None Remove="Assets\rover_wheel.png" />
+<!---->
         <None Remove="Assets\PackedImages\Objects\bar.png" />
         <Content Include="Assets\PackedImages\Objects\bar.png">
-          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
         </Content>
-        <None Remove="Assets\PackedImages\Objects\bar9.png" />
-        <None Remove="Assets\PackedImages\Objects\bar9patch.png" />
         <None Remove="Assets\PackedImages\Objects\bar_green.png" />
         <Content Include="Assets\PackedImages\Objects\bar_green.png">
-          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
         </Content>
-        <None Remove="Assets\PackedImages\Objects\bar_green9.png" />
-        <None Remove="Assets\PackedImages\Objects\bar_grey.png" />
         <None Remove="Assets\PackedImages\Objects\bar_orange.png" />
-        <None Remove="Assets\PackedImages\Objects\bar_orange9.png" />
+        <Content Include="Assets\PackedImages\Objects\bar_orange.png">
+            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </Content>
         <None Remove="Assets\PackedImages\Objects\bar_red.png" />
-        <None Remove="Assets\PackedImages\Objects\bar_red9.png" />
+        <Content Include="Assets\PackedImages\Objects\bar_red.png">
+            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </Content>
         <None Remove="Assets\PackedImages\Objects\bar_yellow.png" />
-        <None Remove="Assets\PackedImages\Objects\bar_yellow9.png" />
-        <None Remove="Assets\PackedImages\Objects\big_block_cover_bottom.png" />
-        <None Remove="Assets\PackedImages\Objects\big_block_cover_left.png" />
-        <None Remove="Assets\PackedImages\Objects\big_block_cover_right.png" />
-        <None Remove="Assets\PackedImages\Objects\books_panel.png" />
-        <None Remove="Assets\PackedImages\Objects\compass.png" />
-        <None Remove="Assets\PackedImages\Objects\complete_star.png" />
-        <None Remove="Assets\PackedImages\Objects\completed_panel.png" />
-        <None Remove="Assets\PackedImages\Objects\dialog_background.png" />
-        <None Remove="Assets\PackedImages\Objects\divider.png" />
-        <None Remove="Assets\PackedImages\Objects\key_held_panel.png" />
-        <None Remove="Assets\PackedImages\Objects\loadbar_background.png" />
-        <None Remove="Assets\PackedImages\Objects\menu_arrows_green.png" />
-        <None Remove="Assets\PackedImages\Objects\menu_glow_blue01.png" />
-        <None Remove="Assets\PackedImages\Objects\menu_glow_green01.png" />
-        <None Remove="Assets\PackedImages\Objects\message_panel1.png" />
-        <None Remove="Assets\PackedImages\Objects\message_panel2.png" />
-        <None Remove="Assets\PackedImages\Objects\message_panel3.png" />
-        <None Remove="Assets\PackedImages\Objects\potions_panel.png" />
-        <None Remove="Assets\PackedImages\Objects\red7logo.png" />
-        <None Remove="Assets\PackedImages\Objects\red7logo_large.png" />
+        <Content Include="Assets\PackedImages\Objects\bar_yellow.png">
+            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </Content>
         <None Remove="Assets\PackedImages\Objects\red7logo_small.png" />
-        <None Remove="Assets\PackedImages\Objects\runes_panel.png" />
-        <None Remove="Assets\PackedImages\Objects\smallbar9.png" />
-        <None Remove="Assets\PackedImages\Objects\solid_black32x32.png" />
-        <None Remove="Assets\PackedImages\Objects\solid_blue32x32.png" />
-        <None Remove="Assets\PackedImages\Objects\solid_clear32x32.png" />
-        <None Remove="Assets\PackedImages\Objects\solid_green32x32.png" />
-        <None Remove="Assets\PackedImages\Objects\solid_lime32x32.png" />
-        <None Remove="Assets\PackedImages\Objects\solid_red32x32.png" />
-        <None Remove="Assets\PackedImages\Objects\solid_white32x32.png" />
-        <None Remove="Assets\PackedImages\Objects\solid_yellow32x32.png" />
+        <Content Include="Assets\PackedImages\Objects\red7logo_small.png">
+            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </Content>
         <None Remove="Assets\PackedImages\Objects\libgdx.png" />
         <Content Include="Assets\PackedImages\Objects\libgdx.png">
           <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -122,28 +80,6 @@
         <Content Include="Assets\PackedImages\Objects\rover_wheel.png">
           <CopyToOutputDirectory>Always</CopyToOutputDirectory>
         </Content>
-        <None Remove="Assets\Fonts\Acme-Regular.ttf" />
-        <None Remove="Assets\Fonts\arial-15.fnt" />
-        <None Remove="Assets\Fonts\arial-15.png" />
-        <None Remove="Assets\Fonts\Cave-Stone.ttf" />
-        <None Remove="Assets\Fonts\CENSCBK.TTF" />
-        <None Remove="Assets\Fonts\galaxy.ttf" />
-        <None Remove="Assets\Fonts\JMH Cthulhumbus UG.ttf" />
-        <None Remove="Assets\Fonts\JMH Cthulhumbus UGalt1.ttf" />
-        <None Remove="Assets\Fonts\JMH Cthulhumbus UGalt2.ttf" />
-        <None Remove="Assets\Fonts\lsans-15.fnt" />
-        <None Remove="Assets\Fonts\lsans-15.png" />
-        <None Remove="Assets\Fonts\MoriaCitadel.TTF" />
-        <None Remove="Assets\Fonts\Orbitron Bold.ttf" />
-        <None Remove="Assets\Fonts\OrcHordeBB_Reg.ttf" />
-        <None Remove="Assets\Fonts\OrcHordeInlineBB_Reg.ttf" />
-        <None Remove="Assets\Fonts\paraaminobenzoic.ttf" />
-        <None Remove="Assets\Fonts\ProFontWindows.ttf" />
-        <Content Include="Assets\Fonts\ProFontWindows.ttf">
-          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-        </Content>
-        <None Remove="Assets\Fonts\sansation.ttf" />
-        <None Remove="Assets\Fonts\videophreak.ttf" />
     </ItemGroup>
 
 </Project>

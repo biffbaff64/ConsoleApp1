@@ -80,6 +80,14 @@
         <Content Include="Assets\PackedImages\Objects\rover_wheel.png">
           <CopyToOutputDirectory>Always</CopyToOutputDirectory>
         </Content>
+        <None Remove="Assets\PackedImages\Test\objects.atlas" />
+        <Content Include="Assets\PackedImages\Test\objects.atlas">
+          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </Content>
+        <None Remove="Assets\PackedImages\Test\objects.png" />
+        <Content Include="Assets\PackedImages\Test\objects.png">
+          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </Content>
     </ItemGroup>
 
 </Project>

@@ -53,6 +53,8 @@ public class TexturePackerTest
     [Test]
     public void Run()
     {
+        Logger.Checkpoint();
+        
         var settings = new TexturePacker.Settings
         {
             MaxWidth   = 2048, // Maximum Width of final atlas image
@@ -70,11 +72,8 @@ public class TexturePackerTest
         // - source folder
         // - destination folder
         // - name of atlas, without extension (the extension '.atlas' will be added automatically)
-        var inputFolder  = IOUtils.ValidateAssetPath( @"\Assets\PackedImages\objects" );
-        var outputFolder = IOUtils.ValidateAssetPath( @"\Assets\PackedImages\output" );
-
-        Logger.Debug( $"Input folder: {inputFolder}" );
-        Logger.Debug( $"Output folder: {outputFolder}" );
+        var inputFolder  = IOUtils.NormalizeAssetPath( @"\Assets\PackedImages\objects" );
+        var outputFolder = IOUtils.NormalizeAssetPath( @"\Assets\PackedImages\output" );
 
         var packer = new TexturePacker();
         packer.Process( inputFolder, outputFolder, "objects", settings );

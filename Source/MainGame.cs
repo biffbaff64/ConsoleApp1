@@ -12,6 +12,7 @@ using LughSharp.Lugh.Assets;
 using LughSharp.Lugh.Assets.Loaders;
 using LughSharp.Lugh.Core;
 using LughSharp.Lugh.Files;
+using LughSharp.Lugh.Graphics.Atlases;
 using LughSharp.Lugh.Graphics.Cameras;
 using LughSharp.Lugh.Graphics.G2D;
 using LughSharp.Lugh.Graphics.Images;
@@ -19,6 +20,7 @@ using LughSharp.Lugh.Graphics.OpenGL;
 using LughSharp.Lugh.Graphics.OpenGL.Enums;
 using LughSharp.Lugh.Graphics.Utils;
 using LughSharp.Lugh.Utils;
+using LughSharp.Lugh.Utils.Collections;
 using LughSharp.Lugh.Utils.Exceptions;
 
 using Color = LughSharp.Lugh.Graphics.Color;
@@ -60,6 +62,8 @@ public class MainGame : ApplicationAdapter
     /// <inheritdoc />
     public override void Create()
     {
+        Logger.Checkpoint();
+        
         _assetManager = new AssetManager();
         _image1       = null;
         _spriteBatch  = new SpriteBatch();
@@ -71,43 +75,44 @@ public class MainGame : ApplicationAdapter
             return;
         }
 
-        _orthoGameCam = new OrthographicGameCamera( Engine.Api.Graphics.Width,
-                                                    Engine.Api.Graphics.Height,
-                                                    ppm: 1f );
+        _orthoGameCam = new OrthographicGameCamera( Engine.Api.Graphics.Width, Engine.Api.Graphics.Height, ppm: 1f );
         _orthoGameCam.SetZoomDefault( CameraData.DEFAULT_ZOOM );
         _orthoGameCam.IsInUse = true;
 
         // ====================================================================
 
-        var test = new TexturePackerTest();
-        test.Run();
-        return;
-        
+//        var test = new TexturePackerTest();
+//        test.Run();
+
         // ====================================================================
 
-        // When creating the texture
-        var pixmap = new Pixmap( TEST_WIDTH, TEST_HEIGHT, PixelType.Format.RGBA8888 );
-        pixmap.SetColor( Color.Magenta );
-        pixmap.FillWithCurrentColor();
+//        // When creating the texture
+//        var pixmap = new Pixmap( TEST_WIDTH, TEST_HEIGHT, PixelType.Format.RGBA8888 );
+//        pixmap.SetColor( Color.Magenta );
+//        pixmap.FillWithCurrentColor();
+//
+//        _testTexture = new Texture( new PixmapTextureData( pixmap, PixelType.Format.RGBA8888, false, false ) );
+//
+//        // Set texture parameters
+//        Engine.GL.BindTexture( IGL.GL_TEXTURE_2D, _testTexture.TextureID );
+//        Engine.GL.TexParameteri( IGL.GL_TEXTURE_2D, IGL.GL_TEXTURE_MIN_FILTER, IGL.GL_NEAREST );
+//        Engine.GL.TexParameteri( IGL.GL_TEXTURE_2D, IGL.GL_TEXTURE_MAG_FILTER, IGL.GL_NEAREST );
+//        Engine.GL.TexParameteri( IGL.GL_TEXTURE_2D, IGL.GL_TEXTURE_WRAP_S, IGL.GL_CLAMP_TO_EDGE );
+//        Engine.GL.TexParameteri( IGL.GL_TEXTURE_2D, IGL.GL_TEXTURE_WRAP_T, IGL.GL_CLAMP_TO_EDGE );
+//
+//        pixmap.Dispose();
+//
+//        // Validate texture creation
+//        if ( !Engine.GL.IsTexture( _testTexture.TextureID ) )
+//        {
+//            Logger.Debug( "Failed to create texture" );
+//
+//            return;
+//        }
 
-        _testTexture = new Texture( new PixmapTextureData( pixmap, PixelType.Format.RGBA8888, false, false ) );
+        // ====================================================================
 
-        // Set texture parameters
-        Engine.GL.BindTexture( IGL.GL_TEXTURE_2D, _testTexture.TextureID );
-        Engine.GL.TexParameteri( IGL.GL_TEXTURE_2D, IGL.GL_TEXTURE_MIN_FILTER, IGL.GL_NEAREST );
-        Engine.GL.TexParameteri( IGL.GL_TEXTURE_2D, IGL.GL_TEXTURE_MAG_FILTER, IGL.GL_NEAREST );
-        Engine.GL.TexParameteri( IGL.GL_TEXTURE_2D, IGL.GL_TEXTURE_WRAP_S, IGL.GL_CLAMP_TO_EDGE );
-        Engine.GL.TexParameteri( IGL.GL_TEXTURE_2D, IGL.GL_TEXTURE_WRAP_T, IGL.GL_CLAMP_TO_EDGE );
-
-        pixmap.Dispose();
-
-        // Validate texture creation
-        if ( !Engine.GL.IsTexture( _testTexture.TextureID ) )
-        {
-            Logger.Debug( "Failed to create texture" );
-
-            return;
-        }
+        var atlas = new TextureAtlas( $"{IOUtils.AssetsTestPath}Objects.atlas" );
 
         // ====================================================================
 
@@ -126,7 +131,7 @@ public class MainGame : ApplicationAdapter
     {
         // Clear and set viewport
         Engine.GL.Viewport( 0, 0, Engine.Api.Graphics.Width, Engine.Api.Graphics.Height );
-        ScreenUtils.Clear( Color.Clear, clearDepth: false );
+        ScreenUtils.Clear( Color.Blue, clearDepth: false );
 
         // Enable blending
         Engine.GL.Enable( IGL.GL_BLEND );

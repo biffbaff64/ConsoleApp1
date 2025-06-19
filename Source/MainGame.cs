@@ -63,7 +63,7 @@ public class MainGame : ApplicationAdapter
     public override void Create()
     {
         Logger.Checkpoint();
-        
+
         _assetManager = new AssetManager();
         _image1       = null;
         _spriteBatch  = new SpriteBatch();
@@ -112,7 +112,11 @@ public class MainGame : ApplicationAdapter
 
         // ====================================================================
 
-        var atlas = new TextureAtlas( $"{IOUtils.AssetsTestPath}Objects.atlas" );
+        var path = $"{IOUtils.AssetsTestPath}Objects.atlas";
+        
+        Logger.Debug( $"Loading texture atlas from: {path}" );
+        
+        var atlas = new TextureAtlas( new FileInfo( path ) );
 
         // ====================================================================
 

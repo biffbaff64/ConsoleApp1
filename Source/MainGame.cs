@@ -11,20 +11,19 @@ using JetBrains.Annotations;
 using LughSharp.Lugh.Assets;
 using LughSharp.Lugh.Assets.Loaders;
 using LughSharp.Lugh.Core;
-using LughSharp.Lugh.Files;
-using LughSharp.Lugh.Graphics.Atlases;
 using LughSharp.Lugh.Graphics.Cameras;
 using LughSharp.Lugh.Graphics.G2D;
 using LughSharp.Lugh.Graphics.Images;
 using LughSharp.Lugh.Graphics.OpenGL;
 using LughSharp.Lugh.Graphics.OpenGL.Enums;
+using LughSharp.Lugh.Graphics.Text;
 using LughSharp.Lugh.Graphics.Utils;
+using LughSharp.Lugh.Input;
 using LughSharp.Lugh.Utils;
-using LughSharp.Lugh.Utils.Collections;
 using LughSharp.Lugh.Utils.Exceptions;
 
 using Color = LughSharp.Lugh.Graphics.Color;
-using PixelType = LughSharp.Lugh.Graphics.Images.PixelType;
+using PixelType = LughSharp.Lugh.Graphics.Pixels.PixelType;
 
 namespace ConsoleApp1.Source;
 
@@ -53,9 +52,9 @@ public class MainGame : ApplicationAdapter
     private Texture?      _testTexture;
     private Texture?      _whitePixelTexture;
 
-//    private BitmapFont?       _font;
-//    private InputMultiplexer? _inputMultiplexer;
-//    private Keyboard?         _keyboard;
+    private BitmapFont?       _font;
+    private InputMultiplexer? _inputMultiplexer;
+    private Keyboard?         _keyboard;
 
     // ========================================================================
 
@@ -86,37 +85,29 @@ public class MainGame : ApplicationAdapter
 
         // ====================================================================
 
-//        // When creating the texture
-//        var pixmap = new Pixmap( TEST_WIDTH, TEST_HEIGHT, PixelType.Format.RGBA8888 );
-//        pixmap.SetColor( Color.Magenta );
-//        pixmap.FillWithCurrentColor();
-//
-//        _testTexture = new Texture( new PixmapTextureData( pixmap, PixelType.Format.RGBA8888, false, false ) );
-//
-//        // Set texture parameters
-//        Engine.GL.BindTexture( IGL.GL_TEXTURE_2D, _testTexture.TextureID );
-//        Engine.GL.TexParameteri( IGL.GL_TEXTURE_2D, IGL.GL_TEXTURE_MIN_FILTER, IGL.GL_NEAREST );
-//        Engine.GL.TexParameteri( IGL.GL_TEXTURE_2D, IGL.GL_TEXTURE_MAG_FILTER, IGL.GL_NEAREST );
-//        Engine.GL.TexParameteri( IGL.GL_TEXTURE_2D, IGL.GL_TEXTURE_WRAP_S, IGL.GL_CLAMP_TO_EDGE );
-//        Engine.GL.TexParameteri( IGL.GL_TEXTURE_2D, IGL.GL_TEXTURE_WRAP_T, IGL.GL_CLAMP_TO_EDGE );
-//
-//        pixmap.Dispose();
-//
-//        // Validate texture creation
-//        if ( !Engine.GL.IsTexture( _testTexture.TextureID ) )
-//        {
-//            Logger.Debug( "Failed to create texture" );
-//
-//            return;
-//        }
+        // When creating the texture
+        var pixmap = new Pixmap( TEST_WIDTH, TEST_HEIGHT, PixelType.Format.RGBA8888 );
+        pixmap.SetColor( Color.Magenta );
+        pixmap.FillWithCurrentColor();
 
-        // ====================================================================
+        _image1 = new Texture( new PixmapTextureData( pixmap, PixelType.Format.RGBA8888, false, false ) );
 
-        var path = $"{IOUtils.AssetsTestPath}Objects.atlas";
-        
-        Logger.Debug( $"Loading texture atlas from: {path}" );
-        
-        var atlas = new TextureAtlas( new FileInfo( path ) );
+        // Set texture parameters
+        Engine.GL.BindTexture( IGL.GL_TEXTURE_2D, _image1.TextureID );
+        Engine.GL.TexParameteri( IGL.GL_TEXTURE_2D, IGL.GL_TEXTURE_MIN_FILTER, IGL.GL_NEAREST );
+        Engine.GL.TexParameteri( IGL.GL_TEXTURE_2D, IGL.GL_TEXTURE_MAG_FILTER, IGL.GL_NEAREST );
+        Engine.GL.TexParameteri( IGL.GL_TEXTURE_2D, IGL.GL_TEXTURE_WRAP_S, IGL.GL_CLAMP_TO_EDGE );
+        Engine.GL.TexParameteri( IGL.GL_TEXTURE_2D, IGL.GL_TEXTURE_WRAP_T, IGL.GL_CLAMP_TO_EDGE );
+
+        pixmap.Dispose();
+
+        // Validate texture creation
+        if ( !Engine.GL.IsTexture( _image1.TextureID ) )
+        {
+            Logger.Debug( "Failed to create texture" );
+
+            return;
+        }
 
         // ====================================================================
 

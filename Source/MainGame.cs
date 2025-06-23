@@ -19,6 +19,7 @@ using LughSharp.Lugh.Graphics.OpenGL.Enums;
 using LughSharp.Lugh.Graphics.Text;
 using LughSharp.Lugh.Graphics.Utils;
 using LughSharp.Lugh.Input;
+using LughSharp.Lugh.Maths;
 using LughSharp.Lugh.Utils;
 using LughSharp.Lugh.Utils.Exceptions;
 
@@ -80,12 +81,6 @@ public class MainGame : ApplicationAdapter
 
         // ====================================================================
 
-//        var test = new TexturePackerTest();
-//        test.Run();
-
-        // ====================================================================
-
-        // When creating the texture
         var pixmap = new Pixmap( TEST_WIDTH, TEST_HEIGHT, PixelType.Format.RGBA8888 );
         pixmap.SetColor( Color.Magenta );
         pixmap.FillWithCurrentColor();
@@ -109,6 +104,8 @@ public class MainGame : ApplicationAdapter
             return;
         }
 
+        _image1.Debug();
+        
         // ====================================================================
 
         Logger.Debug( "Done" );
@@ -125,42 +122,28 @@ public class MainGame : ApplicationAdapter
     public override void Render()
     {
         // Clear and set viewport
-        Engine.GL.Viewport( 0, 0, Engine.Api.Graphics.Width, Engine.Api.Graphics.Height );
         ScreenUtils.Clear( Color.Blue, clearDepth: false );
-
-        // Enable blending
-        Engine.GL.Enable( IGL.GL_BLEND );
-        Engine.GL.BlendFunc( IGL.GL_SRC_ALPHA, IGL.GL_ONE_MINUS_SRC_ALPHA );
 
         if ( ( _spriteBatch != null ) && _orthoGameCam is { IsInUse: true } )
         {
-            _orthoGameCam.Update();
-            _orthoGameCam.Viewport?.Apply();
-
-            // Set up projection matrix
-            _spriteBatch.SetProjectionMatrix( _orthoGameCam.Camera.Combined );
-            _spriteBatch.SetTransformMatrix( _orthoGameCam.Camera.ViewMatrix );
             _spriteBatch.EnableBlending();
-            Engine.GL.BlendFunc( ( int )BlendingFactor.SrcAlpha,
-                                 ( int )BlendingFactor.OneMinusSrcAlpha );
 
+            _orthoGameCam.Viewport?.Apply();
+            _spriteBatch.SetProjectionMatrix( _orthoGameCam.Camera.Combined );
             _spriteBatch.Begin( depthMaskEnabled: false );
 
+            _orthoGameCam.SetPosition( Vector3.Zero );
+            
             if ( _image1 != null )
             {
                 // Draw in center of screen
                 const float width  = 200f;
                 const float height = 200f;
 
-                var x = ( Engine.Api.Graphics.Width - width ) / 2;
-                var y = ( Engine.Api.Graphics.Height - height ) / 2;
-
-                // Bind texture before drawing
-                Engine.GL.ActiveTexture( IGL.GL_TEXTURE0 );
-                Engine.GL.BindTexture( IGL.GL_TEXTURE_2D, _image1.TextureID );
-
-                _spriteBatch.Draw( _image1, x, y, width, height );
+                _spriteBatch.Draw( _image1, 40, 40, width, height );
             }
+
+            _orthoGameCam.Update();
 
             _spriteBatch.End();
         }

@@ -1,7 +1,4 @@
-﻿using System.Runtime.Versioning;
-
-using ConsoleApp1.Source.Tests;
-
+﻿
 using DotGLFW;
 
 using Extensions.Source.Tools.ImagePacker;
@@ -22,6 +19,7 @@ using LughSharp.Lugh.Input;
 using LughSharp.Lugh.Maths;
 using LughSharp.Lugh.Utils;
 using LughSharp.Lugh.Utils.Exceptions;
+using LughSharp.Tests.Source;
 
 using Color = LughSharp.Lugh.Graphics.Color;
 using PixelType = LughSharp.Lugh.Graphics.Pixels.PixelType;
@@ -97,7 +95,7 @@ public class MainGame : ApplicationAdapter
         pixmap.Dispose();
 
         // Validate texture creation
-        if ( !Engine.GL.IsTexture( _image1.TextureID ) )
+        if ( !Engine.GL.IsGLTexture( _image1.TextureID ) )
         {
             Logger.Debug( "Failed to create texture" );
 
@@ -105,7 +103,12 @@ public class MainGame : ApplicationAdapter
         }
 
         _image1.Debug();
-        
+
+        // ====================================================================
+
+        var test = new TexturePackerTest();
+        test.Run();
+
         // ====================================================================
 
         Logger.Debug( "Done" );
@@ -133,7 +136,7 @@ public class MainGame : ApplicationAdapter
             _spriteBatch.Begin( depthMaskEnabled: false );
 
             _orthoGameCam.SetPosition( Vector3.Zero );
-            
+
             if ( _image1 != null )
             {
                 // Draw in center of screen
@@ -144,7 +147,7 @@ public class MainGame : ApplicationAdapter
             }
 
             _orthoGameCam.Update();
-
+            
             _spriteBatch.End();
         }
 
@@ -219,7 +222,6 @@ public class MainGame : ApplicationAdapter
 
     // ========================================================================
 
-    [SupportedOSPlatform( "windows" )]
     private static void PackImages()
     {
         if ( REBUILD_ATLAS )
@@ -240,10 +242,11 @@ public class MainGame : ApplicationAdapter
             // - source folder
             // - destination folder
             // - name of atlas, without extension (the extension '.atlas' will be added automatically)
-//            TexturePacker.Process( @"\Assets\PackedImages\Objects",
-//                                   @"\Assets\PackedImages\output",
-//                                   "objects",
-//                                  settings );
+            var texturePacker = new TexturePacker();
+            texturePacker.Process( @"\Assets\PackedImages\Objects",
+                                   @"\Assets\PackedImages\output",
+                                   "objects",
+                                  settings );
         }
     }
 
@@ -346,10 +349,8 @@ public class MainGame : ApplicationAdapter
                 _spriteBatch.Begin();
             }
 
-            // Draw the bounds
             if ( _whitePixelTexture != null )
             {
-//                _spriteBatch.Draw( _image1, 0, 0 );
                 _spriteBatch.Draw( _whitePixelTexture, 0, 0 );
             }
 

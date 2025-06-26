@@ -15,78 +15,78 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\LughSharpFramework\DesktopGLBackend\DesktopGLBackend.csproj" />
-        <ProjectReference Include="..\LughSharpFramework\LughSharp.Extensions\LughSharp.Extensions.csproj" />
-        <ProjectReference Include="..\LughSharpFramework\LughSharp.Tests\LughSharp.Tests.csproj" />
-        <ProjectReference Include="..\LughSharpFramework\LughSharp\LughSharp.csproj" />
+        <ProjectReference Include="..\LughSharpFramework\DesktopGLBackend\DesktopGLBackend.csproj"/>
+        <ProjectReference Include="..\LughSharpFramework\LughSharp.Extensions\LughSharp.Extensions.csproj"/>
+        <ProjectReference Include="..\LughSharpFramework\LughSharp.Tests\LughSharp.Tests.csproj"/>
+        <ProjectReference Include="..\LughSharpFramework\LughSharp\LughSharp.csproj"/>
     </ItemGroup>
 
     <ItemGroup>
-<!---->
-        <None Remove="Assets\Fonts\Acme-Regular.ttf" />
+        <!---->
+        <None Remove="Assets\Fonts\Acme-Regular.ttf"/>
         <Content Include="Assets\Fonts\Acme-Regular.ttf">
-          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
         </Content>
-        <None Remove="Assets\Fonts\arial-15.fnt" />
+        <None Remove="Assets\Fonts\arial-15.fnt"/>
         <Content Include="Assets\Fonts\arial-15.fnt">
-          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
         </Content>
-        <None Remove="Assets\Fonts\arial-15.png" />
+        <None Remove="Assets\Fonts\arial-15.png"/>
         <Content Include="Assets\Fonts\arial-15.png">
-          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
         </Content>
-        <None Remove="Assets\Fonts\lsans-15.fnt" />
+        <None Remove="Assets\Fonts\lsans-15.fnt"/>
         <Content Include="Assets\Fonts\lsans-15.fnt">
-          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
         </Content>
-        <None Remove="Assets\Fonts\lsans-15.png" />
+        <None Remove="Assets\Fonts\lsans-15.png"/>
         <Content Include="Assets\Fonts\lsans-15.png">
-          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
         </Content>
-        <None Remove="Assets\Fonts\ProFontWindows.ttf" />
+        <None Remove="Assets\Fonts\ProFontWindows.ttf"/>
         <Content Include="Assets\Fonts\ProFontWindows.ttf">
             <CopyToOutputDirectory>Always</CopyToOutputDirectory>
         </Content>
-<!---->
-        <None Remove="Assets\PackedImages\Objects\bar.png" />
+        <!---->
+        <None Remove="Assets\PackedImages\Objects\bar.png"/>
         <Content Include="Assets\PackedImages\Objects\bar.png">
             <CopyToOutputDirectory>Always</CopyToOutputDirectory>
         </Content>
-        <None Remove="Assets\PackedImages\Objects\bar_green.png" />
+        <None Remove="Assets\PackedImages\Objects\bar_green.png"/>
         <Content Include="Assets\PackedImages\Objects\bar_green.png">
             <CopyToOutputDirectory>Always</CopyToOutputDirectory>
         </Content>
-        <None Remove="Assets\PackedImages\Objects\bar_orange.png" />
+        <None Remove="Assets\PackedImages\Objects\bar_orange.png"/>
         <Content Include="Assets\PackedImages\Objects\bar_orange.png">
             <CopyToOutputDirectory>Always</CopyToOutputDirectory>
         </Content>
-        <None Remove="Assets\PackedImages\Objects\bar_red.png" />
+        <None Remove="Assets\PackedImages\Objects\bar_red.png"/>
         <Content Include="Assets\PackedImages\Objects\bar_red.png">
             <CopyToOutputDirectory>Always</CopyToOutputDirectory>
         </Content>
-        <None Remove="Assets\PackedImages\Objects\bar_yellow.png" />
+        <None Remove="Assets\PackedImages\Objects\bar_yellow.png"/>
         <Content Include="Assets\PackedImages\Objects\bar_yellow.png">
             <CopyToOutputDirectory>Always</CopyToOutputDirectory>
         </Content>
-        <None Remove="Assets\PackedImages\Objects\red7logo_small.png" />
+        <None Remove="Assets\PackedImages\Objects\red7logo_small.png"/>
         <Content Include="Assets\PackedImages\Objects\red7logo_small.png">
             <CopyToOutputDirectory>Always</CopyToOutputDirectory>
         </Content>
-        <None Remove="Assets\PackedImages\Objects\libgdx.png" />
+        <None Remove="Assets\PackedImages\Objects\libgdx.png"/>
         <Content Include="Assets\PackedImages\Objects\libgdx.png">
-          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
         </Content>
-        <None Remove="Assets\PackedImages\Objects\rover_wheel.png" />
+        <None Remove="Assets\PackedImages\Objects\rover_wheel.png"/>
         <Content Include="Assets\PackedImages\Objects\rover_wheel.png">
-          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
         </Content>
-        <None Remove="Assets\PackedImages\Test\objects.atlas" />
+        <None Remove="Assets\PackedImages\Test\objects.atlas"/>
         <Content Include="Assets\PackedImages\Test\objects.atlas">
-          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
         </Content>
-        <None Remove="Assets\PackedImages\Test\objects.png" />
+        <None Remove="Assets\PackedImages\Test\objects.png"/>
         <Content Include="Assets\PackedImages\Test\objects.png">
-          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
         </Content>
     </ItemGroup>
 

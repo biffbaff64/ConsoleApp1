@@ -221,36 +221,6 @@ public class MainGame : ApplicationAdapter
     }
 
     // ========================================================================
-
-    private static void PackImages()
-    {
-        if ( REBUILD_ATLAS )
-        {
-            var settings = new TexturePacker.Settings
-            {
-                MaxWidth   = 2048, // Maximum Width of final atlas image
-                MaxHeight  = 2048, // Maximum Height of final atlas image
-                PowerOfTwo = true,
-                Debug      = DRAW_DEBUG_LINES,
-                IsAlias    = REMOVE_DUPLICATE_IMAGES,
-            };
-
-//            settings.WriteToJsonFile( "ExampleSettings.json" );
-
-            // Build the Atlases from the specified parameters :-
-            // - configuration settings
-            // - source folder
-            // - destination folder
-            // - name of atlas, without extension (the extension '.atlas' will be added automatically)
-            var texturePacker = new TexturePacker();
-            texturePacker.Process( @"\Assets\PackedImages\Objects",
-                                   @"\Assets\PackedImages\output",
-                                   "objects",
-                                  settings );
-        }
-    }
-
-    // ========================================================================
     // ========================================================================
     // ========================================================================
 

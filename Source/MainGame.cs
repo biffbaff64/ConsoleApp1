@@ -1,8 +1,6 @@
 ﻿
 using DotGLFW;
 
-using Extensions.Source.Tools.ImagePacker;
-
 using JetBrains.Annotations;
 
 using LughSharp.Lugh.Assets;

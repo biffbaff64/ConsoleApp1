@@ -104,8 +104,10 @@ public class MainGame : ApplicationAdapter
 
         // ====================================================================
 
-        var test = new TexturePackerTest();
-        test.Run();
+        _ = CreateWhitePixelTexture();
+        
+//        var test = new TexturePackerTest();
+//        test.Run();
 
         // ====================================================================
 
@@ -135,13 +137,15 @@ public class MainGame : ApplicationAdapter
 
             _orthoGameCam.SetPosition( Vector3.Zero );
 
+            DrawViewportBounds();
+            
             if ( _image1 != null )
             {
                 // Draw in center of screen
-                const float width  = 200f;
-                const float height = 200f;
+                const float WIDTH  = 200f;
+                const float HEIGHT = 200f;
 
-                _spriteBatch.Draw( _image1, 40, 40, width, height );
+                _spriteBatch.Draw( _image1, 40, 40, WIDTH, HEIGHT );
             }
 
             _orthoGameCam.Update();
@@ -265,7 +269,7 @@ public class MainGame : ApplicationAdapter
 
         Logger.Debug( "Creating white pixel texture" );
 
-        var pixmap = new Pixmap( 1, 1, PixelType.Format.RGBA8888 );
+        var pixmap = new Pixmap( 40, 40, PixelType.Format.RGBA8888 );
         pixmap.SetColor( Color.White );
         pixmap.FillWithCurrentColor();
 
@@ -376,8 +380,12 @@ public class MainGame : ApplicationAdapter
         if ( scissorEnabled )
         {
             var scissors = new int[ 4 ];
+            
             Engine.GL.GetIntegerv( ( int )GetPName.ScissorBox, ref scissors );
-            Logger.Debug( $"Scissors: X={scissors[ 0 ]}, Y={scissors[ 1 ]}, Width={scissors[ 2 ]}, Height={scissors[ 3 ]}" );
+            
+            Logger.Debug( $"Scissors: X={scissors[ 0 ]}, Y={scissors[ 1 ]}, " +
+                          $"Width={scissors[ 2 ]}, Height={scissors[ 3 ]}" );
         }
     }
 }
+

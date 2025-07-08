@@ -1,5 +1,4 @@
-﻿
-using DotGLFW;
+﻿using DotGLFW;
 
 using JetBrains.Annotations;
 
@@ -77,11 +76,11 @@ public class MainGame : ApplicationAdapter
 
         // ====================================================================
 
-        var pixmap = new Pixmap( TEST_WIDTH, TEST_HEIGHT, PixelType.Format.RGBA8888 );
+        var pixmap = new Pixmap( TEST_WIDTH, TEST_HEIGHT, Gdx2DPixmap.Gdx2DPixmapFormat.RGBA8888 );
         pixmap.SetColor( Color.Magenta );
         pixmap.FillWithCurrentColor();
 
-        _image1 = new Texture( new PixmapTextureData( pixmap, PixelType.Format.RGBA8888, false, false ) );
+        _image1 = new Texture( new PixmapTextureData( pixmap, Gdx2DPixmap.Gdx2DPixmapFormat.RGBA8888, false, false ) );
 
         // Set texture parameters
         Engine.GL.BindTexture( IGL.GL_TEXTURE_2D, _image1.TextureID );
@@ -105,7 +104,7 @@ public class MainGame : ApplicationAdapter
         // ====================================================================
 
         _ = CreateWhitePixelTexture();
-        
+
 //        var test = new TexturePackerTest();
 //        test.Run();
 
@@ -125,7 +124,7 @@ public class MainGame : ApplicationAdapter
     public override void Render()
     {
         // Clear and set viewport
-        ScreenUtils.Clear( Color.Blue, clearDepth: false );
+        ScreenUtils.Clear( Color.Blue, false );
 
         if ( ( _spriteBatch != null ) && _orthoGameCam is { IsInUse: true } )
         {
@@ -133,12 +132,12 @@ public class MainGame : ApplicationAdapter
 
             _orthoGameCam.Viewport?.Apply();
             _spriteBatch.SetProjectionMatrix( _orthoGameCam.Camera.Combined );
-            _spriteBatch.Begin( depthMaskEnabled: false );
+            _spriteBatch.Begin( false );
 
             _orthoGameCam.SetPosition( Vector3.Zero );
 
             DrawViewportBounds();
-            
+
             if ( _image1 != null )
             {
                 // Draw in center of screen
@@ -149,7 +148,7 @@ public class MainGame : ApplicationAdapter
             }
 
             _orthoGameCam.Update();
-            
+
             _spriteBatch.End();
         }
 
@@ -269,11 +268,11 @@ public class MainGame : ApplicationAdapter
 
         Logger.Debug( "Creating white pixel texture" );
 
-        var pixmap = new Pixmap( 40, 40, PixelType.Format.RGBA8888 );
+        var pixmap = new Pixmap( 40, 40, Gdx2DPixmap.Gdx2DPixmapFormat.RGBA8888 );
         pixmap.SetColor( Color.White );
         pixmap.FillWithCurrentColor();
 
-        var textureData = new PixmapTextureData( pixmap, PixelType.Format.RGBA8888, false, false );
+        var textureData = new PixmapTextureData( pixmap, Gdx2DPixmap.Gdx2DPixmapFormat.RGBA8888, false, false );
 
         _whitePixelTexture = new Texture( textureData );
 
@@ -380,12 +379,11 @@ public class MainGame : ApplicationAdapter
         if ( scissorEnabled )
         {
             var scissors = new int[ 4 ];
-            
+
             Engine.GL.GetIntegerv( ( int )GetPName.ScissorBox, ref scissors );
-            
+
             Logger.Debug( $"Scissors: X={scissors[ 0 ]}, Y={scissors[ 1 ]}, " +
                           $"Width={scissors[ 2 ]}, Height={scissors[ 3 ]}" );
         }
     }
 }
-

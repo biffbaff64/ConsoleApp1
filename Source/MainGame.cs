@@ -25,7 +25,7 @@ namespace ConsoleApp1.Source;
 /// TEST class, used for testing the framework.
 /// </summary>
 [PublicAPI]
-public class MainGame : ApplicationAdapter
+public class MainGame : Game
 {
     private const string TEST_ASSET1 = Assets.ROVER_WHEEL;
     private const int    TEST_WIDTH  = 100;
@@ -50,7 +50,8 @@ public class MainGame : ApplicationAdapter
     public override void Create()
     {
         Logger.Checkpoint();
-
+        Logger.Debug($"Window dimensions: {Engine.Api.Graphics.Width}x{Engine.Api.Graphics.Height}");
+        
         _assetManager = new AssetManager();
         _image1       = null;
         _spriteBatch  = new SpriteBatch();
@@ -68,57 +69,16 @@ public class MainGame : ApplicationAdapter
         _orthoGameCam.SetZoomDefault( CameraData.DEFAULT_ZOOM );
         _orthoGameCam.IsInUse = true;
 
-        // ====================================================================
-
-        var pixmap = new Pixmap( TEST_WIDTH, TEST_HEIGHT, Gdx2DPixmap.Gdx2DPixmapFormat.RGBA8888 );
-        pixmap.SetColor( Color.Magenta );
-        pixmap.FillWithCurrentColor();
-
-        _image1 = new Texture( new PixmapTextureData( pixmap, Gdx2DPixmap.Gdx2DPixmapFormat.RGBA8888, false, false ) );
-        _image1.Name = "TestImage";
-        
-        // Set texture parameters
-        Engine.GL.BindTexture( IGL.GL_TEXTURE_2D, _image1.TextureID );
-        Engine.GL.TexParameteri( IGL.GL_TEXTURE_2D, IGL.GL_TEXTURE_MIN_FILTER, IGL.GL_NEAREST );
-        Engine.GL.TexParameteri( IGL.GL_TEXTURE_2D, IGL.GL_TEXTURE_MAG_FILTER, IGL.GL_NEAREST );
-        Engine.GL.TexParameteri( IGL.GL_TEXTURE_2D, IGL.GL_TEXTURE_WRAP_S, IGL.GL_CLAMP_TO_EDGE );
-        Engine.GL.TexParameteri( IGL.GL_TEXTURE_2D, IGL.GL_TEXTURE_WRAP_T, IGL.GL_CLAMP_TO_EDGE );
-
-        pixmap.Dispose();
-
-        // Validate texture creation
-        if ( !Engine.GL.IsGLTexture( _image1.TextureID ) )
-        {
-            Logger.Debug( "Failed to create texture" );
-
-            return;
-        }
-
-        _image1.Debug();
+        // Set initial camera position
+        _cameraPos.X = Engine.Api.Graphics.Width / 2f;
+        _cameraPos.Y = Engine.Api.Graphics.Height / 2f;
+        _cameraPos.Z = 0f;
+        _orthoGameCam.SetPosition(_cameraPos);
 
         // ====================================================================
 
-        _ = CreateWhitePixelTexture();
-
-        if ( _whitePixelTexture != null )
-        {
-            // Set texture parameters
-            Engine.GL.BindTexture( IGL.GL_TEXTURE_2D, _whitePixelTexture.TextureID );
-            Engine.GL.TexParameteri( IGL.GL_TEXTURE_2D, IGL.GL_TEXTURE_MIN_FILTER, IGL.GL_NEAREST );
-            Engine.GL.TexParameteri( IGL.GL_TEXTURE_2D, IGL.GL_TEXTURE_MAG_FILTER, IGL.GL_NEAREST );
-            Engine.GL.TexParameteri( IGL.GL_TEXTURE_2D, IGL.GL_TEXTURE_WRAP_S, IGL.GL_CLAMP_TO_EDGE );
-            Engine.GL.TexParameteri( IGL.GL_TEXTURE_2D, IGL.GL_TEXTURE_WRAP_T, IGL.GL_CLAMP_TO_EDGE );
-            
-            // Validate texture creation
-            if ( !Engine.GL.IsGLTexture( _whitePixelTexture.TextureID ) )
-            {
-                Logger.Debug( "Failed to create texture" );
-
-                return;
-            }
-            
-            _whitePixelTexture.Debug();
-        }
+        CreateImage1Texture();
+        CreateWhitePixelTexture();
         
         // ====================================================================
 
@@ -141,37 +101,39 @@ public class MainGame : ApplicationAdapter
         if ( ( _spriteBatch != null ) && _orthoGameCam is { IsInUse: true } )
         {
             _spriteBatch.EnableBlending();
-
             _orthoGameCam.Viewport?.Apply();
             _spriteBatch.SetProjectionMatrix( _orthoGameCam.Camera.Combined );
             _spriteBatch.Begin( depthMaskEnabled: false );
 
-            _cameraPos.X = Engine.Api.Graphics.Width / 2f;
-            _cameraPos.Y = Engine.Api.Graphics.Height / 2f;
-            _cameraPos.Z = 0f;
-            
-            _orthoGameCam.SetPosition( _cameraPos );
-
-            DrawViewportBounds();
-
             if ( _image1 != null )
             {
                 _spriteBatch.Draw( _image1, 40, 40 );
-                GLUtils.CheckGLError( "MainGame.Render" );
             }
 
             _orthoGameCam.Update();
-
             _spriteBatch.End();
+            
+            CheckViewportCoverage();
         }
-
-        GLUtils.CheckGLError( "MainGame.Render" );
     }
 
     /// <inheritdoc />
     public override void Resize( int width, int height )
     {
-        _orthoGameCam?.ResizeViewport( width, height );
+        Logger.Debug($"Resizing to: {width}x{height}");
+    
+        if (_orthoGameCam != null)
+        {
+            _orthoGameCam.ResizeViewport(width, height);
+        
+            // Update camera position to new center
+            _cameraPos.X = width / 2f;
+            _cameraPos.Y = height / 2f;
+            _orthoGameCam.SetPosition(_cameraPos);
+        
+            // Force an update after resize
+            _orthoGameCam.Update();
+        }
     }
 
     /// <inheritdoc />
@@ -179,6 +141,7 @@ public class MainGame : ApplicationAdapter
     {
         _spriteBatch?.Dispose();
         _image1?.Dispose();
+        _whitePixelTexture?.Dispose();
         _assetManager?.Dispose();
         _orthoGameCam?.Dispose();
 
@@ -272,13 +235,44 @@ public class MainGame : ApplicationAdapter
 
     // ========================================================================
 
-    private Texture CreateWhitePixelTexture()
+    private void CreateImage1Texture()
+    {
+        var pixmap = new Pixmap( TEST_WIDTH, TEST_HEIGHT, Gdx2DPixmap.Gdx2DPixmapFormat.RGBA8888 );
+        pixmap.SetColor( Color.Magenta );
+        pixmap.FillWithCurrentColor();
+
+        _image1      = new Texture( new PixmapTextureData( pixmap, Gdx2DPixmap.Gdx2DPixmapFormat.RGBA8888, false, false ) );
+        _image1.Name = "TestImage";
+        
+        // Set texture parameters
+        Engine.GL.BindTexture( IGL.GL_TEXTURE_2D, _image1.TextureID );
+        Engine.GL.TexParameteri( IGL.GL_TEXTURE_2D, IGL.GL_TEXTURE_MIN_FILTER, IGL.GL_NEAREST );
+        Engine.GL.TexParameteri( IGL.GL_TEXTURE_2D, IGL.GL_TEXTURE_MAG_FILTER, IGL.GL_NEAREST );
+        Engine.GL.TexParameteri( IGL.GL_TEXTURE_2D, IGL.GL_TEXTURE_WRAP_S, IGL.GL_CLAMP_TO_EDGE );
+        Engine.GL.TexParameteri( IGL.GL_TEXTURE_2D, IGL.GL_TEXTURE_WRAP_T, IGL.GL_CLAMP_TO_EDGE );
+
+        pixmap.Dispose();
+
+        // Validate texture creation
+        if ( !Engine.GL.IsGLTexture( _image1.TextureID ) )
+        {
+            Logger.Debug( "Failed to create texture" );
+
+            return;
+        }
+
+        _image1.Debug();
+    }
+
+    // ========================================================================
+    
+    private void CreateWhitePixelTexture()
     {
         Logger.Checkpoint();
         
         if ( _whitePixelTexture != null )
         {
-            return _whitePixelTexture;
+            return;
         }
 
         var pixmap = new Pixmap( 100, 100, Gdx2DPixmap.Gdx2DPixmapFormat.RGBA8888 );
@@ -290,7 +284,23 @@ public class MainGame : ApplicationAdapter
         _whitePixelTexture = new Texture( textureData );
         _whitePixelTexture.Name = "WhitePixel";
 
-        return _whitePixelTexture;
+        if ( _whitePixelTexture != null )
+        {
+            // Set texture parameters
+            Engine.GL.BindTexture( IGL.GL_TEXTURE_2D, _whitePixelTexture.TextureID );
+            Engine.GL.TexParameteri( IGL.GL_TEXTURE_2D, IGL.GL_TEXTURE_MIN_FILTER, IGL.GL_NEAREST );
+            Engine.GL.TexParameteri( IGL.GL_TEXTURE_2D, IGL.GL_TEXTURE_MAG_FILTER, IGL.GL_NEAREST );
+            Engine.GL.TexParameteri( IGL.GL_TEXTURE_2D, IGL.GL_TEXTURE_WRAP_S, IGL.GL_CLAMP_TO_EDGE );
+            Engine.GL.TexParameteri( IGL.GL_TEXTURE_2D, IGL.GL_TEXTURE_WRAP_T, IGL.GL_CLAMP_TO_EDGE );
+            
+            // Validate texture creation
+            if ( !Engine.GL.IsGLTexture( _whitePixelTexture.TextureID ) )
+            {
+                throw new GdxRuntimeException( "Failed to create texture" );
+            }
+            
+            _whitePixelTexture.Debug();
+        }
     }
 
     // ========================================================================

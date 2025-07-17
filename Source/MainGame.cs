@@ -38,7 +38,9 @@ public class MainGame : Game
     private          AssetManager?           _assetManager;
     private          Texture?                _image1;
     private          SpriteBatch?            _spriteBatch;
-    private          Texture?                _whitePixelTexture;
+
+    private Texture? _whitePixelTexture;
+
 //    private          Texture?                _testTexture;
 //    private          BitmapFont?             _font;
 //    private          InputMultiplexer?       _inputMultiplexer;
@@ -50,8 +52,8 @@ public class MainGame : Game
     public override void Create()
     {
         Logger.Checkpoint();
-        Logger.Debug($"Window dimensions: {Engine.Api.Graphics.Width}x{Engine.Api.Graphics.Height}");
-        
+        Logger.Debug( $"Window dimensions: {Engine.Api.Graphics.Width}x{Engine.Api.Graphics.Height}" );
+
         _assetManager = new AssetManager();
         _image1       = null;
         _spriteBatch  = new SpriteBatch();
@@ -73,13 +75,13 @@ public class MainGame : Game
         _cameraPos.X = Engine.Api.Graphics.Width / 2f;
         _cameraPos.Y = Engine.Api.Graphics.Height / 2f;
         _cameraPos.Z = 0f;
-        _orthoGameCam.SetPosition(_cameraPos);
+        _orthoGameCam.SetPosition( _cameraPos );
 
         // ====================================================================
 
         CreateImage1Texture();
         CreateWhitePixelTexture();
-        
+
         // ====================================================================
 
         Logger.Debug( "Done" );
@@ -112,7 +114,7 @@ public class MainGame : Game
 
             _orthoGameCam.Update();
             _spriteBatch.End();
-            
+
             CheckViewportCoverage();
         }
     }
@@ -120,17 +122,17 @@ public class MainGame : Game
     /// <inheritdoc />
     public override void Resize( int width, int height )
     {
-        Logger.Debug($"Resizing to: {width}x{height}");
-    
-        if (_orthoGameCam != null)
+        Logger.Debug( $"Resizing to: {width}x{height}" );
+
+        if ( _orthoGameCam != null )
         {
-            _orthoGameCam.ResizeViewport(width, height);
-        
+            _orthoGameCam.ResizeViewport( width, height );
+
             // Update camera position to new center
             _cameraPos.X = width / 2f;
             _cameraPos.Y = height / 2f;
-            _orthoGameCam.SetPosition(_cameraPos);
-        
+            _orthoGameCam.SetPosition( _cameraPos );
+
             // Force an update after resize
             _orthoGameCam.Update();
         }
@@ -243,7 +245,7 @@ public class MainGame : Game
 
         _image1      = new Texture( new PixmapTextureData( pixmap, Gdx2DPixmap.Gdx2DPixmapFormat.RGBA8888, false, false ) );
         _image1.Name = "TestImage";
-        
+
         // Set texture parameters
         Engine.GL.BindTexture( IGL.GL_TEXTURE_2D, _image1.TextureID );
         Engine.GL.TexParameteri( IGL.GL_TEXTURE_2D, IGL.GL_TEXTURE_MIN_FILTER, IGL.GL_NEAREST );
@@ -265,11 +267,11 @@ public class MainGame : Game
     }
 
     // ========================================================================
-    
+
     private void CreateWhitePixelTexture()
     {
         Logger.Checkpoint();
-        
+
         if ( _whitePixelTexture != null )
         {
             return;
@@ -281,7 +283,7 @@ public class MainGame : Game
 
         var textureData = new PixmapTextureData( pixmap, Gdx2DPixmap.Gdx2DPixmapFormat.RGBA8888, false, false );
 
-        _whitePixelTexture = new Texture( textureData );
+        _whitePixelTexture      = new Texture( textureData );
         _whitePixelTexture.Name = "WhitePixel";
 
         if ( _whitePixelTexture != null )
@@ -292,13 +294,13 @@ public class MainGame : Game
             Engine.GL.TexParameteri( IGL.GL_TEXTURE_2D, IGL.GL_TEXTURE_MAG_FILTER, IGL.GL_NEAREST );
             Engine.GL.TexParameteri( IGL.GL_TEXTURE_2D, IGL.GL_TEXTURE_WRAP_S, IGL.GL_CLAMP_TO_EDGE );
             Engine.GL.TexParameteri( IGL.GL_TEXTURE_2D, IGL.GL_TEXTURE_WRAP_T, IGL.GL_CLAMP_TO_EDGE );
-            
+
             // Validate texture creation
             if ( !Engine.GL.IsGLTexture( _whitePixelTexture.TextureID ) )
             {
                 throw new GdxRuntimeException( "Failed to create texture" );
             }
-            
+
             _whitePixelTexture.Debug();
         }
     }
@@ -321,6 +323,7 @@ public class MainGame : Game
         // Get and verify viewport dimensions
         var viewport = new int[ 4 ];
         Engine.GL.GetIntegerv( ( int )GetPName.Viewport, ref viewport );
+
 //        Logger.Debug( $"Viewport dimensions: {viewport[ 2 ]}x{viewport[ 3 ]}" );
 
         var width  = viewport[ 2 ];

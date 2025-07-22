@@ -70,17 +70,18 @@ public class MainGame : Game
                                                     ppm: 1f );
         _orthoGameCam.SetZoomDefault( CameraData.DEFAULT_ZOOM );
         _orthoGameCam.IsInUse = true;
-
+        
         // Set initial camera position
         _cameraPos.X = Engine.Api.Graphics.Width / 2f;
         _cameraPos.Y = Engine.Api.Graphics.Height / 2f;
         _cameraPos.Z = 0f;
         _orthoGameCam.SetPosition( _cameraPos );
-
+        _orthoGameCam.Update();
+        
         // ====================================================================
 
-        CreateImage1Texture();
-        CreateWhitePixelTexture();
+//        CreateImage1Texture();
+//        CreateWhitePixelTexture();
 
         // ====================================================================
 
@@ -103,16 +104,17 @@ public class MainGame : Game
         if ( ( _spriteBatch != null ) && _orthoGameCam is { IsInUse: true } )
         {
             _spriteBatch.EnableBlending();
+            
             _orthoGameCam.Viewport?.Apply();
             _spriteBatch.SetProjectionMatrix( _orthoGameCam.Camera.Combined );
             _spriteBatch.Begin( depthMaskEnabled: false );
+            _orthoGameCam.Update();
 
             if ( _image1 != null )
             {
                 _spriteBatch.Draw( _image1, 40, 40 );
             }
 
-            _orthoGameCam.Update();
             _spriteBatch.End();
 
             CheckViewportCoverage();
@@ -262,8 +264,6 @@ public class MainGame : Game
 
             return;
         }
-
-        _image1.Debug();
     }
 
     // ========================================================================
@@ -300,8 +300,6 @@ public class MainGame : Game
             {
                 throw new GdxRuntimeException( "Failed to create texture" );
             }
-
-            _whitePixelTexture.Debug();
         }
     }
 

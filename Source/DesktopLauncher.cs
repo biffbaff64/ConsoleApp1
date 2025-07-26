@@ -20,14 +20,17 @@ public static class DesktopLauncher
     {
         var config = new DesktopGLApplicationConfiguration
         {
-            Title              = "LughSharp Template",
-            VSyncEnabled       = true,
-            ForegroundFPS      = 60,
-            DisableAudio       = true,
-            Debug              = true,
-            GLProfilingEnabled = true,
-            WindowWidth        = 480,
-            WindowHeight       = 320,
+            Title                 = "LughSharp Template",
+            VSyncEnabled          = true,
+            ForegroundFPS         = 60,
+            DisableAudio          = true,
+            Debug                 = true,
+            GLProfilingEnabled    = true,
+            WindowWidth           = 480,
+            WindowHeight          = 320,
+//            GLContextMajorVersion = 3,
+//            GLContextMinorVersion = 3,
+//            GLContextRevision     = 0,
         };
 
         Engine.Api.CheckEnableDevMode().CheckEnableGodMode();

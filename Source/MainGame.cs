@@ -33,11 +33,12 @@ public class MainGame : Game
 
     // ========================================================================
 
-    private readonly Vector3                 _cameraPos = Vector3.Zero;
-    private static   OrthographicGameCamera? _orthoGameCam;
-    private          AssetManager?           _assetManager;
-    private          Texture?                _image1;
-    private          SpriteBatch?            _spriteBatch;
+    private readonly Vector3 _cameraPos = Vector3.Zero;
+
+    private OrthographicGameCamera? _orthoGameCam;
+    private SpriteBatch             _spriteBatch  = null!;
+    private AssetManager?           _assetManager;
+    private Texture?                _image1;
 
     private Texture? _whitePixelTexture;
 
@@ -58,26 +59,19 @@ public class MainGame : Game
         _image1       = null;
         _spriteBatch  = new SpriteBatch();
 
-        if ( _spriteBatch == null )
-        {
-            Logger.Warning( "Failed to create SpriteBatch" );
-
-            return;
-        }
-
         _orthoGameCam = new OrthographicGameCamera( Engine.Api.Graphics.Width,
                                                     Engine.Api.Graphics.Height,
                                                     ppm: 1f );
         _orthoGameCam.SetZoomDefault( CameraData.DEFAULT_ZOOM );
         _orthoGameCam.IsInUse = true;
-        
+
         // Set initial camera position
         _cameraPos.X = Engine.Api.Graphics.Width / 2f;
         _cameraPos.Y = Engine.Api.Graphics.Height / 2f;
         _cameraPos.Z = 0f;
         _orthoGameCam.SetPosition( _cameraPos );
         _orthoGameCam.Update();
-        
+
         // ====================================================================
 
 //        CreateImage1Texture();
@@ -101,10 +95,10 @@ public class MainGame : Game
         // Clear and set viewport
         ScreenUtils.Clear( Color.Blue, clearDepth: false );
 
-        if ( ( _spriteBatch != null ) && _orthoGameCam is { IsInUse: true } )
+        if ( _orthoGameCam is { IsInUse: true } )
         {
             _spriteBatch.EnableBlending();
-            
+
             _orthoGameCam.Viewport?.Apply();
             _spriteBatch.SetProjectionMatrix( _orthoGameCam.Camera.Combined );
             _spriteBatch.Begin( depthMaskEnabled: false );
@@ -143,7 +137,7 @@ public class MainGame : Game
     /// <inheritdoc />
     public override void Dispose()
     {
-        _spriteBatch?.Dispose();
+        _spriteBatch.Dispose();
         _image1?.Dispose();
         _whitePixelTexture?.Dispose();
         _assetManager?.Dispose();
@@ -261,8 +255,6 @@ public class MainGame : Game
         if ( !Engine.GL.IsGLTexture( _image1.TextureID ) )
         {
             Logger.Debug( "Failed to create texture" );
-
-            return;
         }
     }
 
@@ -311,9 +303,9 @@ public class MainGame : Game
     /// <param name="thickness"></param>
     public void DrawViewportBounds( float thickness = 2f )
     {
-        if ( ( _spriteBatch == null ) || ( _whitePixelTexture == null ) )
+        if ( _whitePixelTexture == null )
         {
-            Logger.Debug( "SpriteBatch or white pixel texture not initialized" );
+            Logger.Debug( "white pixel texture not initialized" );
 
             return;
         }

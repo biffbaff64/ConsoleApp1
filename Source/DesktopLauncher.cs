@@ -1,12 +1,11 @@
-﻿using DesktopGLBackend.Core;
+﻿using DesktopGLBackend;
 
 using LughSharp.Lugh.Core;
 
 namespace ConsoleApp1.Source;
 
 /// <summary>
-/// Example DesktopLauncher class which is the entry point for the
-/// desktop application.
+/// Example DesktopLauncher class which is the entry point for the desktop application.
 /// </summary>
 public static class DesktopLauncher
 {
@@ -14,7 +13,6 @@ public static class DesktopLauncher
     /// Entry point for the desktop application. Initializes the application configuration
     /// and launches the main game loop.
     /// </summary>
-    /// <param name="args">Command-line arguments passed to the application.</param>
     [STAThread]
     private static void Main( string[] args )
     {
@@ -22,12 +20,16 @@ public static class DesktopLauncher
         {
             Title              = "LughSharp Template",
             VSyncEnabled       = true,
+            WindowWidth        = 480,
+            WindowHeight       = 320,
             ForegroundFPS      = 60,
             DisableAudio       = true,
             Debug              = true,
             GLProfilingEnabled = true,
-            WindowWidth        = 480,
-            WindowHeight       = 320,
+
+//            GLContextMajorVersion = 3,
+//            GLContextMinorVersion = 3,
+//            GLContextRevision     = 0,
         };
 
         Engine.Api.CheckEnableDevMode().CheckEnableGodMode();

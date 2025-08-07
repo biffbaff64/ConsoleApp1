@@ -59,11 +59,31 @@ public partial class MainGame : Game
 
         _image1 = new Texture( new FileInfo( $"{IOUtils.AssetsRoot}title_background.png" ) );
 
+        if (_image1 != null)
+        {
+            Logger.Debug($"TextureData prepared: {_image1.TextureData.IsPrepared}");
+            Logger.Debug($"TextureData consumable: {_image1.TextureData.IsManaged}");
+            Logger.Debug($"TextureData type: {_image1.TextureData.GetType().Name}");
+        }
+
         if ( _image1 != null )
         {
             Logger.Debug( $"Texture loaded - Width: {_image1.Width}, Height: {_image1.Height}, " +
                           $"Format: {Gdx2DPixmap.GetFormatString( _image1.TextureData.PixelFormat )}" );
+
+            // Force texture data upload if needed
+            if ( !_image1.TextureData.IsPrepared )
+            {
+                _image1.TextureData.Prepare();
+            }
+
             ( _image1 as GLTexture )?.Bind(); // Force an initial bind
+
+            int[] width  = new int[ 1 ];
+            int[] height = new int[ 1 ];
+            Engine.GL.GetTexLevelParameteriv( IGL.GL_TEXTURE_2D, 0, IGL.GL_TEXTURE_WIDTH, ref width );
+            Engine.GL.GetTexLevelParameteriv( IGL.GL_TEXTURE_2D, 0, IGL.GL_TEXTURE_HEIGHT, ref height );
+            Logger.Debug( $"Initial texture dimensions in GPU: {width[ 0 ]}x{height[ 0 ]}" );
 
             if ( _image1 is GLTexture glTexture )
             {
@@ -112,10 +132,13 @@ public partial class MainGame : Game
     public override void Render()
     {
         // Clear and set viewport
-        ScreenUtils.Clear( Color.Blue, clearDepth: false );
+        ScreenUtils.Clear( Color.Blue, clearDepth: true );
 
         if ( _orthoGameCam is { IsInUse: true } )
         {
+            _spriteBatch.Shader?.Bind();
+            _spriteBatch.SetupVertexAttributes( _spriteBatch.Shader );
+
             _spriteBatch.Begin();
             _spriteBatch.EnableBlending();
             _spriteBatch.SetBlendFunction( IGL.GL_SRC_ALPHA, IGL.GL_ONE_MINUS_SRC_ALPHA );
@@ -127,13 +150,30 @@ public partial class MainGame : Game
             if ( _image1 is GLTexture glTexture )
             {
                 Logger.Debug( $"GLTexture Handle: {glTexture.GLTextureHandle}, Target: {glTexture.GLTarget}" );
+
+                // Make sure texture data is uploaded
+                if ( !_image1.TextureData.IsPrepared )
+                {
+                    _image1.TextureData.Prepare();
+                }
+
+                Engine.GL.ActiveTexture( TextureUnit.Texture0 ); // Select texture unit 0
+
                 glTexture.Bind(); // Force a bind before drawing
+
+                // Verify texture dimensions after binding
+                int[] width  = new int[ 1 ];
+                int[] height = new int[ 1 ];
+                Engine.GL.GetTexLevelParameteriv( IGL.GL_TEXTURE_2D, 0, IGL.GL_TEXTURE_WIDTH, ref width );
+                Engine.GL.GetTexLevelParameteriv( IGL.GL_TEXTURE_2D, 0, IGL.GL_TEXTURE_HEIGHT, ref height );
+                Logger.Debug( $"Render-time texture dimensions in GPU: {width[ 0 ]}x{height[ 0 ]}" );
             }
 
             Logger.Debug( $"Shader active: {_spriteBatch.Shader != null}, " +
                           $"Matrix location: {_spriteBatch.Shader?.GetUniformLocation( "u_combinedMatrix" )}" );
 
-            _spriteBatch.SetProjectionMatrix( _orthoGameCam.Camera.Combined );
+//            _spriteBatch.SetProjectionMatrix( _orthoGameCam.Camera.Combined );
+            _spriteBatch.SetProjectionMatrix( Matrix4.Identity );
             _orthoGameCam.Update();
 
             if ( _image1 != null )
@@ -146,10 +186,56 @@ public partial class MainGame : Game
 
                 Logger.Debug( $"Drawing texture at (40,40) with size {_image1.Width}x{_image1.Height}" );
 
+                var vport = new int[ 4 ];
+                Engine.GL.GetIntegerv( ( int )GLParameter.Viewport, ref vport );
+                Logger.Debug( $"Viewport: x={vport[ 0 ]}, y={vport[ 1 ]}, width={vport[ 2 ]}, height={vport[ 3 ]}" );
+
+                var blend = new bool[ 1 ];
+                Engine.GL.GetBooleanv( ( int )GLParameter.Blend, ref blend );
+                Logger.Debug( $"Blending enabled: {blend[ 0 ]}" );
+
+                var depthTest = new bool[ 1 ];
+                Engine.GL.GetBooleanv( ( int )GLParameter.DepthTest, ref depthTest );
+                Logger.Debug( $"Depth test enabled: {depthTest[ 0 ]}" );
+
+//                Engine.GL.GetBooleanv( ( int )GLParameter.DepthTest, out var dt );
+//                Logger.Debug( $"Depth test enabled: {dt}" );
+
+                // Get and set the texture uniform location
+                Engine.GL.ActiveTexture( TextureUnit.Texture0 );                           // Select texture unit 0
+                Engine.GL.BindTexture( TextureTarget.Texture2D, _image1.GLTextureHandle ); // Bind actual texture to unit 0
+                Logger.Debug( $"ShaderProgramHandle: {_spriteBatch.Shader?.ShaderProgramHandle}" );
+                _spriteBatch.Shader?.SetUniformi( "u_texture", 0 ); // Tell shader to use texture unit 0
+
+                var blendSrc = new int[ 1 ];
+                var blendDst = new int[ 1 ];
+                Engine.GL.GetIntegerv( IGL.GL_BLEND_SRC, ref blendSrc );
+                Engine.GL.GetIntegerv( IGL.GL_BLEND_DST, ref blendDst );
+                Logger.Checkpoint();
+                Logger.Debug( $"Blend functions - Src: {blendSrc[ 0 ]}, Dst: {blendDst[ 0 ]}" );
+
+                Engine.GL.Enable( IGL.GL_DEPTH_TEST );
+                Engine.GL.DepthFunc( IGL.GL_LEQUAL );
+
                 _spriteBatch.Draw( _image1,
                                    new GRect( 40, 40, 640, 480 ),                      // destination rectangle
                                    new GRect( 0, 0, _image1.Width, _image1.Height ) ); // source rectangle
-                
+
+                Engine.GL.Disable( IGL.GL_DEPTH_TEST );
+
+                var activeTexUnit = new int[ 1 ];
+                var boundTexture  = new int[ 1 ];
+                Engine.GL.GetIntegerv( IGL.GL_ACTIVE_TEXTURE, ref activeTexUnit );
+                Engine.GL.GetIntegerv( IGL.GL_TEXTURE_BINDING_2D, ref boundTexture );
+                Logger.Debug( $"Active texture unit: {activeTexUnit[ 0 ] - IGL.GL_TEXTURE0}, Bound texture: {boundTexture[ 0 ]}" );
+
+                for ( uint i = 0; i < 3; i++ )
+                {
+                    var enabled = new int[ 1 ];
+                    Engine.GL.GetVertexAttribiv( i, IGL.GL_VERTEX_ATTRIB_ARRAY_ENABLED, ref enabled );
+                    Logger.Debug( $"Vertex attribute {i} enabled: {enabled[ 0 ] != 0}" );
+                }
+
                 // Check GL state
                 var viewport = new int[ 4 ];
                 Engine.GL.GetIntegerv( IGL.GL_VIEWPORT, ref viewport );

@@ -178,7 +178,7 @@ public partial class MainGame
 
         // Get and verify viewport dimensions
         var viewport = new int[ 4 ];
-        Engine.GL.GetIntegerv( ( int )GetPName.Viewport, ref viewport );
+        Engine.GL.GetIntegerv( ( int )GLParameter.Viewport, ref viewport );
 
         Logger.Debug( $"Viewport dimensions: {viewport[ 2 ]}x{viewport[ 3 ]}" );
 
@@ -211,7 +211,7 @@ public partial class MainGame
 //    private void DebugViewportState()
 //    {
 //        var viewport = new int[ 4 ];
-//        Engine.GL.GetIntegerv( ( int )GetPName.Viewport, ref viewport );
+//        Engine.GL.GetIntegerv( ( int )GLParameter.Viewport, ref viewport );
 //
 //        Logger.Debug( $"Viewport: X={viewport[ 0 ]}, Y={viewport[ 1 ]}, Width={viewport[ 2 ]}, Height={viewport[ 3 ]}" );
 //
@@ -223,7 +223,7 @@ public partial class MainGame
 //        {
 //            var scissors = new int[ 4 ];
 //
-//            Engine.GL.GetIntegerv( ( int )GetPName.ScissorBox, ref scissors );
+//            Engine.GL.GetIntegerv( ( int )GLParameter.ScissorBox, ref scissors );
 //
 //            Logger.Debug( $"Scissors: X={scissors[ 0 ]}, Y={scissors[ 1 ]}, " +
 //                          $"Width={scissors[ 2 ]}, Height={scissors[ 3 ]}" );

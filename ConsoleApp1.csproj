@@ -7,7 +7,7 @@
         <StartupObject>ConsoleApp1.Source.DesktopLauncher</StartupObject>
         <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
         <LangVersion>latestmajor</LangVersion>
-        <TargetFramework>net8.0</TargetFramework>
+        <TargetFrameworks>net8.0;net9.0</TargetFrameworks>
     </PropertyGroup>
 
     <PropertyGroup>

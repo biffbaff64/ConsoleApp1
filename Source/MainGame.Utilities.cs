@@ -1,4 +1,5 @@
-﻿
+﻿using System.Text;
+
 using LughSharp.Lugh.Assets.Loaders;
 using LughSharp.Lugh.Core;
 using LughSharp.Lugh.Graphics;
@@ -44,18 +45,23 @@ public partial class MainGame
             Logger.Debug( $"Loaded image type: {_image1.GetType()}" );
 
             var data = _image1.GetImageData();
+            var sb   = new StringBuilder();
 
             if ( data != null )
             {
+                sb.AppendLine();
+                
                 for ( var i = 0; i < 20; i++ )
                 {
                     for ( var j = 0; j < 20; j++ )
                     {
-                        Logger.Data( $"[{data[ ( i * 20 ) + j ]:X}]", false );
+                        sb.Append( $"[{data[ ( i * 20 ) + j ]:X}]" );
                     }
 
-                    Logger.NewLine();
+                    sb.AppendLine();
                 }
+                
+                Logger.Debug( sb.ToString() );
             }
             #endif
         }
@@ -233,4 +239,3 @@ public partial class MainGame
 
 // ============================================================================
 // ============================================================================
-

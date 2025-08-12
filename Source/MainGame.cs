@@ -58,7 +58,7 @@ public partial class MainGame : Game
         // ====================================================================
 
         _image1 = new Texture( new FileInfo( $"{IOUtils.AssetsRoot}title_background.png" ) );
-
+        
         if ( _image1 != null )
         {
             Logger.Debug( $"Texture loaded - Width: {_image1.Width}, Height: {_image1.Height}, " +
@@ -70,40 +70,13 @@ public partial class MainGame : Game
                 _image1.TextureData.Prepare();
             }
 
-            ( _image1 as GLTexture )?.Bind(); // Force an initial bind
+            _image1.Bind( 0 ); // Set active texture and bind to texture unit 0
 
             var width  = new int[ 1 ];
             var height = new int[ 1 ];
             Engine.GL.GetTexLevelParameteriv( IGL.GL_TEXTURE_2D, 0, IGL.GL_TEXTURE_WIDTH, ref width );
             Engine.GL.GetTexLevelParameteriv( IGL.GL_TEXTURE_2D, 0, IGL.GL_TEXTURE_HEIGHT, ref height );
             Logger.Debug( $"Initial texture dimensions in GPU: {width[ 0 ]}x{height[ 0 ]}" );
-
-            if ( _image1 is GLTexture glTexture )
-            {
-                Logger.Debug( $"Texture binding test:" );
-                glTexture.Bind( 0 ); // Bind to texture unit 0
-                var error = Engine.GL.GetError();
-                Logger.Debug( $"GL Error after bind: {error}" );
-
-                unsafe
-                {
-                    var minFilter = new int[ 1 ];
-                    var magFilter = new int[ 1 ];
-
-                    // Check texture parameters
-                    fixed ( int* minFilterPtr = minFilter )
-                    {
-                        Engine.GL.GetTexParameteriv( IGL.GL_TEXTURE_2D, IGL.GL_TEXTURE_MIN_FILTER, minFilterPtr );
-                    }
-
-                    fixed ( int* magFilterPtr = magFilter )
-                    {
-                        Engine.GL.GetTexParameteriv( IGL.GL_TEXTURE_2D, IGL.GL_TEXTURE_MAG_FILTER, magFilterPtr );
-                    }
-
-                    Logger.Debug( $"Texture filters - Min: {minFilter[ 0 ]}, Mag: {magFilter[ 0 ]}" );
-                }
-            }
         }
 
         // ====================================================================

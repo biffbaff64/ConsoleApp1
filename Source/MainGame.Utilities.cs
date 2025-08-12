@@ -50,7 +50,7 @@ public partial class MainGame
             if ( data != null )
             {
                 sb.AppendLine();
-                
+
                 for ( var i = 0; i < 20; i++ )
                 {
                     for ( var j = 0; j < 20; j++ )
@@ -60,7 +60,7 @@ public partial class MainGame
 
                     sb.AppendLine();
                 }
-                
+
                 Logger.Debug( sb.ToString() );
             }
             #endif
@@ -108,18 +108,13 @@ public partial class MainGame
     private void CreateImage1Texture()
     {
         var pixmap = new Pixmap( TEST_WIDTH, TEST_HEIGHT, Gdx2DPixmap.Gdx2DPixmapFormat.RGBA8888 );
-        pixmap.SetColor( Color.Magenta );
-        pixmap.FillWithCurrentColor();
 
-        _image1      = new Texture( new PixmapTextureData( pixmap, Gdx2DPixmap.Gdx2DPixmapFormat.RGBA8888, false, false ) );
+        _image1 = new Texture( new PixmapTextureData( pixmap,
+                                                      Gdx2DPixmap.Gdx2DPixmapFormat.RGBA8888,
+                                                      false,
+                                                      false,
+                                                      true ) );
         _image1.Name = "TestImage";
-
-        // Set texture parameters
-        Engine.GL.BindTexture( IGL.GL_TEXTURE_2D, _image1.TextureID );
-        Engine.GL.TexParameteri( IGL.GL_TEXTURE_2D, IGL.GL_TEXTURE_MIN_FILTER, IGL.GL_NEAREST );
-        Engine.GL.TexParameteri( IGL.GL_TEXTURE_2D, IGL.GL_TEXTURE_MAG_FILTER, IGL.GL_NEAREST );
-        Engine.GL.TexParameteri( IGL.GL_TEXTURE_2D, IGL.GL_TEXTURE_WRAP_S, IGL.GL_CLAMP_TO_EDGE );
-        Engine.GL.TexParameteri( IGL.GL_TEXTURE_2D, IGL.GL_TEXTURE_WRAP_T, IGL.GL_CLAMP_TO_EDGE );
 
         pixmap.Dispose();
 

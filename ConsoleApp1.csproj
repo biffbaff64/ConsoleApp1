@@ -8,6 +8,7 @@
         <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
         <LangVersion>latestmajor</LangVersion>
         <TargetFramework>net8.0</TargetFramework>
+        <UserSecretsId>5f0d490f-c803-4d42-a284-7a73e88ac3d5</UserSecretsId>
     </PropertyGroup>
 
     <PropertyGroup>

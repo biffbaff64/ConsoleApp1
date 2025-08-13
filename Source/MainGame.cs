@@ -64,12 +64,7 @@ public partial class MainGame : Game
             Logger.Debug( $"Texture loaded - Width: {_image1.Width}, Height: {_image1.Height}, " +
                           $"Format: {PixelFormatUtils.GetFormatString( _image1.TextureData.PixelFormat )}" );
 
-            // Force texture data upload if needed
-            if ( !_image1.TextureData.IsPrepared )
-            {
-                _image1.TextureData.Prepare();
-            }
-
+            _image1.Upload();
             _image1.Bind( 0 ); // Set active texture and bind to texture unit 0
 
             var width  = new int[ 1 ];

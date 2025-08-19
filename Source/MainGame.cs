@@ -72,6 +72,16 @@ public partial class MainGame : Game
             Engine.GL.GetTexLevelParameteriv( IGL.GL_TEXTURE_2D, 0, IGL.GL_TEXTURE_WIDTH, ref width );
             Engine.GL.GetTexLevelParameteriv( IGL.GL_TEXTURE_2D, 0, IGL.GL_TEXTURE_HEIGHT, ref height );
             Logger.Debug( $"Initial texture dimensions in GPU: {width[ 0 ]}x{height[ 0 ]}" );
+            
+            Engine.GL.TexParameteri( ( int )TextureTarget.Texture2D,
+                                     ( int )TextureParameter.MinFilter,
+                                     ( int )TextureFilterMode.Nearest );
+            Engine.GL.TexParameteri( ( int )TextureTarget.Texture2D,
+                                     ( int )TextureParameter.MagFilter,
+                                     ( int )TextureFilterMode.Nearest );
+            
+            Logger.Debug( "TextureMinFilter set to GL_NEAREST" );
+            Logger.Debug( "TextureMagFilter set to GL_NEAREST" );
         }
 
         // ====================================================================
@@ -141,11 +151,13 @@ public partial class MainGame : Game
     /// <inheritdoc />
     public override void Dispose()
     {
+        Logger.Checkpoint();
+        
         Dispose( true );
         GC.SuppressFinalize( this );
     }
 
-    protected void Dispose( bool disposing )
+    protected override void Dispose( bool disposing )
     {
         if ( disposing )
         {

@@ -50,8 +50,6 @@ public partial class MainGame : Game
         _assetManager = new AssetManager();
         _image1       = null;
         _spriteBatch  = new SpriteBatch();
-        _spriteBatch.EnableBlending();
-        _spriteBatch.SetBlendFunction( IGL.GL_SRC_ALPHA, IGL.GL_ONE_MINUS_SRC_ALPHA );
 
         CreateCamera();
 
@@ -100,19 +98,14 @@ public partial class MainGame : Game
     public override void Render()
     {
         // Clear and set viewport
-        ScreenUtils.Clear( Color.Blue, clearDepth: true );
+        ScreenUtils.Clear( Color.Red, clearDepth: true );
 
         if ( _orthoGameCam is { IsInUse: true } )
         {
-            _spriteBatch.Shader?.Bind();
-            _spriteBatch.SetupVertexAttributes( _spriteBatch.Shader );
-
             _spriteBatch.Begin();
-            _spriteBatch.EnableBlending();
-            _spriteBatch.SetBlendFunction( IGL.GL_SRC_ALPHA, IGL.GL_ONE_MINUS_SRC_ALPHA );
+            _spriteBatch.SetProjectionMatrix( _orthoGameCam.Camera.Combined );
 
             _orthoGameCam.Viewport?.Apply();
-            _spriteBatch.SetProjectionMatrix( _orthoGameCam.Camera.Combined );
             _orthoGameCam.Update();
 
             if ( _image1 != null )

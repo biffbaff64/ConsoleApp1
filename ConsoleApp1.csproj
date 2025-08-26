@@ -89,9 +89,9 @@
         <Content Include="Assets\PackedImages\Test\objects.png">
             <CopyToOutputDirectory>Always</CopyToOutputDirectory>
         </Content>
-        <None Remove="Assets\title_background.png" />
+        <None Remove="Assets\title_background.png"/>
         <Content Include="Assets\title_background.png">
-          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
         </Content>
     </ItemGroup>
 

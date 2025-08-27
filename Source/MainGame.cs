@@ -39,9 +39,8 @@ public class MainGame : Game
     private OrthographicGameCamera? _orthoGameCam;
     private SpriteBatch?            _spriteBatch;
     private AssetManager?           _assetManager;
-
-    private Texture? _image1;
-    private Texture? _whitePixelTexture;
+    private Texture?                _image1;
+    private Texture?                _whitePixelTexture;
 
     // ========================================================================
     // ========================================================================
@@ -49,14 +48,12 @@ public class MainGame : Game
     /// <inheritdoc />
     public override void Create()
     {
-        Logger.Checkpoint();
-
-        _spriteBatch = new SpriteBatch();
+        _spriteBatch  = new SpriteBatch();
         _assetManager = new AssetManager();
-        
-        _image1 = null;
+
+        _image1            = null;
         _whitePixelTexture = null;
-        
+
         CreateCamera();
 
         var test = new TexturePackerTest();
@@ -77,7 +74,7 @@ public class MainGame : Game
     public override void Render()
     {
         // Clear and set viewport
-        ScreenUtils.Clear( Color.Blue, false );
+        ScreenUtils.Clear( Color.Blue );
 
         if ( _orthoGameCam is { IsInUse: true } )
         {
@@ -115,7 +112,7 @@ public class MainGame : Game
     {
         if ( disposing )
         {
-            _spriteBatch.Dispose();
+            _spriteBatch?.Dispose();
             _image1?.Dispose();
             _whitePixelTexture?.Dispose();
             _assetManager?.Dispose();
@@ -123,6 +120,9 @@ public class MainGame : Game
         }
     }
 
+    // ========================================================================
+    // ========================================================================
+    // ========================================================================
     // ========================================================================
     // ========================================================================
 

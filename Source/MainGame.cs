@@ -59,6 +59,7 @@ public class MainGame : Game
         var test = new TexturePackerTest();
         test.Setup();
         test.Run();
+        test.TearDown();
 
         Logger.Debug( "Done" );
     }

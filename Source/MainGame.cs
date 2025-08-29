@@ -346,7 +346,7 @@ public class MainGame : Game
             if ( _whitePixelTexture != null )
             {
                 _spriteBatch.Draw( _whitePixelTexture, width / 2f, height / 2f );
-                GLUtils.CheckGLError( "MainGame::DrawViewportBounds" );
+                Engine.Api.GLErrorCheck( "MainGame::DrawViewportBounds" );
             }
         }
         catch ( Exception ex )

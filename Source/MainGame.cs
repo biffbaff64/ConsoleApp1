@@ -46,6 +46,7 @@ public class MainGame : Game
     // ========================================================================
 
     /// <inheritdoc />
+    [SupportedOSPlatform( "windows" )]
     public override void Create()
     {
         _spriteBatch  = new SpriteBatch();
@@ -60,7 +61,7 @@ public class MainGame : Game
         test.Setup();
         test.Run();
         test.TearDown();
-
+        
         Logger.Debug( "Done" );
     }
 
@@ -345,7 +346,7 @@ public class MainGame : Game
         {
             if ( _whitePixelTexture != null )
             {
-                _spriteBatch.Draw( _whitePixelTexture, width / 2f, height / 2f );
+                _spriteBatch?.Draw( _whitePixelTexture, width / 2f, height / 2f );
                 Engine.Api.GLErrorCheck( "MainGame::DrawViewportBounds" );
             }
         }

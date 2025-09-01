@@ -58,10 +58,10 @@ public class MainGame : Game
 
         CreateCamera();
 
-//        var test = new TexturePackerTest();
-//        test.Setup();
-//        test.Run();
-//        test.TearDown();
+        var test = new TexturePackerTest();
+        test.Setup();
+        test.Run();
+        test.TearDown();
         
         Logger.Debug( "Done" );
     }

@@ -1,0 +1,50 @@
+{
+  "MultipleOfFour": false,
+  "Rotation": false,
+  "PowerOfTwo": true,
+  "PaddingX": 2,
+  "PaddingY": 2,
+  "EdgePadding": true,
+  "DuplicatePadding": false,
+  "MinWidth": 16,
+  "MinHeight": 16,
+  "MaxWidth": 2048,
+  "MaxHeight": 2048,
+  "Square": false,
+  "StripWhitespaceX": false,
+  "StripWhitespaceY": false,
+  "AlphaThreshold": 0,
+  "FilterMin": "Nearest",
+  "FilterMag": "Nearest",
+  "WrapX": "ClampToEdge",
+  "WrapY": "ClampToEdge",
+  "Format": "RGBA8888",
+  "IsAlias": false,
+  "OutputFormat": "png",
+  "JpegQuality": 1,
+  "IgnoreBlankImages": true,
+  "Fast": false,
+  "Debug": false,
+  "Silent": false,
+  "CombineSubdirectories": false,
+  "Ignore": false,
+  "FlattenPaths": false,
+  "PremultiplyAlpha": false,
+  "UseIndexes": true,
+  "Bleed": true,
+  "BleedIterations": 2,
+  "LimitMemory": true,
+  "Grid": false,
+  "Scale": [
+    1
+  ],
+  "ScaleSuffix": [
+    ""
+  ],
+  "ScaleResampling": [
+    "Bicubic"
+  ],
+  "AtlasExtension": ".atlas",
+  "PrettyPrint": true,
+  "LegacyOutput": true
+}

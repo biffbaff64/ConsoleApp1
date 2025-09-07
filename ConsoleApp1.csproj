@@ -49,11 +49,6 @@
             <CopyToOutputDirectory>Always</CopyToOutputDirectory>
         </Content>
         <!---->
-        <None Remove="Assets\PackedImages\Objects\bar.png"/>
-        <None Remove="Assets\PackedImages\Objects\bar_green.png"/>
-        <None Remove="Assets\PackedImages\Objects\bar_orange.png"/>
-        <None Remove="Assets\PackedImages\Objects\bar_red.png"/>
-        <None Remove="Assets\PackedImages\Objects\bar_yellow.png"/>
         <None Remove="Assets\PackedImages\Objects\red7logo_small.png"/>
         <Content Include="Assets\PackedImages\Objects\red7logo_small.png">
             <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -66,20 +61,12 @@
         <Content Include="Assets\PackedImages\Objects\rover_wheel.png">
             <CopyToOutputDirectory>Always</CopyToOutputDirectory>
         </Content>
-        <None Remove="Assets\PackedImages\Test\objects.atlas"/>
-        <Content Include="Assets\PackedImages\Test\objects.atlas">
-            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-        </Content>
-        <None Remove="Assets\PackedImages\Test\objects.png"/>
-        <Content Include="Assets\PackedImages\Test\objects.png">
-            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-        </Content>
         <None Remove="Assets\title_background.png"/>
         <Content Include="Assets\title_background.png">
             <CopyToOutputDirectory>Always</CopyToOutputDirectory>
         </Content>
-        <None Remove="Assets\PackedImages\Objects\PackSettings.json" />
-        <Content Include="Assets\PackedImages\Objects\PackSettings.json">
+        <None Remove="Assets\PackedImages\Objects\pack.json" />
+        <Content Include="Assets\PackedImages\Objects\pack.json">
           <CopyToOutputDirectory>Always</CopyToOutputDirectory>
         </Content>
     </ItemGroup>

@@ -66,9 +66,6 @@
             <CopyToOutputDirectory>Always</CopyToOutputDirectory>
         </Content>
         <None Remove="Assets\PackedImages\Objects\pack.json" />
-        <Content Include="Assets\PackedImages\Objects\pack.json">
-          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-        </Content>
     </ItemGroup>
 
     <ItemGroup>

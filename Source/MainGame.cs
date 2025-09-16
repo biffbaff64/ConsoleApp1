@@ -58,11 +58,13 @@ public class MainGame : Game
 
         CreateCamera();
 
-        var test = new TexturePackerTest();
-        test.Setup();
-        test.Run();
-        test.TearDown();
-        
+        LoadImage1Texture();
+
+//        var test = new TexturePackerTest();
+//        test.Setup();
+//        test.Run();
+//        test.TearDown();
+
         Logger.Debug( "Done" );
     }
 
@@ -251,10 +253,16 @@ public class MainGame : Game
 
     private void LoadImage1Texture()
     {
-        _image1 = new Texture( new FileInfo( $"{IOUtils.AssetsRoot}title_background.png" ) );
-
-        if ( _image1 != null )
+        try
         {
+            _image1 = new Texture( new FileInfo( $"{IOUtils.AssetsRoot}title_background.png" ) );
+
+            if ( _image1 == null )
+            {
+                Logger.Debug("Failed to create texture object.");
+                return;
+            }
+
             Logger.Debug( $"Texture loaded - Width: {_image1.Width}, Height: {_image1.Height}, " +
                           $"Format: {PixelFormatUtils.GetFormatString( _image1.TextureData.PixelFormat )}" );
 
@@ -276,6 +284,12 @@ public class MainGame : Game
 
             Logger.Debug( "TextureMinFilter set to GL_NEAREST" );
             Logger.Debug( "TextureMagFilter set to GL_NEAREST" );
+        }
+        catch ( Exception ex )
+        {
+            Logger.Warning( $"Exception while loading texture: {ex.Message}" );
+            _image1?.Dispose();
+            _image1 = null;
         }
     }
 

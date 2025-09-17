@@ -83,18 +83,25 @@ public class MainGame : Game
 
         if ( _orthoGameCam is { IsInUse: true } )
         {
-            _spriteBatch?.Begin();
-            _spriteBatch?.SetProjectionMatrix( _orthoGameCam.Camera.Combined );
-
-            _orthoGameCam.Viewport?.Apply();
-            _orthoGameCam.Update();
-
-            if ( _image1 != null )
+            try
             {
-                _spriteBatch?.Draw( _image1, 0, 0 );
-            }
+                _spriteBatch?.Begin();
+                _spriteBatch?.SetProjectionMatrix( _orthoGameCam.Camera.Combined );
 
-            _spriteBatch?.End();
+                _orthoGameCam.Viewport?.Apply();
+                _orthoGameCam.Update();
+
+                if ( _image1 != null )
+                {
+                    _spriteBatch?.Draw( _image1, 0, 0 );
+                }
+
+                _spriteBatch?.End();
+            }
+            catch ( Exception e )
+            {
+                throw new GdxRuntimeException( $"Exception during rendering: {e.Message}" );
+            }
         }
     }
 

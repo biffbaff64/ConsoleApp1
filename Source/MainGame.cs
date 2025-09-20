@@ -240,10 +240,10 @@ public class MainGame : Game
 
     private void CreateImage1Texture()
     {
-        var pixmap = new Pixmap( TEST_WIDTH, TEST_HEIGHT, Gdx2DPixmap.GDX_2D_FORMAT_RGBA8888 );
+        var pixmap = new Pixmap( TEST_WIDTH, TEST_HEIGHT, Gdx2DPixmap.Gdx2dPixelFormat.RGBA );
 
         _image1 = new Texture( new PixmapTextureData( pixmap,
-                                                      Gdx2DPixmap.GDX_2D_FORMAT_RGBA8888,
+                                                      Gdx2DPixmap.Gdx2dPixelFormat.RGBA,
                                                       false,
                                                       false,
                                                       true ) );
@@ -316,11 +316,11 @@ public class MainGame : Game
             return;
         }
 
-        var pixmap = new Pixmap( 100, 100, Gdx2DPixmap.GDX_2D_FORMAT_RGBA8888 );
+        var pixmap = new Pixmap( 100, 100, Gdx2DPixmap.Gdx2dPixelFormat.RGBA );
         pixmap.SetColor( Color.White );
         pixmap.FillWithCurrentColor();
 
-        var textureData = new PixmapTextureData( pixmap, Gdx2DPixmap.GDX_2D_FORMAT_RGBA8888, false, false );
+        var textureData = new PixmapTextureData( pixmap, Gdx2DPixmap.Gdx2dPixelFormat.RGBA, false, false );
 
         _whitePixelTexture      = new Texture( textureData );
         _whitePixelTexture.Name = "WhitePixel";

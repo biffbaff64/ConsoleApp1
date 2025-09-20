@@ -65,7 +65,7 @@
         <Content Include="Assets\title_background.png">
             <CopyToOutputDirectory>Always</CopyToOutputDirectory>
         </Content>
-        <None Remove="Assets\PackedImages\Objects\pack.json" />
+        <None Remove="Assets\PackedImages\Objects\pack.json"/>
     </ItemGroup>
 
     <ItemGroup>

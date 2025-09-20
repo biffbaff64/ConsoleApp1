@@ -240,10 +240,10 @@ public class MainGame : Game
 
     private void CreateImage1Texture()
     {
-        var pixmap = new Pixmap( TEST_WIDTH, TEST_HEIGHT, Gdx2DPixmap.Gdx2DPixmapFormat.RGBA8888 );
+        var pixmap = new Pixmap( TEST_WIDTH, TEST_HEIGHT, Gdx2DPixmap.GDX_2D_FORMAT_RGBA8888 );
 
         _image1 = new Texture( new PixmapTextureData( pixmap,
-                                                      Gdx2DPixmap.Gdx2DPixmapFormat.RGBA8888,
+                                                      Gdx2DPixmap.GDX_2D_FORMAT_RGBA8888,
                                                       false,
                                                       false,
                                                       true ) );
@@ -262,11 +262,14 @@ public class MainGame : Game
     {
         try
         {
-            _image1 = new Texture( new FileInfo( $"{IOUtils.AssetsRoot}title_background.png" ) );
+            var filename = $"{IOUtils.AssetsRoot}title_background.png";
+
+            _image1 = new Texture( new FileInfo( filename ) );
 
             if ( _image1 == null )
             {
-                Logger.Debug("Failed to create texture object.");
+                Logger.Debug( "Failed to create texture object." );
+
                 return;
             }
 
@@ -278,8 +281,10 @@ public class MainGame : Game
 
             var width  = new int[ 1 ];
             var height = new int[ 1 ];
+
             Engine.GL.GetTexLevelParameteriv( IGL.GL_TEXTURE_2D, 0, IGL.GL_TEXTURE_WIDTH, ref width );
             Engine.GL.GetTexLevelParameteriv( IGL.GL_TEXTURE_2D, 0, IGL.GL_TEXTURE_HEIGHT, ref height );
+
             Logger.Debug( $"Initial texture dimensions in GPU: {width[ 0 ]}x{height[ 0 ]}" );
 
             Engine.GL.TexParameteri( ( int )TextureTarget.Texture2D,
@@ -291,6 +296,8 @@ public class MainGame : Game
 
             Logger.Debug( "TextureMinFilter set to GL_NEAREST" );
             Logger.Debug( "TextureMagFilter set to GL_NEAREST" );
+
+            PNGDecoder.AnalysePNG( filename, true );
         }
         catch ( Exception ex )
         {
@@ -309,11 +316,11 @@ public class MainGame : Game
             return;
         }
 
-        var pixmap = new Pixmap( 100, 100, Gdx2DPixmap.Gdx2DPixmapFormat.RGBA8888 );
+        var pixmap = new Pixmap( 100, 100, Gdx2DPixmap.GDX_2D_FORMAT_RGBA8888 );
         pixmap.SetColor( Color.White );
         pixmap.FillWithCurrentColor();
 
-        var textureData = new PixmapTextureData( pixmap, Gdx2DPixmap.Gdx2DPixmapFormat.RGBA8888, false, false );
+        var textureData = new PixmapTextureData( pixmap, Gdx2DPixmap.GDX_2D_FORMAT_RGBA8888, false, false );
 
         _whitePixelTexture      = new Texture( textureData );
         _whitePixelTexture.Name = "WhitePixel";

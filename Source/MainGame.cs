@@ -17,7 +17,6 @@ using LughSharp.Lugh.Maths;
 using LughSharp.Lugh.Utils;
 using LughSharp.Lugh.Utils.Exceptions;
 using LughSharp.Lugh.Utils.Logging;
-using LughSharp.Tests.Source;
 
 using Color = LughSharp.Lugh.Graphics.Color;
 
@@ -83,25 +82,18 @@ public class MainGame : Game
 
         if ( _orthoGameCam is { IsInUse: true } )
         {
-            try
+            _spriteBatch?.Begin();
+            _spriteBatch?.SetProjectionMatrix( _orthoGameCam.Camera.Combined );
+
+            _orthoGameCam.Viewport?.Apply();
+            _orthoGameCam.Update();
+
+            if ( _image1 != null )
             {
-                _spriteBatch?.Begin();
-                _spriteBatch?.SetProjectionMatrix( _orthoGameCam.Camera.Combined );
-
-                _orthoGameCam.Viewport?.Apply();
-                _orthoGameCam.Update();
-
-                if ( _image1 != null )
-                {
-                    _spriteBatch?.Draw( _image1, 0, 0 );
-                }
-
-                _spriteBatch?.End();
+                _spriteBatch?.Draw( _image1, 0, 0 );
             }
-            catch ( Exception e )
-            {
-                throw new GdxRuntimeException( $"Exception during rendering: {e.Message}" );
-            }
+
+            _spriteBatch?.End();
         }
     }
 
@@ -238,12 +230,15 @@ public class MainGame : Game
         }
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
     private void CreateImage1Texture()
     {
-        var pixmap = new Pixmap( TEST_WIDTH, TEST_HEIGHT, Gdx2DPixmap.Gdx2dPixelFormat.RGBA );
+        var pixmap = new Pixmap( TEST_WIDTH, TEST_HEIGHT, Gdx2DPixmap.GDX_2D_FORMAT_RGBA8888 );
 
         _image1 = new Texture( new PixmapTextureData( pixmap,
-                                                      Gdx2DPixmap.Gdx2dPixelFormat.RGBA,
+                                                      Gdx2DPixmap.GDX_2D_FORMAT_RGBA8888,
                                                       false,
                                                       false,
                                                       true ) );
@@ -260,6 +255,8 @@ public class MainGame : Game
 
     private void LoadImage1Texture()
     {
+        Logger.Checkpoint();
+        
         try
         {
             var filename = $"{IOUtils.AssetsRoot}title_background.png";
@@ -273,12 +270,15 @@ public class MainGame : Game
                 return;
             }
 
-            Logger.Debug( $"Texture loaded - Width: {_image1.Width}, Height: {_image1.Height}, " +
-                          $"Format: {PixelFormatUtils.GetFormatString( _image1.TextureData.PixelFormat )}" );
-
+            Logger.Debug( $"Texture loaded - Width: {_image1.Width}, Height: {_image1.Height}" );
+            Logger.Debug( $"Format: {PixelFormatUtils.GetFormatString( _image1.TextureData.PixelFormat )}" );
+            Logger.Debug( $"Length: {_image1.GetImageData()?.Length}" );
+            
             _image1.Upload();
             _image1.Bind( 0 ); // Set active texture and bind to texture unit 0
 
+            Logger.Debug( "Texture uploaded to GPU and bound to texture unit 0" );
+            
             var width  = new int[ 1 ];
             var height = new int[ 1 ];
 
@@ -316,11 +316,11 @@ public class MainGame : Game
             return;
         }
 
-        var pixmap = new Pixmap( 100, 100, Gdx2DPixmap.Gdx2dPixelFormat.RGBA );
+        var pixmap = new Pixmap( 100, 100, Gdx2DPixmap.GDX_2D_FORMAT_RGBA8888 );
         pixmap.SetColor( Color.White );
         pixmap.FillWithCurrentColor();
 
-        var textureData = new PixmapTextureData( pixmap, Gdx2DPixmap.Gdx2dPixelFormat.RGBA, false, false );
+        var textureData = new PixmapTextureData( pixmap, Gdx2DPixmap.GDX_2D_FORMAT_RGBA8888, false, false );
 
         _whitePixelTexture      = new Texture( textureData );
         _whitePixelTexture.Name = "WhitePixel";

@@ -17,6 +17,7 @@ using LughSharp.Lugh.Maths;
 using LughSharp.Lugh.Utils;
 using LughSharp.Lugh.Utils.Exceptions;
 using LughSharp.Lugh.Utils.Logging;
+using LughSharp.Tests.Source;
 
 using Color = LughSharp.Lugh.Graphics.Color;
 
@@ -57,12 +58,10 @@ public class MainGame : Game
 
         CreateCamera();
 
-        LoadImage1Texture();
-
-//        var test = new TexturePackerTest();
-//        test.Setup();
-//        test.Run();
-//        test.TearDown();
+        var test = new AssetManagerTest();
+        test.Setup();
+        test.Run();
+        test.TearDown();
 
         Logger.Debug( "Done" );
     }

@@ -26,9 +26,9 @@ public static class DesktopLauncher
             DisableAudio          = true,
             Debug                 = true,
             GLProfilingEnabled    = true,
-            GLContextMajorVersion = 3,
-            GLContextMinorVersion = 3,
-            GLContextRevision     = 0,
+//            GLContextMajorVersion = 3,
+//            GLContextMinorVersion = 3,
+//            GLContextRevision     = 0,
         };
 
         Engine.Api.CheckEnableDevMode().CheckEnableGodMode();

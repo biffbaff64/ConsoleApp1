@@ -58,10 +58,26 @@ public class MainGame : Game
 
         CreateCamera();
 
-        var test = new AssetManagerTest();
+        Logger.Divider();
+        Logger.Divider();
+//        var test = new AssetManagerTest();
+        var test = new TexturePackerTest();
         test.Setup();
         test.Run();
         test.TearDown();
+        Logger.Divider();
+        Logger.Divider();
+
+//        var imagePath = $"{IOUtils.AssetsRoot}packedimages/objects/rover_wheel.png";
+//        _assetManager.Load< Texture >( imagePath );
+//        _assetManager.FinishLoading();
+//        var image = _assetManager.Get< Texture >( imagePath );
+//        PNGDecoder.AnalysePNG( image, true );
+//        var data  = image?.GetAsPNG();
+//        if ( data != null )
+//        {
+//            PNGDecoder.AnalyseAndWritePNG( $"{IOUtils.AssetsRoot}newimage.png", data, true );
+//        }
 
         Logger.Debug( "Done" );
     }
@@ -155,7 +171,7 @@ public class MainGame : Game
         Logger.Debug( "Loading assets...", true );
         Logger.Divider();
 
-        _assetManager.Load( TEST_ASSET1, typeof( Texture ), new TextureLoader.TextureLoaderParameters() );
+        _assetManager.Load< Texture >( TEST_ASSET1, new TextureLoader.TextureLoaderParameters() );
         _assetManager.FinishLoading();
 
         if ( _assetManager.Contains( TEST_ASSET1 ) )

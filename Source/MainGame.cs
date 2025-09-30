@@ -252,7 +252,7 @@ public class MainGame : Game
     /// </summary>
     private void CreateImage1Texture()
     {
-        var pixmap = new Pixmap( TEST_WIDTH, TEST_HEIGHT, Gdx2DPixmap.GDX_2D_FORMAT_RGBA8888 );
+        var pixmap = new Pixmap( TEST_WIDTH, TEST_HEIGHT, Pixmap.Format.RGBA8888 );
 
         _image1 = new Texture( new PixmapTextureData( pixmap,
                                                       Gdx2DPixmap.GDX_2D_FORMAT_RGBA8888,
@@ -318,7 +318,7 @@ public class MainGame : Game
         }
         catch ( Exception ex )
         {
-            Logger.Warning( $"Exception while loading texture: {ex.Message}" );
+            Logger.Error( $"Exception while loading texture: {ex.Message}" );
             _image1?.Dispose();
             _image1 = null;
         }
@@ -333,7 +333,7 @@ public class MainGame : Game
             return;
         }
 
-        var pixmap = new Pixmap( 100, 100, Gdx2DPixmap.GDX_2D_FORMAT_RGBA8888 );
+        var pixmap = new Pixmap( 100, 100, Pixmap.Format.RGBA8888 );
         pixmap.SetColor( Color.White );
         pixmap.FillWithCurrentColor();
 

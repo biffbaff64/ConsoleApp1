@@ -255,7 +255,7 @@ public class MainGame : Game
         var pixmap = new Pixmap( TEST_WIDTH, TEST_HEIGHT, Pixmap.Format.RGBA8888 );
 
         _image1 = new Texture( new PixmapTextureData( pixmap,
-                                                      Gdx2DPixmap.GDX_2D_FORMAT_RGBA8888,
+                                                      Pixmap.Format.RGBA8888,
                                                       false,
                                                       false,
                                                       true ) );
@@ -288,7 +288,7 @@ public class MainGame : Game
             }
 
             Logger.Debug( $"Texture loaded - Width: {_image1.Width}, Height: {_image1.Height}" );
-            Logger.Debug( $"Format: {PixelFormatUtils.GetFormatString( _image1.TextureData.PixelFormat )}" );
+            Logger.Debug( $"Format: {PixelFormatUtils.GetFormatString( _image1.TextureData.GetPixelFormat() )}" );
             Logger.Debug( $"Length: {_image1.GetImageData()?.Length}" );
             
             _image1.Upload();
@@ -337,7 +337,7 @@ public class MainGame : Game
         pixmap.SetColor( Color.White );
         pixmap.FillWithCurrentColor();
 
-        var textureData = new PixmapTextureData( pixmap, Gdx2DPixmap.GDX_2D_FORMAT_RGBA8888, false, false );
+        var textureData = new PixmapTextureData( pixmap, Pixmap.Format.RGBA8888, false, false );
 
         _whitePixelTexture      = new Texture( textureData );
         _whitePixelTexture.Name = "WhitePixel";

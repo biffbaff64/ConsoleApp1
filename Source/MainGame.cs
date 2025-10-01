@@ -60,15 +60,15 @@ public class MainGame : Game
 
         CreateCamera();
 
-        Logger.Divider();
-        Logger.Divider();
+//        Logger.Divider();
+//        Logger.Divider();
 //        var test = new AssetManagerTest();
-        var test = new TexturePackerTest();
-        test.Setup();
-        test.Run();
-        test.TearDown();
-        Logger.Divider();
-        Logger.Divider();
+//        var test = new TexturePackerTest();
+//        test.Setup();
+//        test.Run();
+//        test.TearDown();
+//        Logger.Divider();
+//        Logger.Divider();
 
 //        var imagePath = $"{IOUtils.AssetsRoot}packedimages/objects/rover_wheel.png";
 //        _assetManager.Load< Texture >( imagePath );
